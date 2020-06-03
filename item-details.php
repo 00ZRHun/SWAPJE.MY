@@ -1,41 +1,37 @@
 <!-- Booking Form -->
-<?php 
-  session_start();
-  include('includes/config.php');
-  error_reporting(0);
+<?php
+session_start();
+include 'includes/config.php';
+error_reporting(0);
 
-  if(isset($_POST['submit']))
-  {
-    $fromdate=$_POST['fromdate'];
-    $todate=$_POST['todate']; 
-    $message=$_POST['message'];
-    $useremail=$_SESSION['login'];
-    $status=0;
-    $vhid=$_GET['vhid'];
-    $sql="INSERT INTO tblbooking(userEmail,VehicleId,FromDate,ToDate,message,Status)
+if (isset($_POST['submit'])) {
+    $fromdate = $_POST['fromdate'];
+    $todate = $_POST['todate'];
+    $message = $_POST['message'];
+    $useremail = $_SESSION['login'];
+    $status = 0;
+    $vhid = $_GET['vhid'];
+    $sql = "INSERT INTO tblbooking(userEmail,VehicleId,FromDate,ToDate,message,Status)
      VALUES(:useremail,:vhid,:fromdate,:todate,:message,:status)";
     $query = $dbh->prepare($sql);
 
-    $query->bindParam(':useremail',$useremail,PDO::PARAM_STR);
-    $query->bindParam(':vhid',$vhid,PDO::PARAM_STR);
-    $query->bindParam(':fromdate',$fromdate,PDO::PARAM_STR);
-    $query->bindParam(':todate',$todate,PDO::PARAM_STR);
-    $query->bindParam(':message',$message,PDO::PARAM_STR);
-    $query->bindParam(':status',$status,PDO::PARAM_STR);
+    $query->bindParam(':useremail', $useremail, PDO::PARAM_STR);
+    $query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
+    $query->bindParam(':fromdate', $fromdate, PDO::PARAM_STR);
+    $query->bindParam(':todate', $todate, PDO::PARAM_STR);
+    $query->bindParam(':message', $message, PDO::PARAM_STR);
+    $query->bindParam(':status', $status, PDO::PARAM_STR);
     $query->execute();
 
     $lastInsertId = $dbh->lastInsertId();
 
-    if($lastInsertId)
-    {
-      echo "<script>alert('Booking successfull.');</script>";
-    }
-    else 
-    {
-      echo "<script>alert('Something went wrong. Please try again');</script>";
+    if ($lastInsertId) {
+        echo "<script>alert('Booking successfull.');</script>";
+    } else {
+        echo "<script>alert('Something went wrong. Please try again');</script>";
     }
 
-  }
+}
 ?>
 
 <!DOCTYPE HTML>
@@ -82,56 +78,53 @@
 <body>
 
 <!-- Start Switcher -->
-<?php include('includes/colorswitcher.php');?>
-<!-- /Switcher -->  
+<?php include 'includes/colorswitcher.php';?>
+<!-- /Switcher -->
 
 <!--Header-->
-<?php include('includes/header.php');?>
-<!-- /Header --> 
+<?php include 'includes/header.php';?>
+<!-- /Header -->
 
 <!--Listing-Image-Slider-->
-  <!-- get data from tblpostitem -->
-<?php 
-  $vhid=intval($_GET['vhid']);
-  /* $sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid
-   from tblvehicles join tblbrands
-   on tblbrands.id=tblvehicles.VehiclesBrand
-   where tblvehicles.id=:vhid"; */
-  $sql = "SELECT * from tblpostitem where id=:vhid AND delmode=0";
-  $query = $dbh -> prepare($sql);
-  $query->bindParam(':vhid',$vhid, PDO::PARAM_STR);
-  $query->execute();
-  $results=$query->fetchAll(PDO::FETCH_OBJ);
-  $cnt=1;
-  if($query->rowCount() > 0)
-  {
-    foreach($results as $result)
-    {  
-      $_SESSION['brndid']=$result->bid;  
-      $providerID = $result->user_id; 
-?>
-<h1></h1>  
+  <!-- get data from items -->
+<?php
+$vhid = intval($_GET['vhid']);
+/* $sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid
+from tblvehicles join tblbrands
+on tblbrands.id=tblvehicles.VehiclesBrand
+where tblvehicles.id=:vhid"; */
+$sql = "SELECT * from items where id=:vhid AND delmode=0";
+$query = $dbh->prepare($sql);
+$query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
+$query->execute();
+$results = $query->fetchAll(PDO::FETCH_OBJ);
+$cnt = 1;
+if ($query->rowCount() > 0) {
+    foreach ($results as $result) {
+        $_SESSION['brndid'] = $result->bid;
+        $providerID = $result->user_id;
+        ?>
+<h1></h1>
 <section id="listing_img_slider">
-  <div><?= $providerID ?></div>
-  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image" width="900" height="560"></div>
-  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage2);?>" class="img-responsive" alt="image" width="900" height="560"></div>
-  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage3);?>" class="img-responsive" alt="image" width="900" height="560"></div>
-  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage4);?>" class="img-responsive"  alt="image" width="900" height="560"></div>
-  
-  <?php
-   if($result->Vimage5=="")
-    {
+  <div><?=$providerID?></div>
+  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage1); ?>" class="img-responsive" alt="image" width="900" height="560"></div>
+  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage2); ?>" class="img-responsive" alt="image" width="900" height="560"></div>
+  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage3); ?>" class="img-responsive" alt="image" width="900" height="560"></div>
+  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage4); ?>" class="img-responsive"  alt="image" width="900" height="560"></div>
 
-    } else {
-  ?>
+  <?php
+if ($result->Vimage5 == "") {
+
+        } else {
+            ?>
 
     <div>
-      <img src="img/vehicleimages/<?php echo htmlentities($result->Vimage5);?>" class="img-responsive" alt="image" width="900" height="560">
+      <img src="img/vehicleimages/<?php echo htmlentities($result->Vimage5); ?>" class="img-responsive" alt="image" width="900" height="560">
     </div>
-  
+
   <?php
-   } 
-  ?>
+}
+        ?>
 
 </section>
 <!--/Listing-Image-Slider-->
@@ -140,8 +133,8 @@
 <!-- body -->
   <!-- php global variable -->
 <?php
-  $name = $result->productName;
-?>
+$name = $result->productName;
+        ?>
   <!--Listing-detail-->
 <section class="listing-detail">
   <div class="container">
@@ -150,13 +143,13 @@
       <!-- col 1( name, title ) -->
       <div class="col-md-9">
         <h2>
-          <?php echo htmlentities($name);?> , <?php echo htmlentities($result->usedYear);?> Used Years
+          <?php echo htmlentities($name); ?> , <?php echo htmlentities($result->usedYear); ?> Used Years
         </h2>
       </div>
       <!-- col 2( price ) -->
       <div class="col-md-3">
         <div class="price_info">
-          <!-- <p>$<?php echo htmlentities($result->PricePerDay);?> </p>Per Day -->
+          <!-- <p>$<?php echo htmlentities($result->PricePerDay); ?> </p>Per Day -->
         </div>
       </div>
     </div>
@@ -169,157 +162,80 @@
           <ul>
             <li>
               <i class="fa fa-calendar" aria-hidden="true"></i>
-              <h5><?php echo htmlentities($result->ModelYear);?></h5>
+              <h5><?php echo htmlentities($result->ModelYear); ?></h5>
               <p>Reg.Year</p>
             </li>
             <li>
               <i class="fa fa-cogs" aria-hidden="true"></i>
-              <h5><?php echo htmlentities($result->FuelType);?></h5>
+              <h5><?php echo htmlentities($result->FuelType); ?></h5>
               <p>Fuel Type</p>
             </li>
             <li>
               <i class="fa fa-user-plus" aria-hidden="true"></i>
-              <h5><?php echo htmlentities($result->SeatingCapacity);?></h5>
+              <h5><?php echo htmlentities($result->SeatingCapacity); ?></h5>
               <p>Seats</p>
             </li>
           </ul>
         </div> -->
         <div class="main_features">
-              <?php echo htmlentities($result->overview);?>
+              <?php echo htmlentities($result->overview); ?>
         </div>
 
         <!-- tabs( overview, accessories) -->
         <div class="listing_more_info">
-          <div class="listing_detail_wrap"> 
+          <div class="listing_detail_wrap">
           <!-- 1) -->
             <!-- Nav tabs -->
             <ul class="nav nav-tabs gray-bg" role="tablist">
-              <!--  -->
-              <!--  -->
-              <!--  -->
-              <!--  -->
-              <!-- <div class="active">
-                <li role="presentation" class="col-md-4">
-                  <a href="#sell" aria-controls="sell" role="tab" data-toggle="tab">
-                    Sell
-                  </a>
-                </li>
-              </div> -->
-              <!--  -->
-              <!--  -->
-
-              <!-- SELL -->
-              <?php 
-                if($result->sell == 1){ 
-              ?>
                 <!-- Sell -->
                 <li role="presentation" class="active col-md-4">
-                  <a href="#sell" aria-controls="sell" role="tab" data-toggle="tab">
+                    <a href="#sell" aria-controls="sell" role="tab" data-toggle="tab">
                     Sell
+                    </a>
+                </li>
+                <!-- Rent -->
+                <li role="presentation" class="col-md-4">
+                  <a href="#rent" aria-controls="rent" role="tab" data-toggle="tab">
+                      Rent
                   </a>
                 </li>
-
-                <!-- Rent -->
-                <?php 
-                  if($result->rent == 1){ 
-                ?>
-                  <li role="presentation" class="col-md-4">
-                    <a href="#rent" aria-controls="rent" role="tab" data-toggle="tab">
-                      Rent
-                    </a>
-                  </li>
-                <?php 
-                  }
-                ?>
 
                 <!-- Swap -->
-                <?php 
-                  if($result->swap == 1){ 
-                ?>
-                  <li role="presentation" class="col-md-4">
-                    <a href="#swap" aria-controls="swap" role="tab" data-toggle="tab">
-                      Swap
-                    </a>
-                  </li>
-                <?php 
-                  }
-                ?>
-
-
-              <!-- RENT -->
-              <?php 
-                }else if($result->rent == 1){ 
-              ?>
-                  <li role="presentation" class="col-md-4 active">
-                    <a href="#rent" aria-controls="rent" role="tab" data-toggle="tab">
-                      Rent
-                    </a>
-                  </li>
-                  
-                  <!-- Swap -->
-                  <?php 
-                    if($result->swap == 1){ 
-                  ?>
-                    <li role="presentation" class="col-md-4">
-                      <a href="#swap" aria-controls="swap" role="tab" data-toggle="tab">
-                        Swap
-                      </a>
-                    </li>
-                  <?php 
-                    }
-                  ?>
-
-
-              <!-- SWAP -->
-              <?php 
-                }else if($result->swap == 1){ 
-              ?>
                 <li role="presentation" class="col-md-4">
                   <a href="#swap" aria-controls="swap" role="tab" data-toggle="tab">
-                    Swap
+                      Swap
                   </a>
                 </li>
-              <?php
-                }
-              ?>
-              
-
-
-
             </ul>
-            
+
           <!-- 2) -->
             <!-- Tab panes -->
-            <div class="tab-content"> 
-              <!-- SELL -->
-              <?php 
-                if($result->sell == 1){ 
-              ?>
+            <div class="tab-content">
+<!--  -->
+<!--  -->
+<!--  -->
                 <!-- Sell -->
                 <div role="tabpanel" class="tab-pane active" id="sell">
                   <p>
-                    <!-- Sell
-                    <?php echo htmlentities($result->overview);?> -->
-                    <!--  -->
                     <!-- payment( PayPal ) -->
                     <div id="payment-box">
                             <!-- <img src="images/camera.jpg" /> -->
                             <h4 class="txt-title">
-                              Product Name : 
-                              <?php echo htmlentities($name);?>
+                              Product Name :
+                              <?php echo htmlentities($name); ?>
                             </h4>
                             <div class="txt-price">
-                              Total Price : 
-                              RM<?php echo htmlentities($result->totalPrice);?>
+                              Total Price :
+                              RM<?php echo htmlentities($result->totalPrice); ?>
                             </div>
                             <form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
                                 method="post" target="_top">
-                                <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount);?>'> 
-                                <input type='hidden' name='item_name' value='<?php echo htmlentities($name);?>'>
-                                <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#1');?>'> 
-                                <input type='hidden' name='amount' value='<?php echo htmlentities($result->totalPrice);?>'>
-                                <input type='hidden' name='no_shipping' value='1'> 
-                                <input type='hidden' name='currency_code' value='MYR'> 
+                                <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount); ?>'>
+                                <input type='hidden' name='item_name' value='<?php echo htmlentities($name); ?>'>
+                                <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#1'); ?>'>
+                                <input type='hidden' name='amount' value='<?php echo htmlentities($result->totalPrice); ?>'>
+                                <input type='hidden' name='no_shipping' value='1'>
+                                <input type='hidden' name='currency_code' value='MYR'>
                                 <input type='hidden' name='notify_url'
                                     value='http://localhost:8888/paypal-payment-gateway-integration-in-php/notify.php'>
                                 <input type='hidden' name='cancel_return'
@@ -334,119 +250,88 @@
                                 >
                             </form>
                     </div>
-                    <!--  -->
                   </p>
                 </div>
 
                 <!-- Rent -->
-                <?php 
-                  if($result->rent == 1){ 
-                ?>
-                  <div role="tabpanel" class="tab-pane" id="rent">
-                    <p>
-                      <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
-                    </p>
-                    <!--  -->
+                <div role="tabpanel" class="tab-pane" id="rent">
                     <!-- payment( PayPal ) -->
                     <div id="payment-box">
-                            <!-- <img src="images/camera.jpg" /> -->
                             <h4 class="txt-title">
-                              Product Name : 
-                              <?php echo htmlentities($name);?>
+                                Product Name :
+                                <?php echo htmlentities($name); ?>
                             </h4>
                             <div class="txt-price">
-                              Price Per Day : 
-                              RM<?php echo htmlentities($result->pricePerDay);?>
+                                Price Per Day :
+                                RM<?php
+$pricePerDay = $result->pricePerDay;
+        echo htmlentities($pricePerDay);
+        ?>
                             </div>
-                            
-                            <!--  -->
-                            <!--  -->
-                            <!--  -->
                             <div>
-                              <form name="form" action="" method="get">
-                                  <!-- <input type="text" name="subject" id="subject" value="Car Loan"> -->
-                                  <!-- <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
-                                  <input type='number' name='rentDay' value='0'>
-                                  <button type="submit">Check Price</button> -->
-                              </form>
-
-                              <!-- <?php echo $_GET['rentDay']; ?> -->
-                              <!-- <input type='number' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'> -->
-
                             </div>
-                            <!--  -->
-                              <br>
-                              <!--  -->
-                             
-                            <!--  -->
+                                <br>
                             <form name="form" action="" method="get">
-                              <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
-
-                              <!-- <input type='number' class='rentDay' name='rentDay' placeholder="0" /> Day(s) -->
-                              
-                                <!-- <option value="8">8</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option> -->
-                              <br>
-                              <!-- <select name="itemCondition">
-                                <option value="">Select...</option>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                              </select> -->
-                              <br>
-                              <!-- RM<input type='number' id='totalPrice' name='totalPrice' placeholder="0.00" disabled /> -->
-                              <!-- <input type='text' id='totalPrice' name='totalPrice' value="<?= $totalPrice ?>" disabled />
-                              <input type='text' id='totalPrice' name='totalPrice' value="<?= $id ?>" disabled /> -->
-                              <!-- <button id="primaryButton" type="submit"  onclick="alert('abc')">Check Price</button> -->
+                                <input type='hidden' name='vhid' value='<?=$_GET['vhid'];?>'>
+                                <br>
+                                <br>
                             </form>
 
-
-                            <!--  -->
-                            <!--  -->
-
-
                             <?php
-                              $pricePerDay = $result->pricePerDay;
-                              /* $totalPrice = $_COOKIE[sum];
+$pricePerDay = $result->pricePerDay;
+        ?>
 
-                              echo $totalPrice; */
-                            ?>
-                            <!--  -->
+                            <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+                            <script>
+                                var decision = 0;
+                                $(document).ready(function(){
+                                $('select.status').on('change',function () {
+                                        decision = $(this).val();
+                                        var totalPrice = decision * <?=$pricePerDay?>;
+                                        alert("RM" + totalPrice);
+                                });
 
-                            
+                                });
+                            </script>
+
+                            <table width="200px">
+                                <tr>
+                                    <td>
+                                        <select class="status" >
+                                        <option value="">Select...</option>
+                                        <option value="1">1 day</option>
+                                        <option value="2">2 days</option>
+                                        <option value="3">3 days</option>
+                                        <option value="4">4 days</option>
+                                        <option value="5">5 days</option>
+                                        <option value="6">6 days</option>
+                                        <option value="7">1 week</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <?php $totalPrice = 100?>
+                            <button onclick="myfunction()">test</button>
+
+                            <script>
+                              <?php $totalPrice = "<script>document.writeln(decision);</script>";?>
+                              function myfunction(){
+                                alert(<?=$totalPrice?>)
+                              }
+                            </script>
 
                             <form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
-                                method="post" target="_top">
-                                <select name="itemCondition">
-                                  <option value="">Select...</option>
-                                  <option value="1">1 day</option>
-                                  <option value="2">2 days</option>
-                                  <option value="3">3 days</option>
-                                  <option value="4">4 days</option>
-                                  <option value="5">5 days</option>
-                                  <option value="6">6 days</option>
-                                  <option value="7">1 week</option>
-                                </select>
-                                <!-- <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
-                                <input type='number' name='rentDay' value='0'> -->
-
-                                <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount);?>'> 
-                                <input type='hidden' name='item_name' value='<?php echo htmlentities($name);?>'>
-                                <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#N1');?>'> 
-                                <input type='hidden' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'>
-                                <!-- <input type='hidden' name='amount' value='<?php echo htmlentities((float)($_GET['totalPrice']));?>'> -->
-                                <input type='hidden' name='no_shipping' value='1'> 
-                                <input type='hidden' name='currency_code' value='MYR'> 
+                              method="post" target="_top">
+                                <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount); ?>'>
+                                <input type='hidden' name='item_name' value='<?php echo htmlentities($name); ?>'>
+                                <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#N1'); ?>'>
+                                <!-- <input type='hidden' name='amount' value='<?php echo htmlentities((float) ($_GET['totalPrice'])); ?>'> -->
+                                <!-- <input type='hidden' name='amount' value='<?php echo htmlentities((float) ($result->pricePerDay) * (float) ($_GET['rentDay'])); ?>'> -->
+                                <?php $totalPrice = "<script>document.writeln(decision);</script>";?>
+                                <input type='hidden' name='amount' value='<?php echo htmlentities((float) $totalPrice) ?>'>
+                                <input type='hidden' name='no_shipping' value='1'>
+                                <input type='hidden' name='currency_code' value='MYR'>
                                 <input type='hidden' name='notify_url'
                                     value='http://localhost:8888/paypal-payment-gateway-integration-in-php/notify.php'>
                                 <input type='hidden' name='cancel_return'
@@ -455,230 +340,67 @@
                                     value='http://localhost:8888/Renting%20System/SellRentSwap_System/return.php'>
                                 <input type="hidden" name="cmd" value="_xclick">
 
-                                <!-- <button
-                                    type="submit" name="pay_now" id="pay_now"
-                                    Value="Rent"
-                                >
-                                  Rent
-                                <button> -->
-
-                                <!-- <button onclick="document.getElementById('primaryButton').click()">Rent</button> -->
-                                <button onclick="document.getElementById('primaryButton').click()" type="submit" name="pay_now" id="pay_now">Rent</button>
-                                <!-- <button>Rent</button> -->
-
+                                <button type="submit" name="pay_now" id="pay_now">Rent</button>
                             </form>
-                              <!--  -->
-                              <!-- <button onclick="alert('abc')">Go to Google</button></a>
-    <button>Rent</button> -->
-                    <!-- <button id="primaryButton" onclick="alert('abc')">Go to Google</button></a>
-                    <button onclick="document.getElementById('primaryButton').click()">Rent</button> -->
 
-                    </div>
-
-                    <!--  -->
-
-                    <!--  -->
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>
                             <script>
-                              // we used jQuery 'keyup' to trigger the computation as the user type
-                              $('.rentDay').keyup(function () {
-                              
-                                  // initialize the sum (total price) to zero
-                                  var sum = 0;
-                                  
-                                  // we use jQuery each() to loop through all the textbox with 'price' class
-                                  // and compute the sum for each loop
-                                  $('.rentDay').each(function() {
-                                      sum += (Number($(this).val()) * <?= $pricePerDay ?>);
-                                  });
-                                  
-                                  // <?= $totalPrice ?> = sum;
-                                  // set the computed value to 'totalPrice' textbox
-                                  $('#totalPrice').val(sum);
-                                  
-                                  document.cookie = "sum";
-                              });
-
-                              <?php
-                                $totalPrice = $_COOKIE['sum'];
-
-                                echo $totalPrice;
-                              ?>
+                              function submitForm(){
+                                  document.getElementById("form_id").submit();
+                              }
                             </script>
-                    <!--  -->
-                    
-                  </div>
-                <?php 
-                  }
-                ?>
-
-              <!-- Swap -->
-              <div role="tabpanel" class="tab-pane" id="swap">                
-                <p>         
-                  <?php
-                  $user_sql = "SELECT id, FullName FROM tblusers WHERE EmailId=:email";        
-                  $user_query = $dbh->prepare($user_sql);
-                  $user_query->bindParam(':email', $email, PDO::PARAM_STR);
-                  $user_query->execute();
-                  $user_results = $user_query->fetch();
-
-                  $user_id = $user_results["id"];
-                  
-                  $item_status = 1;
-                  
-                  $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, user.id
-                          FROM tblpostitem as item 
-                          JOIN tblusers as user
-                          ON item.user_id = user.id
-                          WHERE user_id = :user_id AND item.delmode = :item_status";
-                    
-                    $query = $dbh->prepare($self_items_sql);
-                    $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-                    $query->bindParam(':item_status', $item_status);
-
-                    $query->execute();
-                    $results = $query->fetchAll(PDO::FETCH_OBJ);                      
-                    ?>
-
-
-
-                    <h2>Item you have:<?= $user_results["id"]; ?></h2>
-                    <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
-                    <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id);?>">
-                    <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID);?>">
-                                        
-                      <?php
-                      foreach ($results as $result) {                      
-                      ?>
-                        <input type="checkbox" name="receiver_item_id" id="<?php echo htmlentities($result->productName) ?>" value="<?php echo htmlentities($result->itemID) ?>" id="" /> 
-                        <label for="<?php echo htmlentities($result->productName) ?>"><?php echo htmlentities($result->productName) ?></label><br />
-                      <?php
-                      }
-                      ?>
-                    
-                  <button id="swap-with-owner-btn">Swap with owner</button>
-                </p>
-              </div>
-              <!--  -->
-
-
-              <!-- RENT -->
-              <?php 
-                }else if($result->rent == 1){ 
-              ?>
-                <div role="tabpanel" class="tab-pane active" id="rent">
-                  <p>
-                    <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
-                  </p>
-                  <!--  -->
-                  <!-- payment( PayPal ) -->
-                  <div id="payment-box">
-                      <!-- <img src="images/camera.jpg" /> -->
-                      <h4 class="txt-title">
-                        Product Name : 
-                        <?php echo htmlentities($name);?>
-                      </h4>
-                      <div class="txt-price">
-                        Price Per Day : 
-                        RM<?php echo htmlentities($result->pricePerDay);?>
-                      </div>
-                      
-                      <div>
-                        <form name="form" action="" method="get">
-                            <!-- <input type="text" name="subject" id="subject" value="Car Loan"> -->
-                            <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
-                            <input type='number' name='rentDay' value='0'>
-                            <button type="submit">Check Price</button>
-                        </form>
-
-                        <!-- <?php echo $_GET['rentDay']; ?> -->
-                        <input type='number' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'>
-                      </div>
-                      
-                      <form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
-                          method="post" target="_top">
-                          <!-- <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
-                          <input type='number' name='rentDay' value='0'> -->
-
-                          <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount);?>'> 
-                          <input type='hidden' name='item_name' value='<?php echo htmlentities($name);?>'>
-                          <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#N1');?>'> 
-                          <!-- <input type='hidden' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'> -->
-                          <input type='hidden' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'>
-                          <input type='hidden' name='no_shipping' value='1'> 
-                          <input type='hidden' name='currency_code' value='MYR'> 
-                          <input type='hidden' name='notify_url'
-                              value='http://localhost:8888/paypal-payment-gateway-integration-in-php/notify.php'>
-                          <input type='hidden' name='cancel_return'
-                              value='http://localhost:8888/paypal-payment-gateway-integration-in-php/cancel.php'>
-                          <input type='hidden' name='return'
-                              value='http://localhost:8888/Renting%20System/SellRentSwap_System/return.php'>
-                          <input type="hidden" name="cmd" value="_xclick">
-
-                          <!-- <button
-                              type="submit" name="pay_now" id="pay_now"
-                              value="Rent"
-                          >
-                            RENT
-                          <button> -->
-                          <button>RENT<button>
-                      </form>
-                  </div>
-                  <!-- JQuery( btn trigger another btn ) -->
-                  <script>
-                    /* $( "button" ).first().click(function() {
-                      update( $( "span" ).first() );
-                    }); */
-                    
-                    $( "button" ).last().click(function() {
-                      $( "button" ).first().trigger( "click" );
-                      // update( $( "span" ).last() );
-                    });
-                    
-                    /* function update( j ) {
-                      var n = parseInt( j.text(), 10 );
-                      j.text( n + 1 );
-                    } */
-                  </script>
-                  <!--  -->
+                    </div>
                 </div>
-                
+
                 <!-- Swap -->
-                <?php 
-                  if($result->swap == 1){ 
-                ?>
-                  <div role="tabpanel" class="tab-pane" id="swap">
+                <div role="tabpanel" class="tab-pane" id="swap">
                     <p>
-                      Swap
-                      <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
+                        <?php
+$user_sql = "SELECT id, FullName FROM users WHERE EmailId=:email";
+        $user_query = $dbh->prepare($user_sql);
+        $user_query->bindParam(':email', $email, PDO::PARAM_STR);
+        $user_query->execute();
+        $user_results = $user_query->fetch();
+
+        $user_id = $user_results["id"];
+
+        $item_status = 1;
+
+        $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, user.id
+                                FROM items as item
+                                JOIN users as user
+                                ON item.user_id = user.id
+                                WHERE user_id = :user_id AND item.delmode = :item_status";
+
+        $query = $dbh->prepare($self_items_sql);
+        $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $query->bindParam(':item_status', $item_status);
+
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_OBJ);
+        ?>
+
+                        <h2>Item you have:<?=$user_results["id"];?></h2>
+                        <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
+                        <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id); ?>">
+                        <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID); ?>">
+
+                            <?php
+foreach ($results as $result) {
+            ?>
+                            <input type="checkbox" name="receiver_item_id" id="<?php echo htmlentities($result->productName) ?>" value="<?php echo htmlentities($result->itemID) ?>" id="" />
+                            <label for="<?php echo htmlentities($result->productName) ?>"><?php echo htmlentities($result->productName) ?></label><br />
+                            <?php
+}
+        ?>
+
+                    <button id="swap-with-owner-btn">Swap with owner</button>
                     </p>
-                  </div>
-                <?php 
-                  }
-                ?>
-              <!-- SWAP -->
-              <?php 
-                }else if($result->swap == 1){ 
-              ?>
-                <div role="tabpanel" class="tab-pane  active" id="swap">
-                  <p>
-                    Swap
-                    <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
-                  </p>
                 </div>
-              <?php
-                }
-              ?>
-                  
-              
-
-
-
-
-              <!--  -->
-              
+<!--  -->
+<!--  -->
+<!--  -->
               <!-- Accessories -->
-              <div role="tabpanel" class="tab-pane" id="accessories"> 
+              <div role="tabpanel" class="tab-pane" id="accessories">
                 <!--Accessories-->
                 <table>
                   <thead>
@@ -691,193 +413,181 @@
                     <tr>
                       <td>Air Conditioner</td>
                       <?php
-                       if($result->AirConditioner==1)
-                       {
-                      ?>
+if ($result->AirConditioner == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                       } else { 
-                      ?> 
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                       } 
-                      ?>
+}
+        ?>
                     </tr>
 
                     <tr>
                       <td>AntiLock Braking System</td>
                       <?php
-                       if($result->AntiLockBrakingSystem==1)
-                       {
-                      ?>
+if ($result->AntiLockBrakingSystem == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                       } else {
-                      ?>
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                       } 
-                      ?>
+}
+        ?>
                     </tr>
 
                     <tr>
                       <td>Power Steering</td>
-                      <?php 
-                        if($result->PowerSteering==1)
-                        {
-                      ?>
+                      <?php
+if ($result->PowerSteering == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                      } else { 
-                      ?>
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                      }
-                      ?>
+}
+        ?>
                     </tr>
-                   
+
                     <tr>
                       <td>Power Windows</td>
                       <?php
-                       if($result->PowerWindows==1)
-                       {
-                      ?>
+if ($result->PowerWindows == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                       } else {
-                      ?>
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                       } 
-                      ?>
+}
+        ?>
                     </tr>
-                   
+
                     <tr>
                       <td>CD Player</td>
                       <?php
-                        if($result->CDPlayer==1)
-                        {
-                      ?>
+if ($result->CDPlayer == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                        } else { 
-                      ?>
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                       } 
-                      ?>
+}
+        ?>
                     </tr>
 
                     <tr>
                       <td>Leather Seats</td>
                       <?php
-                        if($result->LeatherSeats==1)
-                        {
-                      ?>
+if ($result->LeatherSeats == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                        } else { 
-                      ?>
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                        } 
-                      ?>
+}
+        ?>
                     </tr>
 
                     <tr>
                       <td>Central Locking</td>
                       <?php
-                       if($result->CentralLocking==1)
-                       {
-                      ?>
+if ($result->CentralLocking == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                       } else { 
-                      ?>
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                       } 
-                      ?>
+}
+        ?>
                     </tr>
 
                     <tr>
                       <td>Power Door Locks</td>
                       <?php
-                       if($result->PowerDoorLocks==1)
-                       {
-                      ?>
+if ($result->PowerDoorLocks == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                       } else { 
-                      ?>
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                       } 
-                      ?>
+}
+        ?>
                     </tr>
 
                     <tr>
                       <td>Brake Assist</td>
                       <?php
-                       if($result->BrakeAssist==1)
-                       {
-                      ?>
+if ($result->BrakeAssist == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                        } else { 
-                      ?>
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                       } 
-                      ?>
+}
+        ?>
                     </tr>
 
                     <tr>
                       <td>Driver Airbag</td>
                       <?php
-                       if($result->DriverAirbag==1)
-                        {
-                      ?>
+if ($result->DriverAirbag == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                       } else { 
-                      ?>
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                       } 
-                      ?>
+}
+        ?>
                     </tr>
-                    
+
                     <tr>
                       <td>Passenger Airbag</td>
                       <?php
-                       if($result->PassengerAirbag==1)
-                        {
-                      ?>
+if ($result->PassengerAirbag == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                       } else {
-                      ?>
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                       } 
-                      ?>
+}
+        ?>
                     </tr>
 
                     <tr>
                       <td>Crash Sensor</td>
                       <?php
-                       if($result->CrashSensor==1)
-                        {
-                      ?>
+if ($result->CrashSensor == 1) {
+            ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-                       } else { 
-                      ?>
+} else {
+            ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-                       } 
-                      ?>
+}
+        ?>
                     </tr>
 
                   </tbody>
@@ -886,12 +596,12 @@
 
             </div>
           </div>
-          
+
         </div>
-      <?php }} ?>
-   
+      <?php }}?>
+
       </div>
-      
+
       <!--Side-Bar-->
       <aside class="col-md-3">
         <!-- row 1( share ) -->
@@ -934,70 +644,67 @@
               <textarea rows="4" class="form-control" name="message" placeholder="Message" required></textarea>
             </div>
 
-              <?php 
-                if($_SESSION['login'])
-                  {
-              ?>
+              <?php
+if ($_SESSION['login']) {
+    ?>
 
                 <div class="form-group">
                   <input type="submit" class="btn"  name="submit" value="Book Now">
                 </div>
 
               <?php
-                } else { 
-              ?>
+} else {
+    ?>
 
                 <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">
                   Login For Book
                 </a>
 
               <?php
-                } 
-              ?>
+}
+?>
           </form>
         </div>
       </aside>
-      <!--/Side-Bar--> 
+      <!--/Side-Bar-->
 
     </div>
-    
+
     <div class="space-20"></div>
     <div class="divider"></div>
-    
+
     <!-- row 3( Similar-Cars )-->
     <div class="similar_cars">
       <h3>Similar Cars</h3>
       <div class="row">
-        <?php 
-          $bid=$_SESSION['brndid'];
-          /* $sql="SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1
-                from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand
-                where tblvehicles.VehiclesBrand=:bid"; */
-      // ????( filter )
-          /* $sql="SELECT *
-                from tblpostitem
-                where tblvehicles.VehiclesBrand=:bid"; */
-          $sql="SELECT * from tblpostitem";
-          
-          $query = $dbh -> prepare($sql);
-          $query->bindParam(':bid',$bid, PDO::PARAM_STR);
-          $query->execute();
-          $results=$query->fetchAll(PDO::FETCH_OBJ);
-          $cnt=1;
+        <?php
+$bid = $_SESSION['brndid'];
+/* $sql="SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1
+from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand
+where tblvehicles.VehiclesBrand=:bid"; */
+// ????( filter )
+/* $sql="SELECT *
+from items
+where tblvehicles.VehiclesBrand=:bid"; */
+$sql = "SELECT * from items";
 
-          echo $results . $query->rowCount();
+$query = $dbh->prepare($sql);
+$query->bindParam(':bid', $bid, PDO::PARAM_STR);
+$query->execute();
+$results = $query->fetchAll(PDO::FETCH_OBJ);
+$cnt = 1;
 
-          if($query->rowCount() > 0)
-          {
-            foreach($results as $result)
-            { 
-        ?>      
+echo $results . $query->rowCount();
+
+if ($query->rowCount() > 0) {
+    foreach ($results as $result) {
+        ?>
           <div class="col-md-3 grid_listing">
             <div class="product-listing-m gray-bg">
               <!-- row 1( pic. ) -->
               <div class="product-listing-img">
-                <a href="item-details.php?vhid=<?php echo htmlentities($result->id);?>">
-                  <img src="img/itemImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image" />
+                <a href="item-details.php?vhid=<?php echo htmlentities($result->id); ?>">
+                  <img src="img/itemImages/<?php echo htmlentities($result->Vimage1); ?>" class="img-responsive" alt="image" />
                 </a>
               </div>
 
@@ -1005,33 +712,33 @@
               <div class="product-listing-content">
                 <!-- row 1 -->
                 <h5>
-                  <a href="item-details.php?vhid=<?php echo htmlentities($result->id);?>">
-                    <?php echo htmlentities($name);?>
-                     , <?php echo htmlentities($result->usedYear);?> Years Used.
+                  <a href="item-details.php?vhid=<?php echo htmlentities($result->id); ?>">
+                    <?php echo htmlentities($name); ?>
+                     , <?php echo htmlentities($result->usedYear); ?> Years Used.
                   </a>
                 </h5>
 
                 <!-- row 2( price ) -->
                 <p class="list-price">
-                  <?php echo htmlentities(substr($result->overview,0,70));?>
-                  
+                  <?php echo htmlentities(substr($result->overview, 0, 70)); ?>
+
                 </p>
-            
+
                 <!-- row 3( seat, model, fuel ) -->
                 <!-- <ul class="features_list">
                   <li>
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <?php echo htmlentities($result->SeatingCapacity);?>
+                    <?php echo htmlentities($result->SeatingCapacity); ?>
                     seats
                   </li>
                   <li>
                     <i class="fa fa-calendar" aria-hidden="true"></i>
-                    <?php echo htmlentities($result->ModelYear);?>
+                    <?php echo htmlentities($result->ModelYear); ?>
                     model
                   </li>
                   <li>
                     <i class="fa fa-car" aria-hidden="true"></i>
-                    <?php echo htmlentities($result->FuelType);?>
+                    <?php echo htmlentities($result->FuelType); ?>
                   </li>
                 </ul> -->
                 <ul class="features_list">
@@ -1039,75 +746,66 @@
                     <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
                     <b>Sell : </b>
                     <?php
-                      if($result->sell == 1)
-                      {
-                    ?>
-                      RM<?php echo htmlentities($result->totalPrice);?>
+if ($result->sell == 1) {
+            ?>
+                      RM<?php echo htmlentities($result->totalPrice); ?>
                     <?php
-                      }
-                      else
-                      {
-                    ?>
+} else {
+            ?>
                       -
                     <?php
-                      }
-                    ?>
+}
+        ?>
                   </li>
                   <li>
                     <!-- <i class="fa fa-calendar" aria-hidden="true"></i> -->
-                    <b>Rent : </b>  
+                    <b>Rent : </b>
                     <?php
-                      if($result->rent == 1)
-                      {
-                    ?>
-                      RM<?php echo htmlentities($result->pricePerDay);?>
+if ($result->rent == 1) {
+            ?>
+                      RM<?php echo htmlentities($result->pricePerDay); ?>
                     <?php
-                      }
-                      else
-                      {
-                    ?>
+} else {
+            ?>
                       -
                     <?php
-                      }
-                    ?>
+}
+        ?>
                   </li>
                   <li>
                     <!-- <i class="fa fa-car" aria-hidden="true"></i> -->
-                    <b>Swap : </b>  
+                    <b>Swap : </b>
                     <?php
-                      if($result->swap == 1)
-                      {
-                    ?>
-                      RM<?php echo htmlentities($result->value);?>
+if ($result->swap == 1) {
+            ?>
+                      RM<?php echo htmlentities($result->value); ?>
                     <?php
-                      }
-                      else
-                      {
-                    ?>
+} else {
+            ?>
                       -
                     <?php
-                      }
-                    ?>
+}
+        ?>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
         <?php
-         }}
-        ?>       
+}}
+?>
       </div>
     </div>
-    <!--/Similar-Cars--> 
-    
+    <!--/Similar-Cars-->
+
   </div>
 </section>
-  <!--/Listing-detail--> 
+  <!--/Listing-detail-->
 <!-- /body -->
 
 <!--Footer -->
-<?php include('includes/footer.php');?>
-<!-- /Footer--> 
+<?php include 'includes/footer.php';?>
+<!-- /Footer-->
 
 <!--Back to top-->
 <div id="back-top" class="back-top">
@@ -1115,29 +813,29 @@
     <i class="fa fa-angle-up" aria-hidden="true"></i>
   </a>
 </div>
-<!--/Back to top--> 
+<!--/Back to top-->
 
 <!--Login-Form -->
-<?php include('includes/login.php'); ?>
-<!--/Login-Form --> 
+<?php include 'includes/login.php';?>
+<!--/Login-Form -->
 
 <!--Register-Form -->
-<?php include('includes/registration.php'); ?>
-<!--/Register-Form --> 
+<?php include 'includes/registration.php';?>
+<!--/Register-Form -->
 
 <!--Forgot-password-Form -->
-<?php include('includes/forgotpassword.php'); ?>
+<?php include 'includes/forgotpassword.php';?>
 
 <script src="assets/js/jquery.min.js"></script>
 
 <!-- Logics -->
 <script src="js/swap/swap.js"></script>
 
-<script src="assets/js/bootstrap.min.js"></script> 
-<script src="assets/js/interface.js"></script> 
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/interface.js"></script>
 <script src="assets/switcher/js/switcher.js"></script>
-<script src="assets/js/bootstrap-slider.min.js"></script> 
-<script src="assets/js/slick.min.js"></script> 
+<script src="assets/js/bootstrap-slider.min.js"></script>
+<script src="assets/js/slick.min.js"></script>
 <script src="assets/js/owl.carousel.min.js"></script>
 
 </body>

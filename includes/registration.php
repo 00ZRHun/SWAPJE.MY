@@ -5,7 +5,7 @@ if (isset($_POST['signup'])) {
     $lastName = $_POST['lastName'];
     $email = $_POST['email'];
     $password = md5($_POST['password']);
-    $sql = "INSERT INTO tblusers(firstName,lastName,email,password) VALUES(:firstName,:lastName,:email,:password)";
+    $sql = "INSERT INTO users(firstName,lastName,email,password) VALUES(:firstName,:lastName,:email,:password)";
     $query = $dbh->prepare($sql);
     $query->bindParam(':firstName', $firstName, PDO::PARAM_STR);
     $query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
@@ -82,11 +82,11 @@ if (isset($_POST['signup'])) {
                 <div class="form-group">
                   <input type="submit" value="Sign Up" name="signup" id="submit" class="btn btn-block">
                 </div>
-                
+
                 <div class="form-group">
                   <label for="terms_agree">By signing up, you agree with the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
                 </div>
-                
+
                 <div class="form-group text-center" id="whiteBtn">
                   <a href="#loginform" data-toggle="modal" data-dismiss="modal">
                     <input value="Already have an account?" class="btn btn-block">

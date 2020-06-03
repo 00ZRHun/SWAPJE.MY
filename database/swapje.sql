@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jun 03, 2020 at 09:17 AM
+-- Generation Time: Jun 03, 2020 at 02:55 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.4.2
 
@@ -11,16 +11,43 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Database: `SWAPJE`
+-- Database: `swapje`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblpostitem`
+-- Table structure for table `category`
 --
 
-CREATE TABLE `tblpostitem` (
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL,
+  `name` varchar(225) DEFAULT NULL,
+  `delmode` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `name`, `delmode`) VALUES
+(1, 'clothes', 0),
+(2, 'shoes', 0),
+(3, 'clothes', 0),
+(4, 'shoes', 0),
+(5, 'jewelry', 0),
+(6, 'beauty', 0),
+(7, 'jewelry', 0),
+(8, 'beauty', 0),
+(9, 'personal care', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `items`
+--
+
+CREATE TABLE `items` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `productName` varchar(100) DEFAULT NULL,
@@ -46,10 +73,10 @@ CREATE TABLE `tblpostitem` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tblpostitem`
+-- Dumping data for table `items`
 --
 
-INSERT INTO `tblpostitem` (`id`, `user_id`, `productName`, `itemCondition`, `usedYear`, `category`, `overview`, `sell`, `rent`, `swap`, `totalPrice`, `pricePerDay`, `value`, `payPalBusinessAccount`, `contactNo`, `Vimage1`, `Vimage2`, `Vimage3`, `Vimage4`, `Vimage5`, `updationDate`, `delmode`) VALUES
+INSERT INTO `items` (`id`, `user_id`, `productName`, `itemCondition`, `usedYear`, `category`, `overview`, `sell`, `rent`, `swap`, `totalPrice`, `pricePerDay`, `value`, `payPalBusinessAccount`, `contactNo`, `Vimage1`, `Vimage2`, `Vimage3`, `Vimage4`, `Vimage5`, `updationDate`, `delmode`) VALUES
 (1, 7, 'a7', 0, 1, NULL, 'b', 1, 1, 1, 2, 3, 4, 'jobbusiness@gmail.com', '601110604061', ':vimage1', ':vimage2', ':vimage3', ':vimage4', ':vimage5', '2020-05-26 18:56:55', '0'),
 (2, 8, 'b8', 0, 1, NULL, 'b', 1, 1, 1, 2, 3, 4, 'c@gmail.com', '601110604061', 'Screenshot 2020-05-26 at 9.44.49 PM.png', '', '', '', '', '2020-05-26 18:57:22', '0'),
 (3, 7, '123123', 0, 123123, NULL, '123123', NULL, NULL, NULL, 123123, 123123, 123123, 'jobbusiness123123@gmail.com', '123123', ':vimage1', ':vimage2', ':vimage3', ':vimage4', ':vimage5', '2020-05-26 10:56:55', '1'),
@@ -67,10 +94,10 @@ INSERT INTO `tblpostitem` (`id`, `user_id`, `productName`, `itemCondition`, `use
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblusers`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `tblusers` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `firstName` varchar(120) DEFAULT NULL,
   `lastName` varchar(120) DEFAULT NULL,
@@ -86,47 +113,23 @@ CREATE TABLE `tblusers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tblusers`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `tblusers` (`id`, `firstName`, `lastName`, `email`, `password`, `ContactNo`, `dob`, `Address`, `City`, `Country`, `RegDate`, `UpdationDate`) VALUES
+INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `password`, `ContactNo`, `dob`, `Address`, `City`, `Country`, `RegDate`, `UpdationDate`) VALUES
 (1, 'a', 'a', '00ZRHun@gmail.com', 'e99a18c428cb38d5f260853678922e03', NULL, NULL, NULL, NULL, NULL, '2020-06-01 15:39:33', '2020-06-02 12:54:03'),
 (2, 'bc', 'a', 'abc@gmail.com', 'e99a18c428cb38d5f260853678922e03', NULL, NULL, NULL, NULL, NULL, '2020-06-02 00:41:59', '2020-06-02 12:54:06');
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `users`
+-- Indexes for table `category`
 --
-
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `oauth_provider` enum('google','facebook','twitter','linkedin') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'google',
-  `oauth_uid` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `first_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `last_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `gender` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `locale` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `picture` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `tblpostitem`
---
-ALTER TABLE `tblpostitem`
+ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tblusers`
+-- Indexes for table `postitem`
 --
-ALTER TABLE `tblusers`
+ALTER TABLE `postitem`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -140,19 +143,19 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `tblpostitem`
+-- AUTO_INCREMENT for table `category`
 --
-ALTER TABLE `tblpostitem`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+ALTER TABLE `category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `tblusers`
+-- AUTO_INCREMENT for table `postitem`
 --
-ALTER TABLE `tblusers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `postitem`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;

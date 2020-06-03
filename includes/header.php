@@ -27,38 +27,38 @@
             </div>
 
             <!-- status( login/register ) -->
-            <?php   
-                if(strlen($_SESSION['login'])==0){	
-            ?>
+            <?php
+if (strlen($_SESSION['login']) == 0) {
+    ?>
               <div class="login_btn">
                 <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">
                   Login / Register
                   <?php
-                    $email=$_SESSION['login'];
-                    // echo "</br>".$email;
-                  ?>
+$email = $_SESSION['login'];
+    // echo "</br>".$email;
+    ?>
                 </a>
               </div>
             <?php
-              }else{ 
-            
-                // echo "Welcome To Item SellRentSwap System portal";
-                echo "Welcome To SWAPJE.MY";
-                // echo "Welcome To"."<br>"."Item SellRentSwap System portal";
-                // echo "Welcome To \n\t Item SellRentSwap System portal";
-                /* $email=$_SESSION['login'];
-                echo "</br>".$email."abc"; */
-            ?>
-            
+} else {
+
+    // echo "Welcome To Item SellRentSwap System portal";
+    echo "Welcome To SWAPJE.MY";
+    // echo "Welcome To"."<br>"."Item SellRentSwap System portal";
+    // echo "Welcome To \n\t Item SellRentSwap System portal";
+    /* $email=$_SESSION['login'];
+    echo "</br>".$email."abc"; */
+    ?>
+
             <?php
-              } 
-            ?>
+}
+?>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+
   <!-- Navigation -->
   <nav id="navigation_bar" class="navbar navbar-default">
     <div class="container">
@@ -77,44 +77,42 @@
         <div class="user_login">
           <ul>
             <li class="dropdown">
-              <?php if(!$_SESSION['login']){ ?>
+              <?php if (!$_SESSION['login']) {?>
                 <ul>
                   <li class="dropdown">
                     <a href="#loginform" data-toggle="modal" data-dismiss="modal" aria-haspopup="true" aria-expanded="false">
-                      <i class="fa fa-user-circle" aria-hidden="true"></i> 
+                      <i class="fa fa-user-circle" aria-hidden="true"></i>
                       LOGIN
                     </a>
                   </li>
                 </ul>
-              <?php }else{ ?>
+              <?php } else {?>
                 <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-user-circle" aria-hidden="true"></i> 
-                  <?php 
-                    $email=$_SESSION['login'];
-                    $sql ="SELECT id, firstName, lastName FROM tblusers WHERE email=:email ";
-                    $query= $dbh -> prepare($sql);
-                    $query-> bindParam(':email', $email, PDO::PARAM_STR);
-                    $query-> execute();
-                    $results=$query->fetchAll(PDO::FETCH_OBJ);
+                  <i class="fa fa-user-circle" aria-hidden="true"></i>
+                  <?php
+$email = $_SESSION['login'];
+    $sql = "SELECT id, firstName, lastName FROM users WHERE email=:email ";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':email', $email, PDO::PARAM_STR);
+    $query->execute();
+    $results = $query->fetchAll(PDO::FETCH_OBJ);
 
-                    $id = 100;
+    $id = 100;
 
-                    if($query->rowCount() > 0)
-                    {
-                      foreach($results as $result)
-                        {
-                          // echo htmlentities($result->firstName . $result->lasstName);
-                          $firstName = $result->firstName;
-                          $lastName = $result->lastName;
-                          echo htmlentities($lastName . $firstName);
+    if ($query->rowCount() > 0) {
+        foreach ($results as $result) {
+            // echo htmlentities($result->firstName . $result->lasstName);
+            $firstName = $result->firstName;
+            $lastName = $result->lastName;
+            echo htmlentities($lastName . $firstName);
 
-                          // GLOBAL VARIABLE( id )
-                          $id = $result->id;
-                        }
-                    }
+            // GLOBAL VARIABLE( id )
+            $id = $result->id;
+        }
+    }
 
-                    // echo $id;
-                  ?>
+    // echo $id;
+    ?>
                   <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </a>
 
@@ -126,10 +124,10 @@
                   <li><a href="post-testimonial.php">Post a Testimonial</a></li>
                   <li><a href="my-testimonials.php">My Testimonial</a></li> -->
                   <li><a href="swap_request.php">Requests</a></li>
-                  <li><a href="swap_records-listing.php">Records</a></li>                  
-                  <li><a href="logout.php">Sign Out</a></li>                  
+                  <li><a href="swap_records-listing.php">Records</a></li>
+                  <li><a href="logout.php">Sign Out</a></li>
                 </ul>
-              <?php } ?> 
+              <?php }?>
             </li>
           </ul>
         </div>
@@ -165,10 +163,10 @@
 
             <!-- dropdown menu( login/- ) -->
             <ul class="dropdown-menu">
-              <?php if($_SESSION['login']){?>
+              <?php if ($_SESSION['login']) {?>
                 <li><a href="post-item.php">Post Item</a></li>
-                <li><a href="manage-item.php">Manage Item</a></li>              
-              <?php } else { ?>
+                <li><a href="manage-item.php">Manage Item</a></li>
+              <?php } else {?>
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Login</a></li>
                 <!-- <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Profile Settings</a></li>
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Update Password</a></li>
@@ -176,13 +174,13 @@
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Post a Testimonial</a></li>
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">My Testimonial</a></li>
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Sign Out</a></li> -->
-              <?php } ?>
+              <?php }?>
             </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <!-- Navigation end --> 
-  
+  <!-- Navigation end -->
+
 </header>

@@ -9,7 +9,7 @@
 	}
 	else
 	{ 
-		// insert data into tblpostitem
+		// insert data into items
 		if(isset($_POST['submit']))
 		{
 			$userId=$_POST['userId'];
@@ -26,6 +26,8 @@
 			$vimage3=$_FILES["img3"]["name"];
 			$vimage4=$_FILES["img4"]["name"];
 			$vimage5=$_FILES["img5"]["name"];
+			$itemCondition=$_POST['itemCondition'];
+			$catefory=$_POST['catefory'];
 			$sell=$_POST['sell'];
 			$rent=$_POST['rent'];
 			$swap=$_POST['swap'];
@@ -35,8 +37,8 @@
 			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/itemImages/".$_FILES["img4"]["name"]);
 			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/itemImages/".$_FILES["img5"]["name"]);
 
-			$sql="INSERT INTO tblpostitem(user_id, productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap)
-			 VALUES(:userId,:productName,:usedYear,:overview,:totalPrice,:pricePerDay,:value,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:sell,:rent,:swap)";
+			$sql="INSERT INTO items(user_id, productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,itemCondition,category,sell,rent,swap)
+			 VALUES(:userId,:productName,:usedYear,:overview,:totalPrice,:pricePerDay,:value,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:itemCondition,:category,:sell,:rent,:swap)";
 			$query = $dbh->prepare($sql);
 			$query->bindParam(':userId',$userId,PDO::PARAM_STR);
 			$query->bindParam(':productName',$productName,PDO::PARAM_STR);
@@ -52,6 +54,8 @@
 			$query->bindParam(':vimage3',$vimage3,PDO::PARAM_STR);
 			$query->bindParam(':vimage4',$vimage4,PDO::PARAM_STR);
 			$query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR);
+			$query->bindParam(':itemCondition',$itemCondition,PDO::PARAM_STR);
+			$query->bindParam(':category',$category,PDO::PARAM_STR);
 			$query->bindParam(':sell',$sell,PDO::PARAM_STR);
 			$query->bindParam(':rent',$rent,PDO::PARAM_STR);
 			$query->bindParam(':swap',$swap,PDO::PARAM_STR);
@@ -341,6 +345,47 @@
 													</div>
 
 													<div class="hr-dashed"></div>
+
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Item condition 1-10<span style="color:red">*</span></label>
+														<div class="col-sm-4">
+															<select name="itemCondition" id="itemCondition" class="form-control" required>
+																<option value="10">10</option>
+																<option value="9">9</option>
+																<option value="8">8</option>
+																<option value="7">7</option>
+																<option value="6">6</option>
+																<option value="5">5</option>
+																<option value="4">4</option>
+																<option value="3">3</option>
+																<option value="2">2</option>
+																<option value="1">1</option>
+															</select>
+														</div>
+														<label class="col-sm-2 control-label">Category<span style="color:red">*</span></label>
+														<!--  -->
+														<!--  -->
+														<!--  -->
+														<select name="category" id="category">
+															<?php 
+																$sql = "SELECT * FROM category WHERE delmode=0 ORDER BY name ASC";
+																
+																// echo $id;
+																
+																$query = $dbh -> prepare($sql);
+																$query->execute();
+																$results=$query->fetchAll(PDO::FETCH_OBJ);
+																if($query->rowCount() > 0){
+																	foreach($results as $result){
+															?>									
+																<option value="<?=$result->id;?>"><?=$result->id;?></option>
+															<?php }} ?>
+														</select>
+														<!--  -->
+														<!--  -->
+														<!--  -->
+
+													</div>
 
 										</div>
 									</div>

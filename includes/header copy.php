@@ -27,31 +27,31 @@
             </div>
 
             <!-- status( login/register ) -->
-            <?php   
-                if(strlen($_SESSION['login'])==0){	
-              ?>
+            <?php
+if (strlen($_SESSION['login']) == 0) {
+    ?>
                 <div class="login_btn">
                   <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">
                     Login / Register
                     <?php
-                      $email=$_SESSION['login'];
-                      // echo "</br>".$email;
-                    ?>
+$email = $_SESSION['login'];
+    // echo "</br>".$email;
+    ?>
                   </a>
                 </div>
               <?php
-                }else{ 
-                  echo "Welcome To Car rental portal";
-                  /* $email=$_SESSION['login'];
-                  echo "</br>".$email."abc"; */
-              } 
-            ?>
+} else {
+    echo "Welcome To Car rental portal";
+    /* $email=$_SESSION['login'];
+echo "</br>".$email."abc"; */
+}
+?>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+
   <!-- Navigation -->
   <nav id="navigation_bar" class="navbar navbar-default">
     <div class="container">
@@ -68,54 +68,52 @@
 
       <div class="header_wrap">
         <div class="user_login">
-          <?php if($_SESSION['login']){?>
+          <?php if ($_SESSION['login']) {?>
             <ul>
               <li class="dropdown">
                 <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-user-circle" aria-hidden="true"></i> 
-                  <?php 
-                    $email=$_SESSION['login'];
-                    $sql ="SELECT id, FullName FROM tblusers WHERE EmailId=:email ";
-                    $query= $dbh -> prepare($sql);
-                    $query-> bindParam(':email', $email, PDO::PARAM_STR);
-                    $query-> execute();
-                    $results=$query->fetchAll(PDO::FETCH_OBJ);
+                  <i class="fa fa-user-circle" aria-hidden="true"></i>
+                  <?php
+$email = $_SESSION['login'];
+    $sql = "SELECT id, FullName FROM users WHERE EmailId=:email ";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':email', $email, PDO::PARAM_STR);
+    $query->execute();
+    $results = $query->fetchAll(PDO::FETCH_OBJ);
 
-                    // $id = $results->id;
-                    // echo $results->id;
-                    $id = 100;
-                    // echo $results->id;
-                    // echo "ancad";
-                    // echo $email;
+    // $id = $results->id;
+    // echo $results->id;
+    $id = 100;
+    // echo $results->id;
+    // echo "ancad";
+    // echo $email;
 
-                    if($query->rowCount() > 0)
-                    {
-                      foreach($results as $result)
-                        {
-                          echo htmlentities($result->FullName);
+    if ($query->rowCount() > 0) {
+        foreach ($results as $result) {
+            echo htmlentities($result->FullName);
 
-                          // GLOBAL VARIABLE( id )
-                          $id = $result->id;
-                        }
-                    }
+            // GLOBAL VARIABLE( id )
+            $id = $result->id;
+        }
+    }
 
-                    // echo $id;
-                  ?>
+    // echo $id;
+    ?>
                   <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </a>
 
                 <!-- dropdown menu( login/- ) -->
                 <ul class="dropdown-menu">
-                  <?php if($_SESSION['login']){?>
+                  <?php if ($_SESSION['login']) {?>
                     <li><a href="profile.php">Profile Settings</a></li>
                     <li><a href="update-password.php">Update Password</a></li>
                     <li><a href="my-booking.php">My Booking</a></li>
                     <li><a href="post-testimonial.php">Post a Testimonial</a></li>
                     <li><a href="my-testimonials.php">My Testimonial</a></li>
                     <li><a href="swap_request.php">Requests</a></li>
-                    <li><a href="swap_records-listing.php">Records</a></li>                  
-                    <li><a href="logout.php">Sign Out</a></li>                  
-                  <?php } else { ?>
+                    <li><a href="swap_records-listing.php">Records</a></li>
+                    <li><a href="logout.php">Sign Out</a></li>
+                  <?php } else {?>
                     <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Login</a></li>
                     <!-- <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Profile Settings</a></li>
                     <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Update Password</a></li>
@@ -123,19 +121,19 @@
                     <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Post a Testimonial</a></li>
                     <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">My Testimonial</a></li>
                     <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Sign Out</a></li> -->
-                  <?php } ?>
+                  <?php }?>
                 </ul>
               </li>
             </ul>
-          <?php }else{ ?>
+          <?php } else {?>
             <ul>
               <li class="dropdown">
                   <a href="#loginform" data-toggle="modal" data-dismiss="modal" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-user-circle" aria-hidden="true"></i> 
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
                   </a>
               </li>
             </ul>
-          <?php } ?>
+          <?php }?>
         </div>
 
         <!-- search( icon & textbox ) -->
@@ -169,10 +167,10 @@
 
             <!-- dropdown menu( login/- ) -->
             <ul class="dropdown-menu">
-              <?php if($_SESSION['login']){?>
+              <?php if ($_SESSION['login']) {?>
                 <li><a href="post-item.php">Post Item Settings</a></li>
-                <li><a href="manage-item.php">Manage Item</a></li>              
-              <?php } else { ?>
+                <li><a href="manage-item.php">Manage Item</a></li>
+              <?php } else {?>
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Login</a></li>
                 <!-- <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Profile Settings</a></li>
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Update Password</a></li>
@@ -180,13 +178,13 @@
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Post a Testimonial</a></li>
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">My Testimonial</a></li>
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Sign Out</a></li> -->
-              <?php } ?>
+              <?php }?>
             </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <!-- Navigation end --> 
-  
+  <!-- Navigation end -->
+
 </header>
