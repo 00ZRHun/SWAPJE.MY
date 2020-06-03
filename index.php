@@ -148,22 +148,7 @@
                   <img src="img/itemImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image">
                 </a>
                 
-                <!-- <ul>
-                  <li>
-                    <i class="fa fa-car" aria-hidden="true"></i>
-                    <?php echo htmlentities($result->productName);?>
-                  </li>
-                  <li>
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                    <?php echo htmlentities($result->usedYear);?>
-                    Model
-                  </li>
-                  <li>
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <?php echo htmlentities($result->SeatingCapacity);?>
-                    seats
-                  </li>
-                </ul> -->
+                <!-- show the details of them when hover of it -->
                 <ul>
                   <li>
                     <!-- <i class="fa fa-car" aria-hidden="true"></i> -->
