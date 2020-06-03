@@ -1,0 +1,119 @@
+.messaging-container {
+    display: flex;
+    flex-flow: column;
+
+    padding: 1em;    
+}
+
+.message-history-div,
+.message-div-content {    
+    display: flex;
+    flex-flow: column;
+    justify-items: flex-start;
+}
+
+.message-div {
+    display: flex;
+    text-align: left;
+
+    margin-bottom: 1em;
+}
+
+.message-div .avatar {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+}
+
+.message-div-content__username {  
+    margin: 0;  
+    margin-right: auto;
+}
+
+/* Formatting search box */
+.search-box{
+    width: 300px;
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+}
+.search-box input[type="text"]{
+    height: 32px;
+    padding: 5px 10px;
+    border: 1px solid #CCCCCC;
+    font-size: 14px;
+}
+
+.result{
+    position: absolute;        
+    z-index: 999;
+    top: 100%;
+    left: 0;
+}
+.search-box input[type="text"], .result{
+    width: 100%;
+    box-sizing: border-box;
+}
+/* Formatting result items */
+.result p{
+    margin: 0;
+    padding: 7px 10px;
+    border: 1px solid #CCCCCC;
+    border-top: none;
+    cursor: pointer;
+    background-color:#fff;
+}
+.result p:hover{
+    background: #f2f2f2;
+}
+
+/* Messaging contnet */
+.message-content-container {
+    display: flex;
+    flex-flow: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;    
+}
+
+.messaging-header {
+    padding: 1em;
+    border-bottom: 1px solid rgba(0,0,0,.15);
+}
+
+.messaging-tousername {
+    margin: 0;
+}
+
+.messages-container {
+    padding: 0;
+    padding-top: 1em;
+    padding-bottom: 5em;
+}
+
+.message-div-content p{
+    margin: 0;
+}
+
+#message-input {
+    margin-top: auto;
+    min-height: 46px;
+    padding: 1em;
+    border-top: 1px solid rgba(0,0,0,.15);
+    border-left: none;
+    border-right: none;
+
+    z-index: 99;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.message-preview {
+    padding: 0;
+    background-color: #e4e4e4;    
+}
