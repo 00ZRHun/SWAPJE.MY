@@ -508,15 +508,14 @@ $name = $result->productName;
                 <div role="tabpanel" class="tab-pane" id="swap">
                     <p>
                         <?php
-                          $user_sql = "SELECT id, FullName FROM users WHERE EmailId=:email";
+                          $user_sql = "SELECT id FROM users WHERE email=:email";
                           $user_query = $dbh->prepare($user_sql);
                           $user_query->bindParam(':email', $email, PDO::PARAM_STR);
                           $user_query->execute();
                           $user_results = $user_query->fetch();
 
                           $user_id = $user_results["id"];
-
-                          $item_status = 1;
+                          $item_status = 0;
 
                           $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, user.id
                           FROM items as item

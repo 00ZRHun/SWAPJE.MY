@@ -1,4 +1,7 @@
 <?php
+
+require ("envinronment.php");
+
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = md5($_POST['password']);
@@ -20,6 +23,9 @@ if (isset($_POST['login'])) {
 }
 ?>
 
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0&appId=3023285394418002&autoLogAppEvents=1"></script>
+
 <div class="modal fade" id="loginform">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -29,7 +35,7 @@ if (isset($_POST['login'])) {
             &times;
           </span>
         </button>
-        <h3 class="modal-title">Sign In with Email</h3>
+        <h3 class="modal-title">Sign In with Email</h3>        
       </div>
       <div class="modal-body">
         <div class="row">
@@ -56,10 +62,8 @@ if (isset($_POST['login'])) {
                   </a>
                 </div>
 
-                <div class="form-group text-center" id="whiteBtn" style="color: black; background-color: white;">
-                  <a href="#signupform" data-toggle="modal" data-dismiss="modal">
-                    <input value="F     Continue with Facebook" class="btn btn-block">
-                  </a>
+                <div class="form-group text-center" id="whiteBtn" style="color: black; background-color: white;">                                                                      
+                  <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div>
                 </div>
                 <div class="form-group text-center" id="whiteBtn" style="color: black; background-color: white;">
                   <a href="#" data-toggle="modal" data-dismiss="modal">
@@ -79,3 +83,99 @@ if (isset($_POST['login'])) {
     </div>
   </div>
 </div>
+
+
+<script>
+
+  // console.log("<?php htmlentities($_ENV["FB_APP_ID_TEST"]) ?>")
+
+  function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+  }
+
+  function statusChangeCallback(res) {
+    console.log(res)
+  }
+  
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : "<?php echo htmlentities($_ENV["FB_APP_ID_TEST"]) ?>",
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v7.0'
+    });
+      
+    FB.AppEvents.logPageView(); 
+
+    FB.Event.subscribe('auth.authResponseChange', function(response) 
+    {
+     if (response.status === 'connected') 
+    {
+        console.log("<br>Connected to Facebook");
+        //SUCCESS
+        FB.api('/me', { locale: 'en_US', fields: 'name, email,birthday, hometown,education,gender,website,work' },
+          function(response) {            
+            console.log(response.email);
+            console.log(response.name); 
+
+            if(response.name === null || response.email === null)
+              return alert("Sign in with fb failed. Please try again.");
+            
+            const firstName = response.name.slice(0, 1);
+            const lastName = response.name.slice(1, response.name.length);            
+                     
+            $.ajax({
+                method: "POST",
+                url: "functions/User/login_with_third_party.php",
+                dataType: "json",
+                data: {
+                    firstName, 
+                    lastName,
+                    email: response.email
+                },
+                success: (data) => {
+                  
+                    if (data.code == "200")                                                                  
+                       document.location = "<?php echo htmlentities($_SERVER['REQUEST_URI']) ?>";
+                                          
+                },
+                error: (err) => {
+                    console.log(err.msg)
+                    alert("Something went wrong. Please try again.");
+                }
+            });     
+          }
+        );
+
+    }    
+    else if (response.status === 'not_authorized') 
+    {
+        console.log("Failed to Connect");
+
+        //FAILED
+    } else 
+    {
+        console.log("Logged Out");
+
+        //UNKNOWN ERROR
+    }})
+    
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+        
+  };
+  
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   
+</script>
+
