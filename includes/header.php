@@ -5,7 +5,8 @@
       <div class="row">
         <!-- logo -->
         <div class="col-sm-3 col-md-2">
-          <div class="logo"> <a href="index.php"><img src="assets/images/logo.png" alt="logo"/></a> </div>
+          <!-- <div class="logo"> <a href="index.php"><img src="assets/images/logo.png" alt="logo"/></a> </div> -->
+          <div class="logo"> <a href="index.php"><img src="assets/images/logo/cover2.png" alt="logo" style="height: 50px; padding: 0px; margin: 0px;"/></a> </div>
         </div>
 
         <!-- info -->
