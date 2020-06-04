@@ -8,7 +8,7 @@ function get_requests_as_provider($provider_id)
     // Provider's item data
     $sql = "SELECT sr.*, item.productName as itemName, item.id as itemID
             FROM swap_requests as sr 
-            JOIN tblpostitem as item
+            JOIN items as item
             ON item.id = sr.item_id
             WHERE sr.status = 0 AND sr.provider_id = :provider_id";
 
@@ -27,7 +27,7 @@ function get_requests_as_receiver($receiver_id)
 
     $sql = "SELECT sr.*, item.productName as itemName, item.id as itemID, sr.receiver_item_id
             FROM swap_requests as sr 
-            JOIN tblpostitem as item
+            JOIN items as item
             ON item.id = sr.item_id
             WHERE sr.receiver_id = :receiver_id";
 

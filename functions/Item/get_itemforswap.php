@@ -11,7 +11,7 @@
     $conn = new mysqli($dbh);    
 
     // Get user id    
-    $user_sql = "SELECT id FROM tblusers WHERE EmailId=:email";        
+    $user_sql = "SELECT id FROM users WHERE email=:email";        
     $user_query = $dbh->prepare($user_sql);
     $query->bindParam(':email', $email, PDO::PARAM_STR);
     $query->execute();
@@ -23,8 +23,8 @@
     echo $user_id;
 
     $sql = "SELECT item.id, item.user_id, item.swap, user.id
-            FROM tblpostitem as item 
-            JOIN tblusers as user
+            FROM items as item 
+            JOIN users as user
             ON item.user_id = user.id
             WHERE user_id = $user_id"
 ?>

@@ -8,7 +8,7 @@
 
         $swap_request_id = $_POST["swap_request_id"];  
     
-        $user_sql = "SELECT id FROM tblusers WHERE EmailId=:email";        
+        $user_sql = "SELECT id FROM users WHERE email=:email";        
         $user_query = $dbh->prepare($user_sql);
         $user_query->bindParam(':email', $_SESSION['login'], PDO::PARAM_STR);
         $user_query->execute();
@@ -52,7 +52,7 @@
         $receiver_item_ids = explode(", ", $row_result["receiver_item_id"]);
 
         foreach ($receiver_item_ids as $id) {
-            $update_item_sql = "UPDATE tblpostitem SET delmode=:delmode WHERE id=:item_id OR id=:receiver_item_id";
+            $update_item_sql = "UPDATE items SET delmode=:delmode WHERE id=:item_id OR id=:receiver_item_id";
             $delmode = 0;
 
             $item_id = $row_result["item_id"];

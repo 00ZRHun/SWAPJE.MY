@@ -4,7 +4,7 @@
     error_reporting(0);
 
     // Get userID
-    $user_sql = "SELECT id FROM tblusers WHERE EmailId=:email";        
+    $user_sql = "SELECT id FROM users WHERE email=:email";        
     $user_query = $dbh->prepare($user_sql);
     $user_query->bindParam(':email', $_SESSION['login'], PDO::PARAM_STR);
     $user_query->execute();

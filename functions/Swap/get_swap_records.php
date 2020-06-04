@@ -6,7 +6,7 @@
         // Provider's item data
         $sql = "SELECT sr.*, item.productName as itemName
                 FROM swap_records as sr
-                JOIN tblpostitem as item
+                JOIN items as item
                 ON item.id = sr.item_id
                 WHERE sr.provider_id = :provider_id";            
 
@@ -23,7 +23,7 @@
         include('includes/config.php');
 
         $sql = "SELECT sr.*, item.productName as itemName
-                FROM tblpostitem as item
+                FROM items as item
                 JOIN swap_records as sr
                 ON sr.receiver_item_id = item.id
                 WHERE sr.receiver_id = :receiver_id";

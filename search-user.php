@@ -4,7 +4,7 @@
     try {
         if(isset($_REQUEST["search_user"])){
             // create prepared statement
-            $sql = "SELECT id, firstName, lastName FROM tblusers WHERE firstName LIKE :search_user OR lastName LIKE :search_user";
+            $sql = "SELECT id, firstName, lastName FROM users WHERE firstName LIKE :search_user OR lastName LIKE :search_user";
             $stmt = $dbh->prepare($sql);
             $term = $_REQUEST["search_user"] . '%';
             // bind parameters to statement

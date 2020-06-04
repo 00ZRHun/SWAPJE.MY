@@ -10,7 +10,7 @@ if (isset($_SESSION['login'])) {
     
     $id = $_SESSION['login'];    
     
-    $user_sql = 'SELECT id FROM tblusers WHERE email=:email';
+    $user_sql = 'SELECT id FROM users WHERE email=:email';
     $user_query = $dbh->prepare($user_sql);
     $user_query->bindParam(':email', $_SESSION['login'], PDO::PARAM_STR);
     $user_query->execute();
