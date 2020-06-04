@@ -53,7 +53,7 @@
 
         foreach ($receiver_item_ids as $id) {
             $update_item_sql = "UPDATE items SET delmode=:delmode WHERE id=:item_id OR id=:receiver_item_id";
-            $delmode = 0;
+            $delmode = -1;
 
             $item_id = $row_result["item_id"];
 
