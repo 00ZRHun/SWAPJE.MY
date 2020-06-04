@@ -87,7 +87,7 @@
 	<meta name="theme-color" content="#3e454c">
 	
 	<!-- <title>Car Rental Portal | Post Item</title> -->
-	<title>SellRentSwap System | Post Item</title>
+	<title>SWAP.MY</title>
 
 	<!--  -->
 	<!-- Font awesome -->
@@ -167,33 +167,15 @@
 	<?php include('includes/header.php');?>
 	<!-- /Header --> 
 
-	<!--Page Header-->
-	<section class="page-header contactus_page">
-		<div class="container">
-			<div class="page-header_wrap">
-			<div class="page-heading">
-				<h1>Post Item</h1>
-			</div>
-			<ul class="coustom-breadcrumb">
-				<li><a href="index.php">Home</a></li>
-				<li>Post Item</li>
-			</ul>
-			</div>
-		</div>
-		<!-- Dark Overlay-->
-		<div class="dark-overlay"></div>
-	</section>
-	<!-- /Page Header--> 
-
 	<!-- Body -->
-	<div class="ts-main-content section-padding">
+	<div class="ts-main-content" style="padding-top: 90px; padding-bottom: 90px"> 
 		<div class="container">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-							<!-- <div class="section-header text-center">
+							<div class="page-title text-center">
 								<h2 class="">Post Item</h2>
-							</div> -->
+							</div>
 							
 							<!-- form 1( basic info ) -->
 							<div class="row">

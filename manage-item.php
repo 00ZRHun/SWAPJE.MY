@@ -111,38 +111,19 @@
 	<?php include('includes/header.php');?>
 	<!-- /Header --> 
 
-	<!--Page Header-->
-	<section class="page-header contactus_page">
-		<div class="container">
-			<div class="page-header_wrap">
-			<div class="page-heading">
-				<h1>Manage Item</h1>
-			</div>
-			<ul class="coustom-breadcrumb">
-				<li><a href="index.php">Home</a></li>
-				<li>Manage Item</li>
-			</ul>
-			</div>
-		</div>
-
-		<!-- Dark Overlay-->
-		<div class="dark-overlay"></div>
-	</section>
-	<!--/Page Header--> 
-
 	<!-- Body -->
-	<div class="ts-main-content section-padding">
-		<!-- <div class="content-wrapper"> -->
+	<!-- <div class="ts-main-content" style="padding-top: 30px"> -->
+	<div class="ts-main-content" style="padding-top: 90px; padding-bottom: 90px"> 
 		<div class="container">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="page-title">Manage Items</h2>
+						<h2 class="page-title text-center">Manage Items</h2>
 
 						<!-- Zero Configuration Table -->
 						<!-- <div class="panel panel-default"> -->
 						<div class="row">
-							<div class="panel-heading">Item Details</div>
+							<h2 class="panel-heading" style="font-size: large; font-weight: 1000;">Item Details</h2>
 							
 							<div class="panel-body">
 								<!-- notify( success/fail ) -->
@@ -209,8 +190,6 @@
 											from tblvehicles 
 											join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand"; */
 										$sql = "SELECT * FROM items WHERE delmode=0 ORDER BY updationDate ASC";
-										
-										echo $id;
 
 										$query = $dbh -> prepare($sql);
 										$query->execute();
