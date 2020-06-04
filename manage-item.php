@@ -202,7 +202,7 @@
 										<!-- html -->
 									<tr>
 										<td><?php echo htmlentities($cnt);?></td>
-										<!-- <td><?php echo htmlentities($result->productName);?></td> -->
+									<!-- <td><?php echo htmlentities($result->productName);?></td> -->
 										<!-- <td><?php echo htmlentities($result->Vimage1);?></td> -->
 										<td>
 											<?php echo htmlentities($result->productName);?>
@@ -217,8 +217,12 @@
 										<td><?php echo htmlentities($result->contactNo);?></td>
 										<!-- <td><?php echo htmlentities($result->updationDate);?></td> -->
 										<td>
-											<a href="edit-item.php?id=<?php echo $result->id;?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
-											<a href="manage-item.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a>
+											<a href="edit-item.php?id=<?php echo $result->id;?>">
+												<i class="fa fa-edit"></i>
+											</a>&nbsp;&nbsp;
+											<a href="manage-item.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');">
+												<i class="fa fa-close"></i>
+											</a>
 										</td>
 									</tr>
 

@@ -4,6 +4,27 @@ session_start();
 include 'includes/config.php';
 error_reporting(0);
 
+if(strlen($_SESSION['login'])==0)
+	{	
+		header('location:index.php');
+	}
+	else
+	{
+		if(isset($_REQUEST['favourite'])){
+      echo "abc";
+      $favorite=intval($_GET['favorite']);
+      $sql = "INSERT INTO favorite(userId,itemId) VALUES(:userId,:itemId)";
+      // $sql = "UPDATE favorite SET favorite=:favorite WHERE id=:delid";
+			// $sql = "delete from tblvehicles SET id=:status WHERE id=:delid";
+			// $sql = "UPDATE items SET delmode=1 WHERE id=:delid";
+			$query = $dbh->prepare($sql);
+			$query -> bindParam(':userId',$_GET['favourite'], PDO::PARAM_STR);
+			$query -> bindParam(':itemId',$_GET['vhid'], PDO::PARAM_STR);
+			$query -> execute();
+			$msg="Item record deleted successfully";
+    }
+  }
+
 if (isset($_POST['submit'])) {
     $fromdate = $_POST['fromdate'];
     $todate = $_POST['todate'];
@@ -74,6 +95,42 @@ if (isset($_POST['submit'])) {
 
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+  <style>
+    .iconHeartEmpty::before {
+      content: "\f001";
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: normal;
+      text-decoration: inherit;
+      /*--adjust as necessary--*/
+      color: #000;
+      font-size: 18px;
+      padding-right: 0.5em;
+      position: absolute;
+      top: 35%;
+      left: 5%;
+    }
+
+    .iconHeartActive::after {
+      content: "\f000";
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: normal;
+      text-decoration: inherit;
+      /*--adjust as necessary--*/
+      color: #000;
+      font-size: 18px;
+      padding-right: 0.5em;
+      position: absolute;
+      top: 35%;
+      left: 5%;
+    }
+
+    .hide {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
@@ -93,7 +150,9 @@ $vhid = intval($_GET['vhid']);
 from tblvehicles join tblbrands
 on tblbrands.id=tblvehicles.VehiclesBrand
 where tblvehicles.id=:vhid"; */
-$sql = "SELECT * from items where id=:vhid AND delmode=0";
+$sql = "SELECT * 
+from items 
+where id=:vhid AND delmode=0";
 $query = $dbh->prepare($sql);
 $query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
 $query->execute();
@@ -119,7 +178,7 @@ if ($result->Vimage5 == "") {
             ?>
 
     <div>
-      <img src="img/vehicleimages/<?php echo htmlentities($result->Vimage5); ?>" class="img-responsive" alt="image" width="900" height="560">
+      <img src="img/itemImages/<?php echo htmlentities($result->Vimage5); ?>" class="img-responsive" alt="image" width="900" height="560">
     </div>
 
   <?php
@@ -131,6 +190,100 @@ if ($result->Vimage5 == "") {
 
 
 <!-- body -->
+<!--  -->
+<!--  -->
+<!--  -->
+<!-- <i class="fa fa-heart" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
+
+<script>
+
+    document.getElementById('heartIcon').onclick = changeColor;   
+
+    function changeColor() {
+        document.body.style.color = "purple";
+        return false;
+    }   
+
+</script> -->
+
+<!-- actual link -->
+<?php
+  $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+?>
+<!-- <h1><?= $actual_link ?></h1> -->
+
+<!-- share on twitter -->
+  <!-- version 1 -->
+  <!-- <a class="twitter-share-button"
+      href="https://twitter.com/intent/tweet?text=<?= $actual_link ?>"
+      data-size="large">
+          Tweet
+  </a> -->
+  <!-- version 2 -->
+  <a class="twitter-share-button"
+      href="http://twitter.com/share?text=Good Product&url=<?= $actual_link ?>&hashtags=hashtag1,hashtag2,hashtag3"
+      data-size="large">
+          Share on Twitter
+  </a>
+  <a class="twitter-timeline" href="https://twitter.com/TwitterDev/timelines/539487832448843776?ref_src=twsrc%5Etfw">
+  <!-- National Park Tweets - Curated tweets by TwitterDe -->
+  </a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<!-- share on facebook -->
+  <!-- version 1 -->
+  <!-- <?= urlencode($actual_link) ?> -->
+  <iframe src="https://www.facebook.com/plugins/share_button.php?href=<?= urlencode($actual_link) ?>&layout=button_count&size=small&width=71&height=20&appId" width="71" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+  <!-- <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Flocalhost%3A8888%2FSWAPJE.MY%2Fitem-details.php%3Fvhid%3D16&layout=button_count&size=small&width=71&height=20&appId" width="71" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+  <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button_count&size=small&width=100&height=20&appId" width="100" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe> -->
+  <!-- version 2 -->
+  <?php
+      $title=urlencode('SWAPJE.MY');
+      $url=urlencode($actual_link);
+      // $url=urlencode('https://www.facebook.com/plugins/share_button.php');
+      $image=urlencode('assets/images/logo/cover2.png');
+      // $image=urlencode('https://s.abcnews.com/images/Lifestyle/191029_atm_abcsMIX_hpMain_16x9_992.jpg');
+  ?>
+  <!-- <a onClick="window.open('http://www.facebook.com/sharer.php?s=100&amp;p[title]=<?php echo $title;?>&amp;p[url]=<?php echo $url; ?>&amp;&p[images][0]=<?php echo $image;?>', 'sharer', 'toolbar=0,status=0,width=548,height=325');" target="_parent" href="javascript: void(0)">
+      Share our Facebook page!
+  </a> -->
+
+<!--  -->
+<!--  -->
+<!--  -->
+
+<form action="get"></form>
+<span>
+  <button class="saveHome hoverPulse pan typeReversed">
+    <span class="stackIcons">
+      <!-- <i class="iconHeartActive iconOnly hide"></i> -->
+      <!-- <i class="iconHeartEmpty typeReversed iconOnly"></i> -->
+      <!-- <a href="item-details.php?vhid=<?= $vhid; ?>&favourite=<?= $id; ?>"> -->
+        <i class="fa fa-heart iconOnly hide" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
+      <!-- </a> -->
+      <a href="item-details.php?vhid=<?= $vhid; ?>&favourite=<?= $id; ?>">
+        <i class="fa fa-heart-o typeReversed iconOnly" aria-hidden="true" style="color: red; font-size: 100px"></i>
+      </a>
+      <!-- <a href="item-details.php?vhid=<?= $vhid; ?>&favourite=<?= $id; ?>" onclick="return alert('Favourite added');">
+        <i class="fa fa-heart iconOnly hide" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
+      </a>
+      <a href="item-details.php?vhid=<?= $vhid; ?>&favourite=<?= $id; ?>" onclick="return alert('Favourite canceled');">
+        <i class="fa fa-heart-o typeReversed iconOnly" aria-hidden="true" style="color: red; font-size: 100px"></i>
+      </a> -->
+    </span>
+  </button>
+</span>
+
+<script>
+  $( ".saveHome" ).click(function() {
+    $(".stackIcons i" ).toggleClass( "hide" );
+  });
+</script>
+<!--  -->
+<!--  -->
+<!--  -->
+
+
   <!-- php global variable -->
 <?php
 $name = $result->productName;
@@ -264,9 +417,9 @@ $name = $result->productName;
                             <div class="txt-price">
                                 Price Per Day :
                                 RM<?php
-$pricePerDay = $result->pricePerDay;
-        echo htmlentities($pricePerDay);
-        ?>
+                                    $pricePerDay = $result->pricePerDay;
+                                    echo htmlentities($pricePerDay);
+                                  ?>
                             </div>
                             <div>
                             </div>
@@ -278,8 +431,8 @@ $pricePerDay = $result->pricePerDay;
                             </form>
 
                             <?php
-$pricePerDay = $result->pricePerDay;
-        ?>
+                              $pricePerDay = $result->pricePerDay;
+                            ?>
 
                             <script src="http://code.jquery.com/jquery-latest.min.js"></script>
                             <script>
@@ -355,29 +508,29 @@ $pricePerDay = $result->pricePerDay;
                 <div role="tabpanel" class="tab-pane" id="swap">
                     <p>
                         <?php
-$user_sql = "SELECT id, FullName FROM users WHERE EmailId=:email";
-        $user_query = $dbh->prepare($user_sql);
-        $user_query->bindParam(':email', $email, PDO::PARAM_STR);
-        $user_query->execute();
-        $user_results = $user_query->fetch();
+                          $user_sql = "SELECT id, FullName FROM users WHERE EmailId=:email";
+                          $user_query = $dbh->prepare($user_sql);
+                          $user_query->bindParam(':email', $email, PDO::PARAM_STR);
+                          $user_query->execute();
+                          $user_results = $user_query->fetch();
 
-        $user_id = $user_results["id"];
+                          $user_id = $user_results["id"];
 
-        $item_status = 1;
+                          $item_status = 1;
 
-        $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, user.id
-                                FROM items as item
-                                JOIN users as user
-                                ON item.user_id = user.id
-                                WHERE user_id = :user_id AND item.delmode = :item_status";
+                          $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, user.id
+                          FROM items as item
+                          JOIN users as user
+                          ON item.user_id = user.id
+                          WHERE user_id = :user_id AND item.delmode = :item_status";
 
-        $query = $dbh->prepare($self_items_sql);
-        $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-        $query->bindParam(':item_status', $item_status);
+                          $query = $dbh->prepare($self_items_sql);
+                          $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                          $query->bindParam(':item_status', $item_status);
 
-        $query->execute();
-        $results = $query->fetchAll(PDO::FETCH_OBJ);
-        ?>
+                          $query->execute();
+                          $results = $query->fetchAll(PDO::FETCH_OBJ);
+                        ?>
 
                         <h2>Item you have:<?=$user_results["id"];?></h2>
                         <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
@@ -385,13 +538,13 @@ $user_sql = "SELECT id, FullName FROM users WHERE EmailId=:email";
                         <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID); ?>">
 
                             <?php
-foreach ($results as $result) {
-            ?>
+                              foreach ($results as $result) {
+                            ?>
                             <input type="checkbox" name="receiver_item_id" id="<?php echo htmlentities($result->productName) ?>" value="<?php echo htmlentities($result->itemID) ?>" id="" />
                             <label for="<?php echo htmlentities($result->productName) ?>"><?php echo htmlentities($result->productName) ?></label><br />
                             <?php
-}
-        ?>
+                              }
+                            ?>
 
                     <button id="swap-with-owner-btn">Swap with owner</button>
                     </p>
@@ -413,46 +566,46 @@ foreach ($results as $result) {
                     <tr>
                       <td>Air Conditioner</td>
                       <?php
-if ($result->AirConditioner == 1) {
-            ?>
+                        if ($result->AirConditioner == 1) {
+                      ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-} else {
-            ?>
+                        } else {
+                      ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-}
-        ?>
+                        }
+                      ?>
                     </tr>
 
                     <tr>
                       <td>AntiLock Braking System</td>
                       <?php
-if ($result->AntiLockBrakingSystem == 1) {
-            ?>
+                        if ($result->AntiLockBrakingSystem == 1) {
+                      ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-} else {
-            ?>
+                        } else {
+                      ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-}
-        ?>
+                        }
+                      ?>
                     </tr>
 
                     <tr>
                       <td>Power Steering</td>
                       <?php
-if ($result->PowerSteering == 1) {
-            ?>
+                        if ($result->PowerSteering == 1) {
+                      ?>
                         <td><i class="fa fa-check" aria-hidden="true"></i></td>
                       <?php
-} else {
-            ?>
+                        } else {
+                      ?>
                         <td><i class="fa fa-close" aria-hidden="true"></i></td>
                       <?php
-}
-        ?>
+                        }
+                      ?>
                     </tr>
 
                     <tr>

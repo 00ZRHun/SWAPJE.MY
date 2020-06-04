@@ -205,7 +205,7 @@
 
 												<!-- form start -->
 												<form method="post" class="form-horizontal" enctype="multipart/form-data">
-												<!-- Post A Vehicle -->
+													<!-- Post A Vehicle -->
 													<!-- row 1 -->
 													<div class="form-group">
 														<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
@@ -291,7 +291,7 @@
 
 													<div class="hr-dashed"></div>
 
-												<!-- image -->
+													<!-- image -->
 													<!-- row 1( subtitle ) -->
 													<div class="form-group">
 														<div class="col-sm-12">

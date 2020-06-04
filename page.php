@@ -13,7 +13,7 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
 
-  <!-- <title>Car Rental Portal | Page details</title> -->
+  <title>SWAPJE.MY</title>
 
   <!--Bootstrap -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
