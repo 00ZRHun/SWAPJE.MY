@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jun 03, 2020 at 02:55 PM
+-- Generation Time: Jun 04, 2020 at 07:11 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.4.2
 
@@ -33,13 +33,23 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`id`, `name`, `delmode`) VALUES
 (1, 'clothes', 0),
 (2, 'shoes', 0),
-(3, 'clothes', 0),
-(4, 'shoes', 0),
-(5, 'jewelry', 0),
-(6, 'beauty', 0),
-(7, 'jewelry', 0),
-(8, 'beauty', 0),
-(9, 'personal care', 0);
+(3, 'jewelry', 0),
+(4, 'beauty', 0),
+(5, 'personal care', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `favorite`
+--
+
+CREATE TABLE `favorite` (
+  `id` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `itemId` int(11) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `delmode` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -81,7 +91,7 @@ INSERT INTO `items` (`id`, `user_id`, `productName`, `itemCondition`, `usedYear`
 (2, 8, 'b8', 0, 1, NULL, 'b', 1, 1, 1, 2, 3, 4, 'c@gmail.com', '601110604061', 'Screenshot 2020-05-26 at 9.44.49 PM.png', '', '', '', '', '2020-05-26 18:57:22', '0'),
 (3, 7, '123123', 0, 123123, NULL, '123123', NULL, NULL, NULL, 123123, 123123, 123123, 'jobbusiness123123@gmail.com', '123123', ':vimage1', ':vimage2', ':vimage3', ':vimage4', ':vimage5', '2020-05-26 10:56:55', '1'),
 (4, 8, 'd8', 0, 1, NULL, 'b', 1, 1, 1, 2, 3, 4, 'c@gmail.com', '601110604061', 'Screenshot 2020-05-26 at 9.44.49 PM.png', '', '', '', '', '2020-05-26 10:57:22', '0'),
-(5, 7, '71', 0, 1, NULL, 'b', 1, 1, 1, 2, 3, 4, 'jobbusiness@gmail.com', '601110604061', ':vimage1', ':vimage2', ':vimage3', ':vimage4', ':vimage5', '2020-05-26 10:56:55', '0'),
+(5, 7, '71', 0, 1, NULL, 'b', 1, 1, 1, 2, 3, 4, 'jobbusiness@gmail.com', '601110604061', ':vimage1', ':vimage2', ':vimage3', ':vimage4', ':vimage5', '2020-05-26 10:56:55', '1'),
 (6, 7, '72', 0, 1, NULL, 'b', 1, 1, 1, 2, 3, 4, 'c@gmail.com', '601110604061', 'Screenshot 2020-05-26 at 9.44.49 PM.png', '', '', '', '', '2020-05-26 10:57:22', '0'),
 (7, 7, ':productName:', 0, 1, NULL, ':overview', 1, 1, 1, 1, 1, 1, 'payPalBusinessAccount@gmail.com', '11234', ':Vimage1', ':Vimage2', ':Vimage3', ':Vimage4', ':Vimage5', '2020-05-26 02:56:55', '1'),
 (8, 8, '82', 0, 1, NULL, 'b', 1, 1, 1, 2, 3, 4, 'c@gmail.com', '601110604061', 'Screenshot 2020-05-26 at 9.44.49 PM.png', '', '', '', '', '2020-05-26 02:57:22', '1'),
@@ -89,7 +99,10 @@ INSERT INTO `items` (`id`, `user_id`, `productName`, `itemCondition`, `usedYear`
 (10, 7, ':productName', 0, 9, NULL, ':overview', 1, 1, 1, 19, 19, 19, 'payPalBusinessAccount@gmail.com', '123123123123', ':Vimage1', ':Vimage2', ':Vimage3', ':Vimage4', ':Vimage5', '2020-05-27 16:00:14', '0'),
 (11, 7, 'bag', 0, 1, NULL, 'knsdbfcka\r\nsdfcnjaks', NULL, 1, NULL, 3, 2, 10, 'jobbusiness@gmail.com', '601110604061', 'WhatsApp Image 2020-05-23 at 12.05.06 PM.jpeg', '', '', '', '', '2020-05-28 07:54:33', '0'),
 (12, 7, 'ff', 0, 1000, NULL, 'uu', 1, 1, 1, 3567, 3455, 6575, 'jobbusiness@gmail.com', '6543248', 'screencapture-sc-edu-my-as-register-php-2020-05-27-21_42_12.png', 'screencapture-sc-edu-my-as-register-php-2020-05-27-21_42_12.png', 'screencapture-sc-edu-my-as-index-php-2020-05-27-21_46_19.png', 'WhatsApp Image 2020-05-23 at 12.05.06 PM.jpeg', '', '2020-05-28 10:47:51', '0'),
-(13, 2, 'p', 0, 0, NULL, 'p', 1, 1, 1, 10, 10, 10, 'jobbusiness@gmail.com', '601110604061', 'Screenshot 2020-05-28 at 5.45.32 PM.png', 'Screenshot 2020-05-28 at 5.45.32 PM.png', 'Screenshot 2020-06-01 at 5.09.21 PM.png', 'Screenshot 2020-06-01 at 10.54.42 PM.png', '', '2020-06-02 14:57:27', '0');
+(13, 2, 'p', 0, 0, NULL, 'p', 1, 1, 1, 10, 10, 10, 'jobbusiness@gmail.com', '601110604061', 'Screenshot 2020-05-28 at 5.45.32 PM.png', 'Screenshot 2020-05-28 at 5.45.32 PM.png', 'Screenshot 2020-06-01 at 5.09.21 PM.png', 'Screenshot 2020-06-01 at 10.54.42 PM.png', '', '2020-06-02 14:57:27', '0'),
+(14, 7, ':productName', 10, 5, 2, ':overview', 1, 1, 1, 2, 3, 4, 'payPalBusinessAccount@gmail.com', '1110604061', ':vimage1', ':vimage2', ':vimage3', ':vimage4', ':vimage5', '2020-06-03 16:51:10', '0'),
+(15, 7, 'productNam', 2, 3, 3, 'asdas:overview', 1, 1, 1, 1, 2, 3, 'payPalBusinessAccou@gmail.com', '601110604061', ':vimage1', ':vimage2', ':vimage3', ':vimage4', ':vimage5', '2020-06-03 16:55:51', '0'),
+(16, 2, 'e', 10, 1, NULL, 'd', 1, 1, 1, 1, 2, 3, 'businesspersonal@gmail.com', '123', 'Screenshot 2020-05-28 at 7.20.53 PM.png', '', '', '', '', '2020-06-03 16:58:14', '0');
 
 -- --------------------------------------------------------
 
@@ -121,21 +134,25 @@ INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `password`, `Contac
 (2, 'bc', 'a', 'abc@gmail.com', 'e99a18c428cb38d5f260853678922e03', NULL, NULL, NULL, NULL, NULL, '2020-06-02 00:41:59', '2020-06-02 12:54:06');
 
 --
+-- Indexes for dumped tables
+--
+
+--
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `postitem`
+-- Indexes for table `favorite`
 --
-ALTER TABLE `postitem`
+ALTER TABLE `favorite`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indexes for table `items`
 --
-ALTER TABLE `users`
+ALTER TABLE `items`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -143,19 +160,13 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT for table `favorite`
 --
-ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+ALTER TABLE `favorite`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `postitem`
+-- AUTO_INCREMENT for table `items`
 --
-ALTER TABLE `postitem`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;

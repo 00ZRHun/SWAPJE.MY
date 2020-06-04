@@ -122,7 +122,7 @@ if ($login_button == '') {
 
      <!-- row 3( car list ) -->
         <!-- Recently Listed New Cars -->
-        <div class="tab-content">
+        <div class="tab-content"  id="zctb">
         <!-- <div role="tabpanel" class="tab-pane active" id="resentnewcar"> -->
         <div id="latestItem">
 
@@ -265,6 +265,19 @@ if ($login_button == '') {
 </section>
   <!-- /Resent Cat --> 
 <!-- /Body -->
+
+<!-- Loading Scripts -->
+<script src="js/jquery.min.js">
+  </script>
+  <script src="js/bootstrap-select.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.dataTables.min.js"></script>
+  <script src="js/dataTables.bootstrap.min.js"></script>
+  <script src="js/Chart.min.js"></script>
+  <script src="js/fileinput.js"></script>
+  <script src="js/chartData.js"></script>
+  <script src="js/main.js">
+</script>
 
 <!--Footer -->
 <?php include 'includes/footer.php';?>

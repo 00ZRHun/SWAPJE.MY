@@ -32,8 +32,7 @@
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
 	
-	<!-- <title>Car Rental Portal | Post Item</title> -->
-	<title>SellRentSwap System | Post Item</title>
+	<title>SWAPJE.MY</title>
 
 	<!--  -->
 	<!-- Font awesome -->
@@ -104,7 +103,6 @@
 </head>
 
 <body>
-	<!-- <h1><?= $id ?></h1> -->
 	<!-- Start Switcher -->
 	<?php include('includes/colorswitcher.php');?>
 	<!-- /Switcher -->  
@@ -298,23 +296,11 @@
 
 	<!--Register-Form -->
 	<?php include('includes/registration.php');?>
-
 	<!--/Register-Form --> 
 
 	<!--Forgot-password-Form -->
 	<?php include('includes/forgotpassword.php');?>
 	<!--/Forgot-password-Form --> 
-
-	<!-- Scripts --> 
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="js/bootstrap-select.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script> 
-	<script src="js/jquery.dataTables.min.js"></script>
-	<script src="js/dataTables.bootstrap.min.js"></script>
-	<script src="js/Chart.min.js"></script>
-	<script src="js/fileinput.js"></script>
-	<script src="js/chartData.js"></script>
-	<script src="js/main.js"></script>
 
 	<script src="assets/js/interface.js"></script> 
 	<!--Switcher-->
