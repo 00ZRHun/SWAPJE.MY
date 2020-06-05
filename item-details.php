@@ -10,18 +10,28 @@ if(strlen($_SESSION['login'])==0)
 	}
 	else
 	{
-		if(isset($_REQUEST['favourite'])){
-      echo "abc";
-      $favorite=intval($_GET['favorite']);
+		if(isset($_REQUEST['addfavourite'])){
+      $favorite=intval($_GET['addfavourite']);
+      $itemId=intval($_GET['vhid']);
       $sql = "INSERT INTO favorite(userId,itemId) VALUES(:userId,:itemId)";
       // $sql = "UPDATE favorite SET favorite=:favorite WHERE id=:delid";
 			// $sql = "delete from tblvehicles SET id=:status WHERE id=:delid";
 			// $sql = "UPDATE items SET delmode=1 WHERE id=:delid";
 			$query = $dbh->prepare($sql);
-			$query -> bindParam(':userId',$_GET['favourite'], PDO::PARAM_STR);
-			$query -> bindParam(':itemId',$_GET['vhid'], PDO::PARAM_STR);
+			$query -> bindParam(':userId',$favorite, PDO::PARAM_STR);
+			$query -> bindParam(':itemId',$itemId, PDO::PARAM_STR);
 			$query -> execute();
-			$msg="Item record deleted successfully";
+			$msg="Favorite added";
+    }
+    if(isset($_REQUEST['cancelfavourite'])){
+      $favorite=intval($_GET['cancelfavourite']);
+      $itemId=intval($_GET['vhid']);
+      $sql = "DELETE FROM favorite WHERE userId=:userId AND itemId=:itemId";
+			$query = $dbh->prepare($sql);
+			$query -> bindParam(':userId',$favorite, PDO::PARAM_STR);
+			$query -> bindParam(':itemId',$itemId, PDO::PARAM_STR);
+			$query -> execute();
+			$error="Favourite canceled";
     }
   }
 
@@ -96,41 +106,24 @@ if (isset($_POST['submit'])) {
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
-  <style>
-    .iconHeartEmpty::before {
-      content: "\f001";
-      font-family: FontAwesome;
-      font-style: normal;
-      font-weight: normal;
-      text-decoration: inherit;
-      /*--adjust as necessary--*/
-      color: #000;
-      font-size: 18px;
-      padding-right: 0.5em;
-      position: absolute;
-      top: 35%;
-      left: 5%;
-    }
-
-    .iconHeartActive::after {
-      content: "\f000";
-      font-family: FontAwesome;
-      font-style: normal;
-      font-weight: normal;
-      text-decoration: inherit;
-      /*--adjust as necessary--*/
-      color: #000;
-      font-size: 18px;
-      padding-right: 0.5em;
-      position: absolute;
-      top: 35%;
-      left: 5%;
-    }
-
-    .hide {
-      display: none;
-    }
-  </style>
+	<style>
+		.errorWrap {
+			padding: 10px;
+			margin: 0 0 20px 0;
+			background: #fff;
+			border-left: 4px solid #dd3d36;
+			-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+			box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+		}
+		.succWrap{
+			padding: 10px;
+			margin: 0 0 20px 0;
+			background: #fff;
+			border-left: 4px solid #5cb85c;
+			-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+			box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+		}
+	</style>
 </head>
 <body>
 
@@ -145,6 +138,47 @@ if (isset($_POST['submit'])) {
 <!--Listing-Image-Slider-->
   <!-- get data from items -->
 <?php
+  $vhid = intval($_GET['vhid']);
+  $sql = "SELECT * 
+  from items 
+  LEFT JOIN favorite
+  ON items.id = favorite.itemId
+  where items.id=:vhid AND delmode=0";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
+  // $query->bindParam(':userId', $id, PDO::PARAM_STR);
+  $query->execute();
+  $results = $query->fetchAll(PDO::FETCH_OBJ);
+  $cnt = 1;
+  if ($query->rowCount() > 0) {
+      foreach ($results as $result) {
+          $_SESSION['brndid'] = $result->bid;
+          $providerID = $result->user_id;
+?>
+
+<h1></h1>
+<!-- notification( htmlentities ) -->
+<?php 
+  if($error){
+    ?>
+    <div class="errorWrap">
+      <strong>ERROR</strong>:<?php echo htmlentities($error); ?>
+    </div>
+    <?php 
+  } 
+  if($msg){
+    ?>
+    <div class="succWrap">
+      <strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?>
+    </div>
+    <?php
+  }	
+?>
+<!--  -->
+<!--  -->
+<!--  -->
+<!-- favorite -->
+<?php
 $vhid = intval($_GET['vhid']);
 /* $sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid
 from tblvehicles join tblbrands
@@ -152,9 +186,12 @@ on tblbrands.id=tblvehicles.VehiclesBrand
 where tblvehicles.id=:vhid"; */
 $sql = "SELECT * 
 from items 
-where id=:vhid AND delmode=0";
+LEFT JOIN favorite
+ON items.id = favorite.itemId
+where items.id=:vhid AND favorite.userId=:userId AND delmode=0";
 $query = $dbh->prepare($sql);
 $query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
+$query->bindParam(':userId', $id, PDO::PARAM_STR);
 $query->execute();
 $results = $query->fetchAll(PDO::FETCH_OBJ);
 $cnt = 1;
@@ -162,8 +199,21 @@ if ($query->rowCount() > 0) {
     foreach ($results as $result) {
         $_SESSION['brndid'] = $result->bid;
         $providerID = $result->user_id;
-        ?>
-<h1></h1>
+?>
+  <span>
+      <a href="item-details.php?vhid=<?= $vhid; ?>&cancelfavourite=<?= $id; ?>">
+        <i class="fa fa-heart iconOnly cancelFavorite" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
+      </a>
+  </span>
+<?php }}else{ ?>
+  <a href="item-details.php?vhid=<?= $vhid; ?>&addfavourite=<?= $id; ?>">
+    <i class="fa fa-heart-o iconOnly addFavorite" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
+  </a>
+<?php } ?>
+<!--  -->
+<!--  -->
+<!--  -->
+
 <section id="listing_img_slider">
   <div><?=$providerID?></div>
   <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage1); ?>" class="img-responsive" alt="image" width="900" height="560"></div>
@@ -207,6 +257,7 @@ if ($result->Vimage5 == "") {
 </script> -->
 
 <!-- actual link -->
+<h1><?= $id; ?></h1>
 <?php
   $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 ?>
@@ -225,10 +276,10 @@ if ($result->Vimage5 == "") {
       data-size="large">
           Share on Twitter
   </a>
-  <a class="twitter-timeline" href="https://twitter.com/TwitterDev/timelines/539487832448843776?ref_src=twsrc%5Etfw">
   <!-- National Park Tweets - Curated tweets by TwitterDe -->
+  <!-- <a class="twitter-timeline" href="https://twitter.com/TwitterDev/timelines/539487832448843776?ref_src=twsrc%5Etfw">
   </a>
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
 
 <!-- share on facebook -->
   <!-- version 1 -->
@@ -248,42 +299,6 @@ if ($result->Vimage5 == "") {
       Share our Facebook page!
   </a> -->
 
-<!--  -->
-<!--  -->
-<!--  -->
-
-<form action="get"></form>
-<span>
-  <button class="saveHome hoverPulse pan typeReversed">
-    <span class="stackIcons">
-      <!-- <i class="iconHeartActive iconOnly hide"></i> -->
-      <!-- <i class="iconHeartEmpty typeReversed iconOnly"></i> -->
-      <!-- <a href="item-details.php?vhid=<?= $vhid; ?>&favourite=<?= $id; ?>"> -->
-        <i class="fa fa-heart iconOnly hide" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
-      <!-- </a> -->
-      <a href="item-details.php?vhid=<?= $vhid; ?>&favourite=<?= $id; ?>">
-        <i class="fa fa-heart-o typeReversed iconOnly" aria-hidden="true" style="color: red; font-size: 100px"></i>
-      </a>
-      <!-- <a href="item-details.php?vhid=<?= $vhid; ?>&favourite=<?= $id; ?>" onclick="return alert('Favourite added');">
-        <i class="fa fa-heart iconOnly hide" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
-      </a>
-      <a href="item-details.php?vhid=<?= $vhid; ?>&favourite=<?= $id; ?>" onclick="return alert('Favourite canceled');">
-        <i class="fa fa-heart-o typeReversed iconOnly" aria-hidden="true" style="color: red; font-size: 100px"></i>
-      </a> -->
-    </span>
-  </button>
-</span>
-
-<script>
-  $( ".saveHome" ).click(function() {
-    $(".stackIcons i" ).toggleClass( "hide" );
-  });
-</script>
-<!--  -->
-<!--  -->
-<!--  -->
-
-<i class="fa fa-twitter"></i>
   <!-- php global variable -->
 <?php
 $name = $result->productName;
