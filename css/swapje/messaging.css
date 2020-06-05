@@ -2,7 +2,8 @@
     display: flex;
     flex-flow: column;
 
-    padding: 1em;    
+    padding: 1em;   
+    margin-top: 5em; 
 }
 
 .message-history-div,

@@ -17,16 +17,18 @@
  	$('.menu-btn').click(function () {
  		$('nav.ts-sidebar').toggleClass('menu-open');
  	});
+	$('.dropdown').click(function() {
+		$(this).toggleClass('open')
+	})
+	 
+	//  $('#zctb').DataTable();
 	 
 	 
-	 $('#zctb').DataTable();
-	 
-	 
-	 $("#input-43").fileinput({
-		showPreview: false,
-		allowedFileExtensions: ["zip", "rar", "gz", "tgz"],
-		elErrorContainer: "#errorBlock43"
-			// you can configure `msgErrorClass` and `msgInvalidFileExtension` as well
-	});
+	//  $("#input-43").fileinput({
+	// 	showPreview: false,
+	// 	allowedFileExtensions: ["zip", "rar", "gz", "tgz"],
+	// 	elErrorContainer: "#errorBlock43"
+	// 		// you can configure `msgErrorClass` and `msgInvalidFileExtension` as well
+	// });
 
  });

@@ -283,7 +283,7 @@ if ($result->Vimage5 == "") {
 <!--  -->
 <!--  -->
 
-
+<i class="fa fa-twitter"></i>
   <!-- php global variable -->
 <?php
 $name = $result->productName;
