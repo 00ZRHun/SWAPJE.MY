@@ -299,11 +299,6 @@ if ($result->Vimage5 == "") {
       Share our Facebook page!
   </a> -->
 
-<!--  -->
-<!--  -->
-<!--  -->
-
-
   <!-- php global variable -->
 <?php
 $name = $result->productName;

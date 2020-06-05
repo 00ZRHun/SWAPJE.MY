@@ -28,9 +28,10 @@ if (isset($_SESSION['login'])) {
   <meta name="keywords" content="">
   <meta name="description" content="">
   <title>Chat</title>
-  <link rel="stylesheet" href="css/messaging.css">
-  <!-- Bootstrap
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css"> -->
+  <link rel="stylesheet" href="css/swapje/messaging.css">
+  <!-- Bootstrap --> 
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css"> 
+
   <!--Custome Style -->
   <link rel="stylesheet" href="assets/css/style.css" type="text/css">
   <!--OWL Carousel slider-->
@@ -45,7 +46,14 @@ if (isset($_SESSION['login'])) {
 
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/messaging.css">
+  
+  <!-- SWAPJE CSS + Google Icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="css/swapje/index.css">
+  <link rel="stylesheet" href="css/nav/nav.css">
+  <link rel="stylesheet" href="css/swapje/index.css">      
+  <link rel="stylesheet" href="css/messaging.css">
+
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -148,11 +156,15 @@ if (isset($_SESSION['login'])) {
 </head>
 <body>
 
+<!--Header-->
+<?php include 'includes/header.php'; ?>
+<!-- /Header -->
+  
 <div class="messaging-container">
-    <h2>Messages</h2>
-    <p>You are <?php echo htmlentities($id) ?></p>
+    <!-- <h2>Messages</h2> -->
+    <!-- <p>You are <?php echo htmlentities($id) ?></p> -->
     <div class="search-box">
-    <input type="text" name="search_user" id="search_user" autocomplete="off" placeholder="Search user...">
+    <input type="text" name="search_user" class="form-control" id="search_user" autocomplete="off" placeholder="Search user...">
         <div class="result"></div>
     </div>
     
