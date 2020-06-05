@@ -158,13 +158,13 @@ if (isset($_SESSION['login'])) {
 
 <!--Header-->
 <?php include 'includes/header.php'; ?>
-  <!-- /Header -->
+<!-- /Header -->
   
 <div class="messaging-container">
-    <h2>Messages</h2>
-    <p>You are <?php echo htmlentities($id) ?></p>
+    <!-- <h2>Messages</h2> -->
+    <!-- <p>You are <?php echo htmlentities($id) ?></p> -->
     <div class="search-box">
-    <input type="text" name="search_user" id="search_user" autocomplete="off" placeholder="Search user...">
+    <input type="text" name="search_user" class="form-control" id="search_user" autocomplete="off" placeholder="Search user...">
         <div class="result"></div>
     </div>
     
