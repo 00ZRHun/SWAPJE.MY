@@ -36,8 +36,16 @@ if (isset($_SESSION['login'])) {
   <meta name="keywords" content="">
   <meta name="description" content="">
   <title>Chat</title>
-  <link rel="stylesheet" href="css/messaging.css">
-  <!--Bootstrap -->
+  
+  <!-- SWAPJE CSS + Google Icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="css/swapje/index.css">
+  <link rel="stylesheet" href="css/nav/nav.css">      
+  <link rel="stylesheet" href="css/swapje/messaging.css">
+
+  <!-- Bootstrap --> 
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css"> 
+  
   <!--Custome Style -->
   <link rel="stylesheet" href="assets/css/style.css" type="text/css">
   <!--OWL Carousel slider-->
@@ -66,8 +74,8 @@ if (isset($_SESSION['login'])) {
 <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-analytics.js"></script>
 
 <script src="firebase_config.js"></script>
-<script>                    
-        
+<script>                            
+
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
@@ -89,10 +97,15 @@ if (isset($_SESSION['login'])) {
             });
 
             $('#message-input').val("");
+            document.documentElement.scrollTo({
+                left: 0,
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth'
+            });
             
         };
                 
-        $("#to_user_id").ready(function() {  
+        $("#to_user_id").ready(function() {              
                           
         const to_user_id = $('#to_user_id').val();        
         
@@ -147,9 +160,9 @@ if (isset($_SESSION['login'])) {
 
         let html = "";
 
+        // <img src="..." class="avatar" alt="avatar">
         html = `
-        <div class="message-div">
-            <img src="" class="avatar" alt="">
+        <div class="${sentBySelf ? "message-div self-message-div" : "message-div"}">            
             <div class="message-div-content">
                 <h5 class="message-div-content__username">
                 ${sentBySelf ? "You" : "<?php echo htmlentities($to_user_name) ?>"} 
@@ -168,11 +181,15 @@ if (isset($_SESSION['login'])) {
 </head>
 <body>
 
+<!--Header-->
+<?php include 'includes/header.php'; ?>
+<!-- /Header -->
+
 <form id="message-content-form" onsubmit="return sendMessage(event);">
     <input type="hidden" id="to_user_id" name="to_user_id" value="<?php echo htmlentities($to_user_id) ?>">
     <div class="message-content-container">
         <div class="messaging-header">
-            <p>You are <?php echo htmlentities($id) ?></p>
+            <!-- <p>You are <?php echo htmlentities($id) ?></p> -->
             <h3 class="messaging-tousername"><?php echo htmlentities($to_user_name) ?></h3>
         </div>
 
@@ -191,7 +208,5 @@ if (isset($_SESSION['login'])) {
 }
 ?>
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="js/chat/chat.js"></script>
 </body>
 </html>
