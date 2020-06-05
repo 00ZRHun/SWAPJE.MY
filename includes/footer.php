@@ -70,7 +70,7 @@
         <div class="col-md-6 col-md-pull-6">
           <p class="copy-right">Copyright &copy; 2020 Rental Portal. All Rights Reserved</p>
         </div>
-        <div class="col-md-6 col-md-push-6 text-right">
+        <!-- <div class="col-md-6 col-md-push-6 text-right">
           <div class="footer_widget">
             <p>Connect with Us:</p>
             <ul>
@@ -81,7 +81,7 @@
               <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
             </ul>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
