@@ -25,6 +25,7 @@
 
 .header_search {
     max-width: 75% !important;
+    margin-right: 1em !important;
 }
 
 #header-search-form {
@@ -33,11 +34,11 @@
 }
 
 .header_search input {
-    width: 100% !important;
+    width: 100% !important;    
 }
 
 .navbar .primary-btn {
-    margin-left: 1em;
+    margin-left: auto;
     min-width: 80px !important;
 }
 
@@ -150,6 +151,10 @@
 
     .navbar {                
         max-width: 100% !important;
+    }
+
+    .navbar .primary-btn {
+        margin-left: 1em;
     }
 
     .nav__main-content {
