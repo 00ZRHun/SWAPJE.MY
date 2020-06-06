@@ -87,6 +87,8 @@ if (isset($_POST['submit'])) {
   <link href="assets/css/bootstrap-slider.min.css" rel="stylesheet">
   <!--FontAwesome Font Style -->
   <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+  <!-- <script src='https://kit.fontawesome.com/a076d05399.js'></script> -->
+  <!-- icon -->
 
   <!-- SWITCHER -->
       <link rel="stylesheet" id="switcher-css" type="text/css" href="assets/switcher/css/switcher.css" media="all" />
@@ -162,14 +164,14 @@ if (isset($_POST['submit'])) {
   if($error){
     ?>
     <div class="errorWrap">
-      <strong>ERROR</strong>:<?php echo htmlentities($error); ?>
+      <?php echo htmlentities($error); ?>
     </div>
     <?php 
   } 
   if($msg){
     ?>
     <div class="succWrap">
-      <strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?>
+      <?php echo htmlentities($msg); ?>
     </div>
     <?php
   }	
@@ -210,9 +212,8 @@ if ($query->rowCount() > 0) {
     <i class="fa fa-heart-o iconOnly addFavorite" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
   </a>
 <?php } ?>
-<!--  -->
-<!--  -->
-<!--  -->
+
+<!-- <i class='fas fa-comments' style='font-size:36px'></i> -->
 
 <section id="listing_img_slider">
   <div><?=$providerID?></div>
