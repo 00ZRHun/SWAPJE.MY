@@ -55,7 +55,7 @@ $('#accept-request-btn').click(function () {
         success: (data) => {
             if (data.code == "200") {                
                 alert("You have accepted the request.");
-                window.location = "swap_request.php";
+                window.location = "notifications.php";
             }                
         },
         error: (err) => {
@@ -80,7 +80,7 @@ $('#reject-request-btn').click(function () {
         success: (data) => {
             if (data.code == "200") {
                 alert("You have rejected the request.");
-                window.location = "swap_request.php";
+                window.location = "notifications.php";
             }                
         },
         error: (err) => {

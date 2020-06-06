@@ -23,7 +23,7 @@
           <i class="material-icons">chat_bubble_outline</i>
           <span>Messages</span>
         </div>
-        <div class="nav__main-content-item">
+        <div class="nav__main-content-item" onclick="window.location.href = 'notifications.php'">
           <i class="material-icons">notifications_none</i>
           <span>Notifications</span>
         </div>

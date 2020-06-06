@@ -1,10 +1,15 @@
 :root {
-    --primary-color: #e70448;
+    --primary-color: #e70448;    
     --grey: #e9e9f0;
 }
 
 body {
     box-sizing: border-box !important;
+}
+
+button {
+    border-radius: 5px;
+    font-weight: bold !important;
 }
 
 .primary-btn {
@@ -14,6 +19,49 @@ body {
     padding: .5em .65em;
 }
 
+.success-btn {
+    background-color: #09c976;
+    border: none;
+    color: #fff;    
+    padding: .5em .65em;
+}
+
+.grey-btn {
+    background-color: #d8d8d8;
+    border: none;
+    color: #575757;    
+    padding: .5em .65em;
+}
+
+.primary-btn:hover, 
+.success-btn:hover {
+    color: #fff !important;
+    cursor: pointer;
+    filter: brightness(90%);
+
+    transition: filter 300ms ease-out;
+}
+
+.grey-btn:hover {
+    cursor: pointer;
+    filter: brightness(90%);
+
+    transition: filter 300ms ease-out;
+}
+
 .form-control {
     background-color: var(--grey) !important;
+}
+
+.badge {
+    padding: .75em !important;
+    border-radius: 50px !important;
+}
+
+.badge-danger {
+    background-color: var(--primary-color) !important;
+}
+
+.badge-success {
+    background-color: #09c976 !important;
 }
