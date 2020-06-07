@@ -87,7 +87,48 @@
               </ul>
             </div>
       </div>
-      
+
+      <!-- navbat -->
+      <div class="collapse navbar-collapse" id="navigation">
+        <ul class="nav navbar-nav">
+          <li><a href="index.php">Home</a></li>
+          <li><a href="page.php?type=aboutus">About Us</a></li>
+          <li><a href="car-listing.php">Car Listing</a>
+          <!-- <li><a href="post-item.php">Post Item</a> -->
+          <li><a href="page.php?type=faqs">FAQs</a></li>
+          <li><a href="contact-us.php">Contact Us</a></li>
+
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Post
+            </a>
+            <!-- dropdown menu( login/- ) -->
+            <ul class="dropdown-menu">
+              <?php if ($_SESSION['login']) {?>
+                <li><a href="post-item.php">Post Item</a></li>
+                <li><a href="manage-item.php">Manage Item</a></li>
+              <?php } else {?>
+                <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Login</a></li>
+              <?php }?>
+            </ul>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Ads
+            </a>
+            <!-- dropdown menu( login/- ) -->
+              <ul class="dropdown-menu">
+                <?php if ($_SESSION['login']) {?>
+                  <li><a href="post-ads.php">Post Ads</a></li>
+                  <li><a href="manage-ads.php">Manage Ads</a></li>
+                <?php } else {?>
+                  <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Login</a></li>
+                <?php }?>
+              </ul>
+          </li>
+        </ul>
+
       </div>
         <!-- <a href="index.php">Home</a></li> -->
         <!-- <a href="page.php?type=aboutus">About Us</a> -->

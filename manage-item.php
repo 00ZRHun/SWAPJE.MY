@@ -11,7 +11,6 @@
 	{ 
 		if(isset($_REQUEST['del'])){
 			$delid=intval($_GET['del']);
-			// $sql = "delete from tblvehicles SET id=:status WHERE id=:delid";
 			$sql = "UPDATE items SET delmode=1 WHERE id=:delid";
 			$query = $dbh->prepare($sql);
 			$query -> bindParam(':delid',$delid, PDO::PARAM_STR);
@@ -32,7 +31,7 @@
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
 	
-	<title>SWAPJE.MY</title>
+	<title>SWAP.ME</title>
 
 	<!--  -->
 	<!-- Font awesome -->
@@ -103,6 +102,7 @@
 </head>
 
 <body>
+	<!-- <h1><?= $id ?></h1> -->
 	<!-- Start Switcher -->
 	<?php include('includes/colorswitcher.php');?>
 	<!-- /Switcher -->  
@@ -112,18 +112,18 @@
 	<!-- /Header --> 
 
 	<!-- Body -->
-	<!-- <div class="ts-main-content" style="padding-top: 30px"> -->
-	<div class="ts-main-content" style="padding-top: 90px; padding-bottom: 90px"> 
+	<div class="ts-main-content section-padding">
+		<!-- <div class="content-wrapper"> -->
 		<div class="container">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="page-title text-center">Manage Items</h2>
+						<h2 class="page-title">Manage Items</h2>
 
 						<!-- Zero Configuration Table -->
 						<!-- <div class="panel panel-default"> -->
 						<div class="row">
-							<h2 class="panel-heading" style="font-size: large; font-weight: 1000;">Item Details</h2>
+							<div class="panel-heading">Item Details</div>
 							
 							<div class="panel-body">
 								<!-- notify( success/fail ) -->
@@ -189,7 +189,9 @@
 											"SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id 
 											from tblvehicles 
 											join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand"; */
-										$sql = "SELECT * FROM items WHERE delmode=0 ORDER BY updationDate ASC";
+										$sql = "SELECT * FROM items WHERE delmode=0 ORDER BY updationDate DESC";
+										
+										// echo $id;
 
 										$query = $dbh -> prepare($sql);
 										$query->execute();
@@ -202,7 +204,7 @@
 										<!-- html -->
 									<tr>
 										<td><?php echo htmlentities($cnt);?></td>
-									<!-- <td><?php echo htmlentities($result->productName);?></td> -->
+										<!-- <td><?php echo htmlentities($result->productName);?></td> -->
 										<!-- <td><?php echo htmlentities($result->Vimage1);?></td> -->
 										<td>
 											<?php echo htmlentities($result->productName);?>
@@ -217,12 +219,8 @@
 										<td><?php echo htmlentities($result->contactNo);?></td>
 										<!-- <td><?php echo htmlentities($result->updationDate);?></td> -->
 										<td>
-											<a href="edit-item.php?id=<?php echo $result->id;?>">
-												<i class="fa fa-edit"></i>
-											</a>&nbsp;&nbsp;
-											<a href="manage-item.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');">
-												<i class="fa fa-close"></i>
-											</a>
+											<a href="edit-item.php?id=<?php echo $result->id;?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+											<a href="manage-item.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a>
 										</td>
 									</tr>
 
@@ -279,11 +277,23 @@
 
 	<!--Register-Form -->
 	<?php include('includes/registration.php');?>
+
 	<!--/Register-Form --> 
 
 	<!--Forgot-password-Form -->
 	<?php include('includes/forgotpassword.php');?>
 	<!--/Forgot-password-Form --> 
+
+	<!-- Scripts --> 
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="js/bootstrap-select.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script> 
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.bootstrap.min.js"></script>
+	<script src="js/Chart.min.js"></script>
+	<script src="js/fileinput.js"></script>
+	<script src="js/chartData.js"></script>
+	<script src="js/main.js"></script>
 
 	<script src="assets/js/interface.js"></script> 
 	<!--Switcher-->
@@ -295,6 +305,8 @@
 	<script src="assets/js/owl.carousel.min.js"></script>
 
 </body>
+
+<!-- Mirrored from themes.webmasterdriver.net/carforyou/demo/about-us.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 16 Jun 2017 07:26:12 GMT -->
 </html>
 
 <?php } ?>
