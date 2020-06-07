@@ -13,7 +13,7 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   
-  <title>Car Rental Portal</title>
+  <title>SWAP.ME</title>
 
   <!--Bootstrap -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">

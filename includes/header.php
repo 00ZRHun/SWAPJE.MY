@@ -162,7 +162,6 @@ $email = $_SESSION['login'];
             <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Post
             </a>
-
             <!-- dropdown menu( login/- ) -->
             <ul class="dropdown-menu">
               <?php if ($_SESSION['login']) {?>
@@ -172,6 +171,21 @@ $email = $_SESSION['login'];
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Login</a></li>
               <?php }?>
             </ul>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Ads
+            </a>
+            <!-- dropdown menu( login/- ) -->
+              <ul class="dropdown-menu">
+                <?php if ($_SESSION['login']) {?>
+                  <li><a href="post-ads.php">Post Ads</a></li>
+                  <li><a href="manage-ads.php">Manage Ads</a></li>
+                <?php } else {?>
+                  <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Login</a></li>
+                <?php }?>
+              </ul>
           </li>
         </ul>
       </div>

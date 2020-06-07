@@ -27,7 +27,7 @@
 			$vimage4=$_FILES["img4"]["name"];
 			$vimage5=$_FILES["img5"]["name"];
 			$itemCondition=$_POST['itemCondition'];
-			$catefory=$_POST['catefory'];
+			$category=$_POST['category'];
 			$sell=$_POST['sell'];
 			$rent=$_POST['rent'];
 			$swap=$_POST['swap'];
@@ -86,7 +86,6 @@
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
 	
-	<!-- <title>Car Rental Portal | Post Item</title> -->
 	<title>SWAP.MY</title>
 
 	<!--  -->
@@ -344,25 +343,27 @@
 																<option value="1">1</option>
 															</select>
 														</div>
+														<!--  -->
+														<!--  -->
+														<!--  -->
 														<label class="col-sm-2 control-label">Category<span style="color:red">*</span></label>
-														<!--  -->
-														<!--  -->
-														<!--  -->
-														<select name="category" id="category">
-															<?php 
-																$sql = "SELECT * FROM category WHERE delmode=0 ORDER BY name ASC";
-																
-																// echo $id;
-																
-																$query = $dbh -> prepare($sql);
-																$query->execute();
-																$results=$query->fetchAll(PDO::FETCH_OBJ);
-																if($query->rowCount() > 0){
-																	foreach($results as $result){
-															?>									
-																<option value="<?=$result->id;?>"><?=$result->id;?></option>
-															<?php }} ?>
-														</select>
+														<div class="col-sm-4">
+															<select name="category" id="category" class="form-control" required>
+																<?php 
+																	$sql = "SELECT * FROM category WHERE delmode=0 ORDER BY name ASC";
+																	
+																	// echo $id;
+																	
+																	$query = $dbh -> prepare($sql);
+																	$query->execute();
+																	$results=$query->fetchAll(PDO::FETCH_OBJ);
+																	if($query->rowCount() > 0){
+																		foreach($results as $result){
+																?>									
+																	<option value="<?=$result->id;?>"><?=$result->name;?></option>
+																<?php }} ?>
+															</select>
+														</div>
 														<!--  -->
 														<!--  -->
 														<!--  -->
