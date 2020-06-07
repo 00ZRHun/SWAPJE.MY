@@ -2,7 +2,6 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
-
 ?>
 
 <!DOCTYPE HTML>
@@ -87,8 +86,8 @@ error_reporting(0);
             // As Provider
 
             require("./functions/Swap/get_swap_records.php");
-            require("./functions/User/user.php");
-            require("./functions/Item/item.php");
+            // require("./functions/User/user.php");
+            // require("./functions/Item/item.php");
             
             $results = get_records_as_provider($user_id);
             
@@ -106,13 +105,26 @@ error_reporting(0);
                 $current_receiver_name = $current_receiver["firstName"] . " " . $current_receiver["lastName"];
                                             
                 ?>
-                    <p style="margin-bottom: 0; margin-top: 1em">RES:<?php echo htmlentities($current_receiver_name) ?> wants to swap your <?php echo htmlentities($result->itemName) ?> with <?php echo htmlentities($receiver_item_names) ?></p>
-                    <?php if ($result->status == -1) {
-                        echo "You rejected this request.";
-                    } ?>
-                    <?php if ($result->status == 1) {
-                        echo "You accepted this request.";
-                    } ?>
+                <div class="notification-list__item">
+                    <p style="margin-bottom: 1em;"><?php echo htmlentities($current_receiver_name) ?> wants to swap your <a href='item-details.php?vhid=<?php echo htmlentities($result->itemID)?>'" class="notification_swap-item"><?php echo htmlentities($result->itemName) ?></a> with
+                        <?php for ($i = 0; $i < count($receiver_item_ids); $i++) {
+                            $current_item_id = $receiver_item_ids[$i];
+                            $current_item = get_item_detail($current_item_id, $result->receiver_id);
+                            $currentItemName = $current_item["productName"];  
+                            
+                            if($i != count($receiver_item_ids) - 1)
+                                $currentItemName .= ", ";
+                        ?>  
+                            <a href='item-details.php?vhid=<?php echo htmlentities($current_item_id)?>'" class="notification_swap-item"><?php echo htmlentities($currentItemName); ?></a>                                                 
+                        <?php } ?>        
+                    </p>
+                        <?php if ($result->status == -1) {
+                            echo "You rejected this request.";
+                        } ?>
+                        <?php if ($result->status == 1) {
+                            echo "You accepted this request.";
+                        } ?>
+                </div>                    
             <?php
                 
             }
@@ -122,8 +134,8 @@ error_reporting(0);
                 // As Receiver
 
                 require("./functions/Swap/get_swap_records.php");
-                require("./functions/User/user.php");
-                require("./functions/Item/item.php");
+                // require("./functions/User/user.php");
+                // require("./functions/Item/item.php");
                               
                 $results = get_records_as_receiver($user_id);
 
@@ -132,7 +144,8 @@ error_reporting(0);
                     $receiver_item_ids = explode(", ", $result->receiver_item_id);
                     $receiver_item_names = "";                                               
 
-                    $provider_item = get_item_detail($result->item_id, $result->provider_id);
+                    $provider_item_id = $result->item_id;
+                    $provider_item = get_item_detail($provider_item_id, $result->provider_id);                    
                     $provider_item_name = $provider_item["productName"];                    
 
                     foreach ($receiver_item_ids as $id) {
@@ -144,13 +157,29 @@ error_reporting(0);
                     $current_provider_name = $current_provider["firstName"] . " " . $current_provider["lastName"];
 
                 ?>
-                    <p style="margin-bottom: 0; margin-top: 1em">REQ: You want to swap your <?php echo htmlentities($receiver_item_names) ?> with <?php echo htmlentities($current_provider_name) ?>'s <?php echo htmlentities($provider_item_name) ?></p>
-                    <?php if ($result->status == -1) {
-                            echo "Your swap request is rejected.";
-                        } ?>
-                    <?php if ($result->status == 1) {
-                            echo "Your swap request is accepted.";
-                        } ?>
+                    <div class="notification-list__item">
+                        <p style="margin-bottom: 1em;">You want to swap your
+                            <?php for ($i = 0; $i < count($receiver_item_ids); $i++) {
+                                $current_item_id = $receiver_item_ids[$i];
+                                $current_item = get_item_detail($current_item_id, $result->receiver_id);
+                                $currentItemName = $current_item["productName"];  
+                                
+                                if($i != count($receiver_item_ids) - 1)
+                                    $currentItemName .= ", ";
+                            ?>  
+                                <a href='item-details.php?vhid=<?php echo htmlentities($current_item_id)?>'" class="notification_swap-item"><?php echo htmlentities($currentItemName); ?></a>                                                 
+                            <?php } ?>   
+                            with <?php echo htmlentities($current_provider_name) ?>'s <a class="notification_swap-item" href="item-details.php?vhid=<?php echo htmlentities($provider_item_id) ?>"><?php echo htmlentities($provider_item_name) ?></a>     
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <?php if ($result->status == -1) {
+                                    echo "Your swap request is <span style='color: var(--primary-color); font-weight:bold'>rejected</span>";
+                                } ?>
+                            <?php if ($result->status == 1) {
+                                    echo "Your swap request is <span style='color: #09c976; font-weight: bold'>accepted</span>";
+                                } ?>                        
+                        </div>                        
+                    </div>                    
             <?php
                     
                 }
@@ -160,45 +189,7 @@ error_reporting(0);
     </section>
     <!-- /Content -->
 
-    <!--Footer -->
-    <?php include('includes/footer.php');
-    ?>
-    <!-- /Footer-->
-
-    <!--Back to top-->
-    <div id='back-top' class='back-top'>
-        <a href='#top'>
-            <i class='fa fa-angle-up' aria-hidden='true'></i>
-        </a>
-    </div>
-    <!--/Back to top-->
-
-    <!--Login-Form -->
-    <?php include('includes/login.php');
-    ?>
-    <!--/Login-Form -->
-
-    <!--Register-Form -->
-    <?php include('includes/registration.php');
-    ?>
-    <!--/Register-Form -->
-
-    <!--Forgot-password-Form -->
-    <?php include('includes/forgotpassword.php');
-    ?>
-
     <script src='assets/js/jquery.min.js'></script>
 
     <!-- Logics -->
     <script src='js/swap/swap.js'></script>
-
-    <script src='assets/js/bootstrap.min.js'></script>
-    <script src='assets/js/interface.js'></script>
-    <script src='assets/switcher/js/switcher.js'></script>
-    <script src='assets/js/bootstrap-slider.min.js'></script>
-    <script src='assets/js/slick.min.js'></script>
-    <script src='assets/js/owl.carousel.min.js'></script>
-
-</body>
-
-</html>
