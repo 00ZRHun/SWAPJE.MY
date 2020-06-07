@@ -10,26 +10,32 @@ if(strlen($_SESSION['login'])==0)
 	}
 	else
 	{
-		if(isset($_REQUEST['addfavourite'])){
-      $favorite=intval($_GET['addfavourite']);
-      $itemId=intval($_GET['vhid']);
-      $sql = "INSERT INTO favorite(userId,itemId) VALUES(:userId,:itemId)";
-      // $sql = "UPDATE favorite SET favorite=:favorite WHERE id=:delid";
-			// $sql = "delete from tblvehicles SET id=:status WHERE id=:delid";
-			// $sql = "UPDATE items SET delmode=1 WHERE id=:delid";
-			$query = $dbh->prepare($sql);
-			$query -> bindParam(':userId',$favorite, PDO::PARAM_STR);
-			$query -> bindParam(':itemId',$itemId, PDO::PARAM_STR);
-			$query -> execute();
-			$msg="Favorite added";
+		if(isset($_REQUEST['addfavorite'])){
+     /*  $userId = $_POST['addfavorite'];
+      $itemId = $_GET['vhid'];
+      
+      $sql = "SELECT * 
+      from favorite
+      where userId=:userId AND itemId=:itemId;
+      $query = $dbh->prepare($sql);
+      $query->bindParam(':userId', $userId, PDO::PARAM_STR);
+      $query->bindParam(':itemId', $itemId, PDO::PARAM_STR);
+      $query->execute();
+      $results = $query->fetchAll(PDO::FETCH_OBJ);
+      if ($query->rowCount() == 0) {
+      } */
+      $sql = "INSERT INTO favorite(userId,itemId) VALUE(:userId,:itemId)";
+        $query = $dbh->prepare($sql);
+        $query -> bindParam(':userId',$_POST['addfavorite'], PDO::PARAM_STR);
+        $query -> bindParam(':itemId',$_GET['vhid'], PDO::PARAM_STR);
+        $query -> execute();
+        $msg="Favorite added";
     }
-    if(isset($_REQUEST['cancelfavourite'])){
-      $favorite=intval($_GET['cancelfavourite']);
-      $itemId=intval($_GET['vhid']);
+    if(isset($_REQUEST['cancelfavorite'])){
       $sql = "DELETE FROM favorite WHERE userId=:userId AND itemId=:itemId";
 			$query = $dbh->prepare($sql);
-			$query -> bindParam(':userId',$favorite, PDO::PARAM_STR);
-			$query -> bindParam(':itemId',$itemId, PDO::PARAM_STR);
+			$query -> bindParam(':userId',$_POST['cancelfavorite'], PDO::PARAM_STR);
+			$query -> bindParam(':itemId',$_GET['vhid'], PDO::PARAM_STR);
 			$query -> execute();
 			$error="Favourite canceled";
     }
@@ -125,6 +131,7 @@ if (isset($_POST['submit'])) {
 			-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 			box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 		}
+
     body{width:610;}
 		.demo-table {width: 100%;border-spacing: initial;margin: 20px 0px;word-break: break-word;table-layout: auto;line-height:1.8em;color:#333;}
 		.demo-table th {background: #999;padding: 5px;text-align: left;color:#FFF;}
@@ -134,49 +141,8 @@ if (isset($_POST['submit'])) {
 		.demo-table li{cursor:pointer;list-style-type: none;display: inline-block;color: #F0F0F0;text-shadow: 0 0 1px #666666;font-size:20px;}
 		.demo-table .highlight, .demo-table .selected {color:#F4B30A;text-shadow: 0 0 1px #F48F0A;}
 	</style>
-  	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
-	<script>
-		function highlightStar(obj,id) {
-			removeHighlight(id);		
-			$('.demo-table #tutorial-'+id+' li').each(function(index) {
-				$(this).addClass('highlight');
-				if(index == $('.demo-table #tutorial-'+id+' li').index(obj)) {
-					return false;	
-				}
-			});
-		}
 
-		function removeHighlight(id) {
-			$('.demo-table #tutorial-'+id+' li').removeClass('selected');
-			$('.demo-table #tutorial-'+id+' li').removeClass('highlight');
-		}
-
-		function addRating(obj,id) {
-			$('.demo-table #tutorial-'+id+' li').each(function(index) {
-				$(this).addClass('selected');
-				$('#tutorial-'+id+' #rating').val((index+1));
-				if(index == $('.demo-table #tutorial-'+id+' li').index(obj)) {
-					return false;	
-				}
-			});
-			$.ajax({
-			url: "add_rating.php",
-			data:'id='+id+'&star='+$('#tutorial-'+id+' #rating').val(),
-			type: "POST"
-			});
-		}
-
-		function resetRating(id) {
-			if($('#tutorial-'+id+' #rating').val() != 0) {
-				$('.demo-table #tutorial-'+id+' li').each(function(index) {
-					$(this).addClass('selected');
-					if((index+1) == $('#tutorial-'+id+' #rating').val()) {
-						return false;	
-					}
-				});
-			}
-		} 
-	</script>
+  
 </head>
 <body>
 
@@ -206,8 +172,8 @@ if (isset($_POST['submit'])) {
   $cnt = 1;
   if ($query->rowCount() > 0) {
       foreach ($results as $result) {
-          $_SESSION['brndid'] = $result->bid;
-          $providerID = $result->user_id;
+          /* $_SESSION['brndid'] = $result->bid;
+          $providerID = $result->user_id; */
 ?>
 
 <h1></h1>
@@ -232,48 +198,139 @@ if (isset($_POST['submit'])) {
 <!--  -->
 <!--  -->
 <!--favorite-->
-<?php
-$vhid = intval($_GET['vhid']);
-/* $sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid
-from tblvehicles join tblbrands
-on tblbrands.id=tblvehicles.VehiclesBrand
-where tblvehicles.id=:vhid"; */
-$sql = "SELECT * 
-from items 
-LEFT JOIN favorite
-ON items.id = favorite.itemId
-where items.id=:vhid AND favorite.userId=:userId AND delmode=0";
-$query = $dbh->prepare($sql);
-$query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
-$query->bindParam(':userId', $id, PDO::PARAM_STR);
-$query->execute();
-$results = $query->fetchAll(PDO::FETCH_OBJ);
-$cnt = 1;
-if ($query->rowCount() > 0) {
-    foreach ($results as $result) {
-        $_SESSION['brndid'] = $result->bid;
-        $providerID = $result->user_id;
-?>
-  <span>
-      <a href="item-details.php?vhid=<?= $vhid; ?>&cancelfavourite=<?= $id; ?>">
-        <i class="fa fa-heart iconOnly cancelFavorite" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
-      </a>
-  </span>
-<?php }}else{ ?>
-  <a href="item-details.php?vhid=<?= $vhid; ?>&addfavourite=<?= $id; ?>">
-    <i class="fa fa-heart-o iconOnly addFavorite" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
-  </a>
-<?php } ?>
+<form name="form" action="" method="post">
+  <?php
+  $vhid = intval($_GET['vhid']);
+  /* $sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid
+  from tblvehicles join tblbrands
+  on tblbrands.id=tblvehicles.VehiclesBrand
+  where tblvehicles.id=:vhid"; */
+  $sql = "SELECT * 
+  from items 
+  LEFT JOIN favorite
+  ON items.id = favorite.itemId
+  where items.id=:vhid AND favorite.userId=:userId AND delmode=0
+  LIMIT 1";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
+  $query->bindParam(':userId', $id, PDO::PARAM_STR);
+  $query->execute();
+  $results = $query->fetchAll(PDO::FETCH_OBJ);
+  $cnt = 1;
+  if ($query->rowCount() > 0) {
+      foreach ($results as $result) {
+          $_SESSION['brndid'] = $result->bid;
+          $providerID = $result->user_id;
+  ?>
+    <button name="cancelfavorite" value="<?= $id; ?>" style="background: none; border:none">
+      <i class="fa fa-heart iconOnly cancelfavorite" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
+    </button>
+  <?php }}else{ ?>
+    <button name="addfavorite" value="<?= $id; ?>" style="background: none; border:none">
+      <i class="fa fa-heart-o iconOnly addFavorite" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
+    </button>
+  <?php } ?>
+</form>
 <!--/favorite-->
 
 
-<!--  -->
-<!--  -->
-<!--  -->
+<!--rating-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+<script>
+  function highlightStar(obj,id) {
+    removeHighlight(id);		
+    $('.demo-table #tutorial-'+id+' li').each(function(index) {
+      $(this).addClass('highlight');
+      if(index == $('.demo-table #tutorial-'+id+' li').index(obj)) {
+        return false;	
+      }
+    });
+  }
 
-<!--  -->
-<!--  -->
-<!--  -->
+  function removeHighlight(id) {
+    $('.demo-table #tutorial-'+id+' li').removeClass('selected');
+    $('.demo-table #tutorial-'+id+' li').removeClass('highlight');
+  }
+
+  function addRating(obj,id) {
+    $('.demo-table #tutorial-'+id+' li').each(function(index) {
+      $(this).addClass('selected');
+      $('#tutorial-'+id+' #rating').val((index+1));
+      if(index == $('.demo-table #tutorial-'+id+' li').index(obj)) {
+        return false;	
+      }
+    });
+    $.ajax({
+    url: "add_rating.php",
+    data:'id='+id+'&rating='+$('#tutorial-'+id+' #rating').val(),
+    type: "POST"
+    });
+  }
+
+  function resetRating(id) {
+    if($('#tutorial-'+id+' #rating').val() != 0) {
+      $('.demo-table #tutorial-'+id+' li').each(function(index) {
+        $(this).addClass('selected');
+        if((index+1) == $('#tutorial-'+id+' #rating').val()) {
+          return false;	
+        }
+      });
+    }
+  } 
+</script>
+
+<?php
+  $vhid = intval($_GET['vhid']);
+  /* $sql = "SELECT * 
+  from items 
+  LEFT JOIN rating
+  ON items.id = rating.itemId
+  where items.id=:vhid OR rating.userId=:userId AND delmode=0
+  LIMIT 1"; */
+  $sql = "SELECT * 
+  from rating
+  where itemId=:vhid AND userId=:userId
+  LIMIT 1";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
+  $query->bindParam(':userId', $id, PDO::PARAM_STR);
+  $query->execute();
+  $results = $query->fetchAll(PDO::FETCH_OBJ);
+  $cnt = 1;
+  if ($query->rowCount() > 0) {
+      foreach ($results as $result) {
+          /* $_SESSION['brndid'] = $result->bid;
+          $providerID = $result->user_id; */
+          echo "abc";
+          echo $vhid;
+          echo $id;
+          echo $result->star;
+          echo "cba";
+?>
+
+  <div id="tutorial-<?php echo $vhid ?>">
+    <input type="hidden" name="rating" id="rating" value="<?php echo $result->star; ?>" />
+    <ul onMouseOut="resetRating(<?php echo $vhid; ?>);">
+      <?php
+        for($i=1;$i<=5;$i++) {
+          $selected = "";
+          if(!empty($result->star) && $i<=$result->star) {
+            $selected = "selected";
+          }
+      ?>
+      <li class='<?php echo $selected; ?>' 
+        onmouseover="highlightStar(this,<?php echo $vhid; ?>);"
+        onmouseout="removeHighlight(<?php echo $vhid; ?>);" 
+        onClick="addRating(this,<?php echo $vhid; ?>);">
+          &#9733;
+      </li>  
+      <?php }  ?>
+    <ul>
+  </div>
+
+<?php	}} ?>
+<!--/rating-->
+
 
 
 <!-- <i class='fas fa-comments' style='font-size:36px'></i> -->
@@ -321,7 +378,11 @@ if ($result->Vimage5 == "") {
 </script> -->
 
 <!-- actual link -->
-<h1><?= $id; ?></h1>
+<!-- <h1><?= $id; ?></h1>
+<h1><?= $result->category; ?></h1> -->
+<?php $category = $result->category; ?>
+
+
 <?php
   $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 ?>
@@ -366,8 +427,6 @@ if ($result->Vimage5 == "") {
   <!-- php global variable -->
 <?php
 $name = $result->productName;
-$category = $result->category;
-echo "abcabcabc" . $category;
         ?>
   <!--Listing-detail-->
 <section class="listing-detail">
@@ -908,7 +967,7 @@ if ($_SESSION['login']) {
 
     <!-- row 3( Similar-Cars )-->
     <div class="similar_cars">
-      <h3>Similar Cars</h3>
+      <h3>Similar Items</h3>
       <div class="row">
         <?php
 $bid = $_SESSION['brndid'];
@@ -919,19 +978,17 @@ where tblvehicles.VehiclesBrand=:bid"; */
 /* $sql="SELECT *
 from items
 where tblvehicles.VehiclesBrand=:bid"; */
-// $sql = "SELECT * from items";
-$sql = "SELECT * from items WHERE delmode=0 AND category=:category AND NOT id=:itemId AND NOT user_id=:userId";
+$sql = "SELECT * from items WHERE delmode=0 AND category=:category AND NOT user_id=:id";
 
 $query = $dbh->prepare($sql);
 // $query->bindParam(':bid', $bid, PDO::PARAM_STR);
 $query->bindParam(':category', $category, PDO::PARAM_STR);
-$query->bindParam(':itemId', $_GET['vhid'], PDO::PARAM_STR);
-$query->bindParam(':userId', $id, PDO::PARAM_STR);
+$query->bindParam(':id', $id, PDO::PARAM_STR);
 $query->execute();
 $results = $query->fetchAll(PDO::FETCH_OBJ);
 $cnt = 1;
 
-echo $results . $query->rowCount();
+echo $results . $query->rowCount() . $id;
 
 if ($query->rowCount() > 0) {
     foreach ($results as $result) {
@@ -1034,104 +1091,6 @@ if ($result->swap == 1) {
       </div>
     </div>
     <!--/Similar-Cars-->
-
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--rating-->
-	<table class="demo-table">
-		<tbody>
-
-<?php
-// echo "abc";
-  $vhid = intval($_GET['vhid']);
-  $id = 3;
-/* echo $vhid;
-echo $id; */
-  $sql = "SELECT * 
-  from rating
-  where itemId=:vhid AND userId=:userId
-  LIMIT 1";
-  /* $sql = "SELECT * 
-  from items 
-  LEFT JOIN rating
-  ON items.id = rating.itemId
-  where items.id=:vhid AND rating.userId=:userId AND delmode=0
-  LIMIT 1"; */
-/* echo $sql;
-echo $id;  */
-  $query = $dbh->prepare($sql);
-  $query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
-  $query->bindParam(':userId', $id, PDO::PARAM_STR);
-  $query->execute();
-  $results = $query->fetchAll(PDO::FETCH_OBJ);
-  $cnt = 1;
-/* echo $vhid;
-echo $id; */
-echo $query->rowCount();
-  /* if ($query->rowCount() === 0) {
-    $sql = "INSERT INTO rating
-      (itemId,userId)
-      VALUE(:vhid,:userId)";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
-    $query->bindParam(':userId', $id, PDO::PARAM_STR);
-    $query->execute();
-    echo "abc";
-    echo $sql;
-    echo $vhid;
-    echo $id;
-  } */
-  if ($query->rowCount() > 0) {
-      foreach ($results as $result) {
-          echo "abc";
-          echo $vhid;
-          echo $id;
-          echo $result->star;
-          echo $result->id;
-          echo "cba";
-?>
-  <!--  -->
-  <!--  -->
-  <!--  -->
-  <tr>
-    <td valign="top">
-
-      <div id="tutorial-<?php echo $result->id; ?>">
-        <!-- <input type="hidden" name="rating" id="rating" value="<?php echo $result->star; ?>" /> -->
-        <input type="hidden" name="rating" id="rating" value="<?php echo $result->star; ?>" />
-        <ul onMouseOut="resetRating(<?php echo $result->id; ?>);">
-          <?php
-            for($i=1;$i<=5;$i++) {
-              $selected = "";
-              if(!empty($result->star) && $i<=$result->star) {
-                $selected = "selected";
-              }
-          ?>
-          <!-- <li class='<?php echo $selected; ?>' onmouseover="highlightStar(this,<?php echo $tutorial["id"]; ?>);" onmouseout="removeHighlight(<?php echo $tutorial["id"]; ?>);" onClick="addRating(this,<?php echo $tutorial["id"]; ?>);">&#9733;</li>   -->
-          <li class='<?php echo $selected; ?>' 
-            onmouseover="highlightStar(this,<?php echo $result->id; ?>);"
-            onmouseout="removeHighlight(<?php echo $result->id; ?>);" 
-            onClick="addRating(this,<?php echo $result->id; ?>);"
-          >
-              &#9733;
-          </li>  
-          <?php }  ?>
-        <ul>
-      </div>
-
-      <!-- <div><?php echo $tutorial["description"]; ?></div> -->
-    </td>
-  </tr>
-  <!--  -->
-  <!--  -->
-  <!--  -->
-
-<?php	}} ?>
-<!--/rating-->
-    <!--  -->
-    <!--  -->
-    <!--  -->
 
   </div>
 </section>

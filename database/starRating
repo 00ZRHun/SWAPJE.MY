@@ -1,0 +1,19 @@
+<!-- <div id="tutorial-<?php echo $vhid ?>">
+    <input type="hidden" name="rating" id="rating" value="<?php echo $result->star; ?>" />
+    <ul onMouseOut="resetRating(<?php echo $vhid; ?>);">
+      <?php
+        for($i=1;$i<=5;$i++) {
+          $selected = "";
+          if(!empty($result->star) && $i<=$result->star) {
+            $selected = "selected";
+          }
+      ?>
+      <li class='<?php echo $selected; ?>' 
+        onmouseover="highlightStar(this,<?php echo $vhid; ?>);"
+        onmouseout="removeHighlight(<?php echo $vhid; ?>);" 
+        onClick="addRating(this,<?php echo $vhid; ?>);">
+          &#9733;
+      </li>  
+      <?php }  ?>
+    <ul>
+  </div> -->

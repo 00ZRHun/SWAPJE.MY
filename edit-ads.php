@@ -31,7 +31,8 @@
 			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/adsImages/".$_FILES["img4"]["name"]);
 			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/adsImages/".$_FILES["img5"]["name"]);
 			/* move_uploaded_file($_FILES["img1"]["tmp_name"],"img/adsImages/".$_FILES["img1"]["name"]);
-			$vimage1=$_FILES["img1"]["name"]; */
+			$vimage1=$_FILES
+			["img1"]["name"]; */
 			/* move_uploaded_file($_FILES["image"]["tmp_name"],"uploads/" . $_FILES["image"]["name"]);			
     		$location1=$_FILES["image"]["name"]; */
 
