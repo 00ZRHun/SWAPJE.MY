@@ -235,7 +235,7 @@
 														<div class="form-group">
 															<label class="col-sm-2 control-label">Title<span style="color:red">*</span></label>
 															<div class="col-sm-4">
-																<input type="text" name="userId" id="userId" class="form-control" required value="<?= $userId ?>">
+																<input type="hidden" name="userId" id="userId" class="form-control" required value="<?= $userId ?>">
 																<input type="text" name="title" id="title" class="form-control" value="<?php echo htmlentities($result->title);?>" required>
 															</div>
 

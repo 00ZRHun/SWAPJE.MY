@@ -98,7 +98,7 @@
       </select>
     </div>
   </form>
-  <?= $_POST['search']; ?>
+  <!-- <?= $_POST['search']; ?> -->
 
 </div>
 
@@ -161,7 +161,7 @@
             $query->execute();
             $results=$query->fetchAll(PDO::FETCH_OBJ);
             $cnt=1;
-            echo $sql . $_POST['search'] . $_POST['category'];
+// echo $sql . $_POST['search'] . $_POST['category'];
             if($query->rowCount() > 0)
             {
               foreach($results as $result)
