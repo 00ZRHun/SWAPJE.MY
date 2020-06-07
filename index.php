@@ -162,8 +162,19 @@
             $results=$query->fetchAll(PDO::FETCH_OBJ);
             $cnt=1;
 // echo $sql . $_POST['search'] . $_POST['category'];
-            if($query->rowCount() > 0)
-            {
+            if($query->rowCount() == 0){
+          ?>
+
+            <section class="about_us section-padding">
+              <div class="container">
+                <div class="section-header text-center">
+                  <h3>No matching records found</h3>
+                </div>
+              </div>
+            </section>
+            
+          <?php
+            } else {
               foreach($results as $result)
               {  
           ?>  
