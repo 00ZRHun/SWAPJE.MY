@@ -48,7 +48,7 @@
 <!-- /Header --> 
 
 <!-- Banners -->
-<!-- <section id="banner" class="banner-section">
+<section id="banner" class="banner-section">
   <div class="container">
     <div class="div_zindex">
       <div class="row">
@@ -56,6 +56,7 @@
           <div class="banner_content">
             <h1>Find the right item for you.</h1>
             <p>We have more than a thousand items for you to choose. </p>
+            <!-- <a href="page.php" class="btn">Read More <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a> -->
             <a href="page.php?type=aboutus" class="btn">
               Read More
               <span class="angle_arrow">
@@ -67,40 +68,9 @@
       </div>
     </div>
   </div>
-</section> -->
+</section>
 <!-- /Banners --> 
 
-<div class="header_search">
-  <!-- icon -->
-  <div id="search_toggle">
-    <i class="fa fa-search" aria-hidden="true"></i>
-  </div>
-  <!-- textbox -->
-  <form action="index.php" method="post" id="header-search-form">
-    <input type="text" placeholder="Search..." name="search" class="form-control">
-    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-  </form>
-  <!-- category -->
-  <form action="index.php" method="post" id="categoryForm">
-    <div class="col-sm-4">
-      <select name="category" id="category" class="form-control" required onChange="submit()">
-      <?php 
-          $sql = "SELECT * FROM category WHERE delmode=0 ORDER BY name ASC";
-
-          $query = $dbh -> prepare($sql);
-          $query->execute();
-          $results=$query->fetchAll(PDO::FETCH_OBJ);
-          if($query->rowCount() > 0){
-            foreach($results as $result){
-        ?>									
-          <option value="<?=$result->id;?>"><?=$result->name;?></option>
-        <?php }} ?>
-      </select>
-    </div>
-  </form>
-  <?= $_POST['search']; ?>
-
-</div>
 
 <!-- Body -->
   <!-- Resent Cat-->
@@ -131,37 +101,22 @@
           </ul>
         </div>
       <!-- </a> -->
-        
+
       <!-- row 3( car list ) -->
         <!-- Recently Listed New Cars -->
-
       <div class="tab-content">
         <!-- <div role="tabpanel" class="tab-pane active" id="resentnewcar"> -->
         <div id="latestItem">
 
           <?php 
-            if(isset($_REQUEST['category'])){
-              $sql = "SELECT * from items WHERE delmode=0 AND category=:category ORDER BY updationDate DESC";
-              $category = $_POST['category'];
-              $query = $dbh -> prepare($sql);
-              $query->bindParam(':category',$category,PDO::PARAM_STR);
-            }else if(isset($_REQUEST['search'])){
-              // $sql = "SELECT * from items WHERE delmode=0 AND productName LIKE '%:search%' ORDER BY updationDate DESC";
-              $sql = "SELECT * from items WHERE delmode=0 AND productName LIKE :search ORDER BY updationDate DESC";
-              $search = '%'.$_POST['search'].'%';
-              $query = $dbh -> prepare($sql);
-              $query->bindParam(':search',$search,PDO::PARAM_STR);
-            }else{
-              // $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
-              $sql = "SELECT * from items WHERE delmode=0 ORDER BY updationDate DESC";
-              $query = $dbh -> prepare($sql);
-            }
-            
-            
+            // $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
+            $sql = "SELECT * from items WHERE delmode=0 ORDER BY updationDate DESC";
+          
+            // $sql = "SELECT * from tblpostitem ORDER BY updationDate DESC";
+            $query = $dbh -> prepare($sql);
             $query->execute();
             $results=$query->fetchAll(PDO::FETCH_OBJ);
             $cnt=1;
-            echo $sql . $_POST['search'] . $_POST['category'];
             if($query->rowCount() > 0)
             {
               foreach($results as $result)

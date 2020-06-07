@@ -303,6 +303,8 @@ if ($result->Vimage5 == "") {
   <!-- php global variable -->
 <?php
 $name = $result->productName;
+$category = $result->category;
+echo "abcabcabc" . $category;
         ?>
   <!--Listing-detail-->
 <section class="listing-detail">
@@ -854,10 +856,14 @@ where tblvehicles.VehiclesBrand=:bid"; */
 /* $sql="SELECT *
 from items
 where tblvehicles.VehiclesBrand=:bid"; */
-$sql = "SELECT * from items";
+// $sql = "SELECT * from items";
+$sql = "SELECT * from items WHERE delmode=0 AND category=:category AND NOT id=:itemId AND NOT user_id=:userId";
 
 $query = $dbh->prepare($sql);
-$query->bindParam(':bid', $bid, PDO::PARAM_STR);
+// $query->bindParam(':bid', $bid, PDO::PARAM_STR);
+$query->bindParam(':category', $category, PDO::PARAM_STR);
+$query->bindParam(':itemId', $_GET['vhid'], PDO::PARAM_STR);
+$query->bindParam(':userId', $id, PDO::PARAM_STR);
 $query->execute();
 $results = $query->fetchAll(PDO::FETCH_OBJ);
 $cnt = 1;
