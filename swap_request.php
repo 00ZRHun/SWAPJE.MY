@@ -104,10 +104,27 @@ error_reporting(0);
                 $current_receiver_name = $current_receiver["firstName"] . " " . $current_receiver["lastName"];
                      
         ?>
-                <p style="margin-bottom: 0; margin-top: 1em"><?php echo htmlentities($current_receiver_name); ?> wants to swap your <?php echo htmlentities($result->itemName); ?> with <?php echo htmlentities($receiver_item_names); ?></p>
-                <a style='color: #000' href='item-details.php?vhid=<?php echo htmlentities($rResult->itemID) ?>'>View</a>
-                <a id="accept-request-btn" data-requestID="<?php echo $result->id ?>" style='color: #000'>Accept</a>
-                <a id="reject-request-btn" data-requestID="<?php echo $result->id ?>" style='color: #000'>Reject</a>
+                <div class="notification-list__item">                    
+                    <div class="d-flex flex-row">
+                        <p style="margin-bottom: 0;"><?php echo htmlentities($current_receiver_name); ?> wants to swap your <a href='item-details.php?vhid=<?php echo htmlentities($result->itemID)?>'" class="notification_swap-item"><?php echo htmlentities($result->itemName); ?></a> with 
+                        <?php for ($i = 0; $i < count($receiver_item_ids); $i++) {
+                            $current_item_id = $receiver_item_ids[$i];
+                            $current_item = get_item_detail($current_item_id, $result->receiver_id);
+                            $currentItemName = $current_item["productName"];  
+                            
+                            if($i != count($receiver_item_ids) - 1)
+                                $currentItemName .= ", ";
+                        ?>  
+                            <a href='item-details.php?vhid=<?php echo htmlentities($current_item_id)?>'" class="notification_swap-item"><?php echo htmlentities($currentItemName); ?></a>                     
+                            
+                        <?php } ?>        
+                        </p>
+                    </div>        
+                    <div class="notification-list__item-footer d-flex flex-row">
+                        <button id="accept-request-btn" data-requestID="<?php echo $result->id ?>" class="success-btn">Accept</button>
+                        <button id="reject-request-btn" data-requestID="<?php echo $result->id ?>" class="grey-btn">Reject</button>
+                    </div>                                            
+                </div>                
                 <?php
             }
         }
@@ -125,76 +142,56 @@ error_reporting(0);
                 $receiver_item_ids = explode(", ", $result->receiver_item_id);
                 $receiver_item_names = "";
 
-                $provider_item = get_item_detail($result->item_id, $result->provider_id);
+                $provider_item_id = $result->item_id;
+                $provider_item = get_item_detail($provider_item_id, $result->provider_id);
                 $provider_item_name = $provider_item["productName"];
 
-                foreach ($receiver_item_ids as $id) {
-                    $item = get_item_detail($id, $result->receiver_id);
+                for ($i = 0; $i < count($receiver_item_ids); $i++) {
+                    $item = get_item_detail($receiver_item_ids[$i], $result->receiver_id);
                     $receiver_item_names .= $item["productName"] . " ";
+
+                    if($i != count($receiver_item_ids) - 1)
+                        $receiver_item_names .= ", ";
                 }
 
                 $current_provider = get_user_detail($result->provider_id, $dbh);                
                 $current_provider_name = $current_provider["firstName"] . " " . $current_provider["lastName"];
                 
                 ?>
-                    <p style="margin-bottom: 0; margin-top: 1em;">You want to swap <?php echo htmlentities($receiver_item_names) ?> with <?php echo htmlentities($current_provider_name) ?>'s <?php echo htmlentities($provider_item_name) ?></p>
-                    <strong>
-                        <?php if ($result->status == -1) {
-                            echo "REJECTED";
-                        } ?>
-                        <?php if ($result->status == 1) {
-                            echo "ACCEPTED";
-                        } ?>
-                        <?php if ($result->status == 0) {
-                            echo "PENDING";
-                        } ?>
-                    </strong>
+                    <div class="notification-list__item">
+                        <p style="margin-bottom: 0; margin-top: 1em;">You want to swap 
+                            <?php for ($i = 0; $i < count($receiver_item_ids); $i++) {
+                                $current_item_id = $receiver_item_ids[$i];
+                                $current_item = get_item_detail($current_item_id, $result->receiver_id);
+                                $currentItemName = $current_item["productName"];  
+                                
+                                if($i != count($receiver_item_ids) - 1)
+                                    $currentItemName .= ", ";
+                            ?>  
+                                <a href='item-details.php?vhid=<?php echo htmlentities($current_item_id)?>'" class="notification_swap-item"><?php echo htmlentities($currentItemName); ?></a>                     
+                                
+                            <?php } ?>  
+                            with <?php echo htmlentities($current_provider_name) ?>'s <a href='item-details.php?vhid=<?php echo htmlentities($provider_item_id)?>'" class="notification_swap-item"><?php echo htmlentities($provider_item_name); ?></a>
+                        </p>
+                            <?php if ($result->status == -1) {
+                                echo "<span class='badge badge-danger'>REJECTED</span>";
+                            } ?>
+                            <?php if ($result->status == 1) {
+                                echo "<span class='badge badge-success'>ACCEPTED</span>";
+                            } ?>
+                            <?php if ($result->status == 0) {
+                                echo "<span class='badge badge-light'>PENDING</span>";
+                            } ?>                        
+                    </div>                    
         <?php                
             }
-        }
+        } else {
+            // echo "You don't have any requests yet.";
+        }            
         ?>
     </section>
     <!-- /Content -->
 
-    <!--Footer -->
-    <?php include('includes/footer.php');
-    ?>
-    <!-- /Footer-->
-
-    <!--Back to top-->
-    <div id='back-top' class='back-top'>
-        <a href='#top'>
-            <i class='fa fa-angle-up' aria-hidden='true'></i>
-        </a>
-    </div>
-    <!--/Back to top-->
-
-    <!--Login-Form -->
-    <?php include('includes/login.php');
-    ?>
-    <!--/Login-Form -->
-
-    <!--Register-Form -->
-    <?php include('includes/registration.php');
-    ?>
-    <!--/Register-Form -->
-
-    <!--Forgot-password-Form -->
-    <?php include('includes/forgotpassword.php');
-    ?>
-
-    <script src='assets/js/jquery.min.js'></script>
-
+    <script src="assets/js/jquery.min.js"></script>
     <!-- Logics -->
     <script src='js/swap/swap.js'></script>
-
-    <script src='assets/js/bootstrap.min.js'></script>
-    <script src='assets/js/interface.js'></script>
-    <script src='assets/switcher/js/switcher.js'></script>
-    <script src='assets/js/bootstrap-slider.min.js'></script>
-    <script src='assets/js/slick.min.js'></script>
-    <script src='assets/js/owl.carousel.min.js'></script>
-
-</body>
-
-</html>

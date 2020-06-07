@@ -4,7 +4,7 @@
         include('includes/config.php');
 
         // Provider's item data
-        $sql = "SELECT sr.*, item.productName as itemName
+        $sql = "SELECT sr.*, item.productName as itemName, item.id as itemID
                 FROM swap_records as sr
                 JOIN items as item
                 ON item.id = sr.item_id

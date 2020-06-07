@@ -15,6 +15,12 @@
   
   <title>SWAP.ME</title>
 
+  <!-- SWAPJE CSS + Google Icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="css/swapje/index.css">
+  <link rel="stylesheet" href="css/nav/nav.css">
+  <link rel="stylesheet" href="css/swapje/index.css"> 
+
   <!--Bootstrap -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
   <link rel="stylesheet" href="assets/css/style.css" type="text/css">

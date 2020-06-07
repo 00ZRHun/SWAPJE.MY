@@ -1,0 +1,82 @@
+.notification-section {
+    min-height: 100vh;
+    margin-top: 7em;
+}
+
+.notification-section .container {
+    max-width: 700px;
+}
+
+.notification-section .nav-tabs > li {
+    float: left !important;
+}
+
+.notification-section .nav-tabs {
+    width: max-content;    
+}
+
+.notification-section .nav-tabs>li.active>a, 
+.notification-section .nav-tabs>li.active>a:focus, 
+.notification-section .nav-tabs>li.active>a:hover {
+    border: none;
+}
+
+.notification-section .nav-item {
+    opacity: .5;
+    color: #808080;
+}
+
+.notification-section .nav-item, 
+.notification-section .nav-link {
+    background-color: #fff !important;
+    border: none;    
+}
+
+.notification-section .nav-tabs .active {    
+    border-bottom: 2px solid var(--primary-color) !important;
+    border-radius: 0;   
+    opacity: 1 !important; 
+
+    transition: all 100ms;    
+}
+
+.notification-section .tab-content {
+    margin-top: 2em;
+}
+
+/* Requests */
+.notification-list__item {
+    display: flex;
+    flex-flow: column;
+
+    align-items: flex-start;
+
+    box-shadow: 4px 4px 20px rgba(0,0,0,0.105);
+    padding: 1.25em 1.45em;
+    border-radius: 6px;
+
+    margin-bottom: 1.5em;
+}
+
+.notification-list__item p {
+    line-height: 1.2;
+    color: #000;
+    font-weight: bold;
+}
+
+.notification-list__item a:hover,
+.notification-list__item a:focus {
+    color: #0658f1 !important;
+    text-decoration: underline !important;
+}
+
+.notification_swap-item {
+    color: #0658f1;
+    font-weight: bold;
+    /* text-decoration: underline; */
+}
+
+.notification-list__item-footer, 
+.notification-list__item .badge {
+    margin-top: 1em;
+}
