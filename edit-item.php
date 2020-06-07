@@ -29,20 +29,18 @@
 			$rent=$_POST['rent'];
 			$swap=$_POST['swap'];
 			
-			
-			/* $vimage1=$_FILES["img1"]["name"];
-			move_uploaded_file($_FILES["img1"]["tmp_name"],"img/itemImages/".$_FILES["img1"]["name"]);
 			$vimage1=$_FILES["img1"]["name"];
 			$vimage2=$_FILES["img2"]["name"];
 			$vimage3=$_FILES["img3"]["name"];
 			$vimage4=$_FILES["img4"]["name"];
 			$vimage5=$_FILES["img5"]["name"];
-
 			move_uploaded_file($_FILES["img1"]["tmp_name"],"img/itemImages/".$_FILES["img1"]["name"]);
 			move_uploaded_file($_FILES["img2"]["tmp_name"],"img/itemImages/".$_FILES["img2"]["name"]);
 			move_uploaded_file($_FILES["img3"]["tmp_name"],"img/itemImages/".$_FILES["img3"]["name"]);
 			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/itemImages/".$_FILES["img4"]["name"]);
-			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/itemImages/".$_FILES["img5"]["name"]); */
+			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/itemImages/".$_FILES["img5"]["name"]);
+			
+			
 			
 
 			/* $sql="INSERT items(user_id, productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap)
@@ -90,6 +88,11 @@ user_id = 7, productName = ":productName", usedYear = 9, overview = ":overview",
 					value = :value,
 					payPalBusinessAccount = :payPalBusinessAccount,
 				 	contactNo = :contactNo,
+					Vimage1 = :vimage1,
+					Vimage2 = :vimage2,
+					Vimage3 = :vimage3,
+					Vimage4 = :vimage4,
+					Vimage5 = :vimage5,
 					sell = :sell,
 					rent = :rent,
 					swap = :swap
@@ -104,18 +107,18 @@ user_id = 7, productName = ":productName", usedYear = 9, overview = ":overview",
 			$query->bindParam(':value',$value,PDO::PARAM_STR);
 			$query->bindParam(':payPalBusinessAccount',$payPalBusinessAccount,PDO::PARAM_STR);
 			$query->bindParam(':contactNo',$contactNo,PDO::PARAM_STR);
-			$query->bindParam(':sell',$sell,PDO::PARAM_STR);
-			$query->bindParam(':rent',$rent,PDO::PARAM_STR);
-			$query->bindParam(':swap',$swap,PDO::PARAM_STR);
-			
-			// $query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
-			/* $query->bindParam(':userId',$userId,PDO::PARAM_STR);
-			$query->bindParam(':productName',$productName,PDO::PARAM_STR);
-			$query->bindParam(':usedYear',$usedYear,PDO::PARAM_STR);
+			$query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
 			$query->bindParam(':vimage2',$vimage2,PDO::PARAM_STR);
 			$query->bindParam(':vimage3',$vimage3,PDO::PARAM_STR);
 			$query->bindParam(':vimage4',$vimage4,PDO::PARAM_STR);
 			$query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR);
+			$query->bindParam(':sell',$sell,PDO::PARAM_STR);
+			$query->bindParam(':rent',$rent,PDO::PARAM_STR);
+			$query->bindParam(':swap',$swap,PDO::PARAM_STR);
+			
+			/* $query->bindParam(':userId',$userId,PDO::PARAM_STR);
+			$query->bindParam(':productName',$productName,PDO::PARAM_STR);
+			$query->bindParam(':usedYear',$usedYear,PDO::PARAM_STR);
 			*/
 			// $query->bindParam(':editId',$editId,PDO::PARAM_STR);
 			$query->bindParam(':id',$editId,PDO::PARAM_STR);

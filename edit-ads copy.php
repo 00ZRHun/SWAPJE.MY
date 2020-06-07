@@ -20,6 +20,11 @@
 			$contactNo=$_POST['contactNo'];
 			$description=$_POST['description'];
 			$id=$_GET['id'];
+			move_uploaded_file($_FILES["img1"]["tmp_name"],"img/adsImages/".$_FILES["img1"]["name"]);
+			$vimage1=$_FILES["img1"]["name"];
+			/* move_uploaded_file($_FILES["image"]["tmp_name"],"uploads/" . $_FILES["image"]["name"]);			
+    		$location1=$_FILES["image"]["name"]; */
+			/* 
 			$vimage1=$_FILES["img1"]["name"];
 			$vimage2=$_FILES["img2"]["name"];
 			$vimage3=$_FILES["img3"]["name"];
@@ -29,11 +34,7 @@
 			move_uploaded_file($_FILES["img2"]["tmp_name"],"img/adsImages/".$_FILES["img2"]["name"]);
 			move_uploaded_file($_FILES["img3"]["tmp_name"],"img/adsImages/".$_FILES["img3"]["name"]);
 			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/adsImages/".$_FILES["img4"]["name"]);
-			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/adsImages/".$_FILES["img5"]["name"]);
-			/* move_uploaded_file($_FILES["img1"]["tmp_name"],"img/adsImages/".$_FILES["img1"]["name"]);
-			$vimage1=$_FILES["img1"]["name"]; */
-			/* move_uploaded_file($_FILES["image"]["tmp_name"],"uploads/" . $_FILES["image"]["name"]);			
-    		$location1=$_FILES["image"]["name"]; */
+			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/adsImages/".$_FILES["img5"]["name"]); */
 
 			/* $sql="INSERT INTO ads(userId,title,category,companyName,payPalBusinessAccount,contactNo,description,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5)
 			 VALUES(:userId,:title,:category,:companyName,:payPalBusinessAccount,:contactNo,:description,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5)"; */
@@ -46,8 +47,8 @@
 			 set
 			 title=:title
 			 where id=:id"; */
-		/* $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "UPDATE tbl_image SET image_location ='$location1' WHERE tbl_image_id = '$get_id' "; */
+			 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			 $sql = "UPDATE tbl_image SET image_location ='$location1' WHERE tbl_image_id = '$get_id' ";
 			
 			$sql =
 			"update ads
@@ -58,12 +59,13 @@
 			 payPalBusinessAccount=:payPalBusinessAccount,
 			 contactNo=:contactNo,
 			 description=:description,
-			 Vimage1=:vimage1,
-			 Vimage2=:vimage2,
-			 Vimage3=:vimage3,
-			 Vimage4=:vimage4,
-			 Vimage5=:vimage5
+			 Vimage1=:Vimage1
 			 where id=:id";
+			 /* 
+			 Vimage2=:Vimage2,
+			 Vimage3=:Vimage3,
+			 Vimage4=:Vimage4,
+			 Vimage5=:Vimage5 */
 			$query = $dbh->prepare($sql);
 			// $query->bindParam(':userId',$userId,PDO::PARAM_STR);
 			$query->bindParam(':title',$title,PDO::PARAM_STR);
@@ -72,12 +74,12 @@
 			$query->bindParam(':payPalBusinessAccount',$payPalBusinessAccount,PDO::PARAM_STR);
 			$query->bindParam(':contactNo',$contactNo,PDO::PARAM_STR);
 			$query->bindParam(':description',$description,PDO::PARAM_STR);
-			$query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
+			$query->bindParam(':id',$id,PDO::PARAM_STR);
+			/* $query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
 			$query->bindParam(':vimage2',$vimage2,PDO::PARAM_STR);
 			$query->bindParam(':vimage3',$vimage3,PDO::PARAM_STR);
 			$query->bindParam(':vimage4',$vimage4,PDO::PARAM_STR);
-			$query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR);
-			$query->bindParam(':id',$id,PDO::PARAM_STR);
+			$query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR); */
 			$query->execute();
 			
 			// $msg="Profile Updated Successfully".$sql.$name.$mobileno.$dob;
