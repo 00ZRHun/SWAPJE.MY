@@ -52,7 +52,7 @@
                       $query->execute();
                       $results = $query->fetchAll(PDO::FETCH_OBJ);
 
-                      $id = 100;
+                      $id = -1;
 
                       if ($query->rowCount() > 0) {
                         foreach ($results as $result) {
@@ -97,12 +97,14 @@
         <!-- <a href="contact-us.php">Contact Us</a> -->
         <?php if ($_SESSION['login']) { ?>
           <button class="primary-btn" onclick="window.location.href = 'post-item.php'">Post Item</button>
-          <!-- <!-- <a class="nav-link" href="manage-item.php">Manage Item</a> -->
+          <!-- <a class="nav-link" href="manage-item.php">Manage Item</a> -->
         <?php } ?>
           
 
       
   </nav>
   <!-- Navigation end -->
-
 </header>
+
+<?php $userId = $id; ?>
+<!-- <h1><?= $userId; ?></h1> -->
