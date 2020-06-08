@@ -58,33 +58,7 @@ error_reporting(0);
 
   <section class="home-section">
     <div class="container">
-      <h5>Items Browser</h5>
-      <div class="header_search">
-        <!-- textbox -->
-        <form action="index.php" method="post" id="header-search-form">
-          <input type="text" placeholder="Search..." name="search" class="form-control">
-          <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-        </form>
-        <!-- category -->
-        <form action="index.php" method="post" id="categoryForm">
-          <select name="category" id="category" class="form-control" required onChange="submit()">
-            <?php
-            $sql = "SELECT * FROM category WHERE delmode=0 ORDER BY name ASC";
-
-            $query = $dbh->prepare($sql);
-            $query->execute();
-            $results = $query->fetchAll(PDO::FETCH_OBJ);
-            if ($query->rowCount() > 0) {
-              foreach ($results as $result) {
-            ?>
-                <option value="<?= $result->id; ?>"><?= $result->name; ?></option>
-            <?php }
-            } ?>
-          </select>
-        </form>
-        <!-- <?= $_POST['search']; ?> -->
-
-      </div>
+      <h5>Items Browser</h5>      
 
       <!-- Body -->
 

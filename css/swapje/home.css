@@ -121,18 +121,11 @@
         height: 200px !important;
     }
 
-    .home-section #categoryForm {
-        width: 35% !important;
-    }
 }
 
 @media screen and (min-width: 1200px) {
     .home-item-grid {
         grid-template-areas: 'item item item';
-    }
-    
-    .home-section .header_search{
-        max-width: 500px !important;
     }
     
 }
