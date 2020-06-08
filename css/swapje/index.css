@@ -13,9 +13,10 @@ button {
 }
 
 .primary-btn {
-    background-color: var(--primary-color) !important;
-    border: none;
-    color: #fff;    
+    /* background-color: var(--primary-color) !important; */
+    border: 1.5px solid #000;
+    color: #000;   
+    background: transparent; 
     padding: .5em .65em;
 }
 
@@ -33,7 +34,6 @@ button {
     padding: .5em .65em;
 }
 
-.primary-btn:hover, 
 .success-btn:hover {
     color: #fff !important;
     cursor: pointer;
@@ -42,11 +42,12 @@ button {
     transition: filter 300ms ease-out;
 }
 
+.primary-btn:hover, 
 .grey-btn:hover {
     cursor: pointer;
-    filter: brightness(90%);
+    opacity: .75;
 
-    transition: filter 300ms ease-out;
+    transition: opacity 200ms ease-out;
 }
 
 .form-control {

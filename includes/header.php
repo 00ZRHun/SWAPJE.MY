@@ -6,15 +6,32 @@
       <a href="index.php"><img class="logo" src="assets/images/logo/cover2.png" alt="logo" /></a>
       <!-- search( icon & textbox ) -->
       <div class="header_search">
-        <!-- icon -->
-        <!-- <div id="search_toggle">
-          <i class="fa fa-search" aria-hidden="true"></i>
-        </div> -->
         <!-- textbox -->
-        <form action="#" method="get" id="header-search-form">
-          <input type="text" placeholder="Search..." class="form-control">
+        <form action="index.php" method="post" id="header-search-form">
+          <input type="text" placeholder="Search..." name="search" class="form-control">
           <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
         </form>
+        
+        <!-- category -->
+        <form action="index.php" method="post" id="categoryForm">
+          <select name="category" id="category" class="form-control" required onChange="submit()">
+            <option value="" disabled selected></option>
+            <?php
+            $sql = "SELECT * FROM category WHERE delmode=0 ORDER BY name ASC";
+
+            $query = $dbh->prepare($sql);
+            $query->execute();
+            $results = $query->fetchAll(PDO::FETCH_OBJ);
+            if ($query->rowCount() > 0) {
+              foreach ($results as $result) {
+            ?>
+                <option value="<?= $result->id; ?>"><?= $result->name; ?></option>
+            <?php }
+            } ?>
+          </select>
+        </form>
+        <!-- <?= $_POST['search']; ?> -->
+
       </div>
       <!-- nav__main-content -->
       <?php if ($_SESSION['login']) { ?>
