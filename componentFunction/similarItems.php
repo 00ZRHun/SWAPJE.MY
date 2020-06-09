@@ -3,14 +3,17 @@
    <h3>Similar Items</h3>
    <div class="item-grid">
      <?php
-      $sql = "SELECT * from items WHERE delmode=0 AND category=:category AND NOT user_id=:id";
+      $sql = "SELECT * from items WHERE delmode=0 AND category=:category AND NOT user_id=:userId";
       $query = $dbh->prepare($sql);
-      $query->bindParam(':category', $result->category, PDO::PARAM_STR);
-      $query->bindParam(':id', $id, PDO::PARAM_STR);
+      $query->bindParam(':category', $category, PDO::PARAM_STR);
+      $query->bindParam(':userId', $userId, PDO::PARAM_STR);
       $query->execute();
       $results = $query->fetchAll(PDO::FETCH_OBJ);
       $cnt = 1;
       // echo $results . $query->rowCount() . $id;
+      /* echo "<br>sql = " . $sql;
+      echo "<br>category = " . $category;
+      echo "<br>userId = " . $userId; */
 
       if ($query->rowCount() > 0) {
         foreach ($results as $result) {
