@@ -2,17 +2,12 @@
 <div role="tabpanel" class="tab-pane active" id="sell">
     <p>
         <!-- payment( PayPal ) -->
-        <div id="payment-box">
-                <!-- <img src="images/camera.jpg" /> -->
-                <h4 class="txt-title">
-                    Product Name :
-                    <?php echo htmlentities($name); ?>
-                </h4>
-                <div class="txt-price">
+        <div id="payment-box" class="payment-box">                                
+                <h5 class="txt-price" style="margin: 0">
                     Total Price :
                     RM<?php echo htmlentities($result->totalPrice); ?>
-                </div>
-                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+                </h5>
+                <form style="margin-left: auto" action="https://www.sandbox.paypal.com/cgi-bin/webscr"
                     method="post" target="_top">
                     <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount); ?>'>
                     <input type='hidden' name='item_name' value='<?php echo htmlentities($name); ?>'>
@@ -28,10 +23,11 @@
                         value='http://localhost:8888/Renting%20System/SellRentSwap_System/return.php'>
                     <input type="hidden" name="cmd" value="_xclick">
 
-                    <input
-                        type="submit" name="pay_now" id="pay_now"
-                        Value="Pay Now"
+                    <button
+                        type="submit" name="pay_now" id="pay_now" class="primary-btn"
                     >
+                    Pay Now
+                    </button>
                 </form>
         </div>
     </p>

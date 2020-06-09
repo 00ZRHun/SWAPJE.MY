@@ -1,4 +1,4 @@
-<form name="form" action="" method="post">
+<form class="favourite-form" name="form" action="" method="post">
   <?php
   $vhid = intval($_GET['vhid']);
   /* $sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid
@@ -22,12 +22,12 @@
           $_SESSION['brndid'] = $result->bid;
           $providerID = $result->user_id;
   ?>
-    <button name="cancelfavorite" value="<?= $id; ?>" style="background: none; border:none">
-      <i class="fa fa-heart iconOnly cancelfavorite" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
+    <button class="favourite-icon" name="cancelfavorite" value="<?= $id; ?>">
+      <i class="fa fa-heart iconOnly cancelfavorite" aria-hidden="true" id="heartIcon"></i>
     </button>
   <?php }}else{ ?>
-    <button name="addfavorite" value="<?= $id; ?>" style="background: none; border:none">
-      <i class="fa fa-heart-o iconOnly addFavorite" aria-hidden="true" style="color: red; font-size: 100px" id="heartIcon"></i>
+    <button class="favourite-icon" name="addfavorite" value="<?= $id; ?>">
+      <i class="fa fa-heart-o iconOnly addFavorite" aria-hidden="true" id="heartIcon"></i>
     </button>
   <?php } ?>
 </form>
