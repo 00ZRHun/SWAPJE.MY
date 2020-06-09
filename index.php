@@ -62,7 +62,7 @@ error_reporting(0);
 
       <!-- Body -->
 
-      <div id="latestItem" class="home-item-grid">
+      <div id="latestItem" class="item-grid">
 
         <?php
         if (isset($_REQUEST['category'])) {

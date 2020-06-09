@@ -66,3 +66,94 @@ button {
 .badge-success {
     background-color: #09c976 !important;
 }
+
+/* Grid & Card */
+
+.item-grid {
+    margin-top: 2em;
+    display: grid;
+    grid-template-areas: 'item';
+    min-width: 0 !important;
+    gap: 1em;
+}
+
+.item-grid .card-image-padding {
+    padding: 0 .8em;
+}
+
+/* Card */
+.item-grid .card{
+    border: 2px solid #000;
+    z-index: 1;        
+    padding: .8em 0 !important;
+    display: flex;
+    flex-flow: column;
+}
+
+.item-grid .card:hover {
+    cursor: pointer;
+    opacity: .8;
+    transition: all 300ms ease-out;
+}
+
+.item-grid .card img {         
+    object-fit: contain !important;
+    margin-bottom: auto;    
+    width: 100%;
+}
+
+.item-grid .card-body {
+    margin-top: .8em;
+    border-top: 2px solid #000000;
+    padding: 1em;    
+}
+
+.card-description-label {
+    font-size: 1.5rem;
+    font-weight: bold !important;
+    margin: 0 !important;
+    margin-right: auto !important;
+    margin-bottom: .6em !important;
+}
+
+.item-grid .card-text {
+    margin-top: 1em;    
+    line-height: 1.2;    
+}
+
+.card-description-text,
+.item-grid .card-text {
+    opacity: .75;
+}
+
+.item-grid .card-item-description {
+    margin: auto 0;
+}
+
+.item-grid .card-footer {        
+    display: flex;
+    align-items: center;    
+    justify-content: space-evenly;   
+    background-color: #f0f0f1; 
+    padding: 1em 0;
+    margin: auto 1em 0 1em;
+}
+
+
+@media screen and (min-width: 768px) {
+    .item-grid {
+        grid-template-areas: 'item item';
+    }
+
+    .item-grid .card img {
+        height: 200px !important;
+    }
+
+}
+
+@media screen and (min-width: 1200px) {
+    .item-grid {
+        grid-template-areas: 'item item item';
+    }
+    
+}

@@ -25,21 +25,26 @@
             $results = $query->fetchAll(PDO::FETCH_OBJ);
         ?>
 
-        <h2>Item you have:<?=$user_results["id"];?></h2>
+        <!-- <h2>Item you have:<?=$user_results["id"];?></h2> -->
+        <h2>Item you have: </h2>
         <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
         <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id); ?>">
         <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID); ?>">
 
+        <div class="swap-item-list">
             <?php
                 foreach ($results as $result) {
             ?>
-            <input type="checkbox" name="receiver_item_id" id="<?php echo htmlentities($result->productName) ?>" value="<?php echo htmlentities($result->itemID) ?>" id="" />
-            <label for="<?php echo htmlentities($result->productName) ?>"><?php echo htmlentities($result->productName) ?></label><br />
+            <div class="swap-item">
+                <input type="checkbox" name="receiver_item_id" id="<?php echo htmlentities($result->productName) ?>" value="<?php echo htmlentities($result->itemID) ?>" id="" />
+                <label for="<?php echo htmlentities($result->productName) ?>"><?php echo htmlentities($result->productName) ?></label><br />
+            </div>
             <?php
                 }
             ?>
+        </div>
 
-    <button id="swap-with-owner-btn">Swap with owner</button>
+    <button id="swap-with-owner-btn" style="margin-top: 1em" class="primary-btn">Swap with owner</button>
     </p>
 </div>
 <!--/Swap-->
