@@ -188,11 +188,11 @@ if (isset($_POST['submit'])) {
       <?php
       $vhid = intval($_GET['vhid']);
       $sql = "SELECT * 
-  from items 
-  LEFT JOIN favorite
-  ON items.id = favorite.itemId
-  where items.id=:vhid AND delmode=0
-  LIMIT 1";
+        from items 
+        LEFT JOIN favorite
+        ON items.id = favorite.itemId
+        where items.id=:vhid AND delmode=0
+        LIMIT 1";
       $query = $dbh->prepare($sql);
       $query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
       // $query->bindParam(':userId', $id, PDO::PARAM_STR);
@@ -225,10 +225,14 @@ if (isset($_POST['submit'])) {
           <?php include 'componentFunction/shareOnFacebookAndTwitter.php'; ?>
           <!--/shareOnFacebookAndTwitter-->
 
-          <!-- php global variable -->
+          <!--php global variable-->
           <?php
-          $name = $result->productName;
+            $name = $result->productName;
+            $category = $result->category;
           ?>
+          <!--/php global variable-->
+
+          
           <!--Listing-detail-->
 
           <!--main_features-->
@@ -261,12 +265,12 @@ if (isset($_POST['submit'])) {
             </div>
           </div>
 
-      <?php }
-      } ?>
-
       <!--Similar-Items-->
       <?php include 'componentFunction/similarItems.php'; ?>
       <!--/Similar-Items-->
+
+      <?php }} ?>
+
 
     </div>
     <!-- Container -->

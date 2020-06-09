@@ -250,12 +250,18 @@
 															<h4><b>Upload Images</b></h4>
 														</div>
 													</div>
+
+													<a href="webcamImage">
+														<i class="fa fa-camera" aria-hidden="true" style="font-size:42px"></i>
+													</a>
+
 													<!-- row 2( upload image ) -->
 													<div class="form-group">
 														<div class="col-sm-4">
 															Image 1
 															<span style="color:red">*</span>
-															<input type="file" name="img1" required>
+															<input type="file" name="img1" accept="image/*" multiple required>
+															<!-- <input type="file" name="img1" accept="image/*" multiple required> -->
 														</div>
 														<div class="col-sm-4">
 															Image 2

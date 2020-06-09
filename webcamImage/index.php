@@ -20,13 +20,21 @@
                 <div id="my_camera"></div>
                 <br/>
                 <input type=button value="Take Snapshot" onClick="take_snapshot()">
-                <input type="hidden" name="image" class="image-tag">
+                <?php for($i=0; $i<60; $i++){ ?>
+                    <!-- <input type="hidden" name="image" class="image-tag"> -->
+                    <!-- <input type="text" name="image[<?=$i;?>]" class="image-tag[<?=$i;?>]"> -->
+                    <input type="hidden" name="image[]" class="image-tag<?=$i;?>">
+                <?php } ?>
             </div>
             
-            <div class="col-md-6">
-                <div id="results">Your captured image will appear here...</div>
-            </div>
-            
+            <div class="col-md-12">Your captured image will appear here...</div>
+
+            <?php for($i=0; $i<60; $i++){ ?>
+                <div class="col-md-6">
+                    <div id="results[<?=$i;?>]"></div>
+                </div>
+            <?php } ?>
+
             <div class="col-md-12 text-center">
                 <br/>
                 <button class="btn btn-success">Submit</button>
@@ -37,6 +45,8 @@
   
 <!-- Configure a few settings and attach camera -->
 <script language="JavaScript">
+    var i = 0;
+
     Webcam.set({
         width: 490,
         height: 390,
@@ -48,8 +58,28 @@
   
     function take_snapshot() {
         Webcam.snap( function(data_uri) {
-            $(".image-tag").val(data_uri);
-            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+            // alert(".image-tag"+i);
+            
+            // var className = ".image-tag"+i;
+            // $(className).val(data_uri);
+            // $(".image-tag"+[i]).val(data_uri);
+
+            // var className = ".image-tag["+i+"]";
+            // var className = ".image-tag"+[i];
+            var className = ".image-tag"+i;
+            $(className).val(data_uri);
+            // alert(className);
+            
+            // document.getElementById('results'+[i]).innerHTML = '<img src="'+data_uri+'"/>';
+            document.getElementById('results['+i+']').innerHTML = '<img src="'+data_uri+'"/>';
+            
+            // echo $i;
+            // if(i!===2){
+            if(i<60){
+                i++;
+            }else{
+                alert("Sorry, the limit has been reached");
+            }
         } );
     }
 </script>
