@@ -11,6 +11,7 @@
 .item-detail__header h6 {
     margin-left: auto;
     margin-right: 0;
+    margin-bottom: 6.5px;
 }
 
 .demo-table {
@@ -174,4 +175,11 @@
 .swap-item label {
     margin-bottom: 0;
     margin-left: 5px;
+}
+
+@media screen and (min-width: 768px) {
+    .item-detail__header h6 {
+        margin-left: 0 !important;
+        margin-right: auto !important;
+    }
 }
