@@ -42,6 +42,8 @@
 .navbar .primary-btn {
     margin-left: auto;
     min-width: 80px !important;
+    font-size: 1rem;
+    min-height: 48px;
 }
 
 .navbar-collapse {
@@ -187,6 +189,11 @@
      
     .header_search{
         max-width: 320px !important;
+    }
+
+    .navbar .primary-btn {
+        min-height: unset;
+        font-size: unset;
     }
 }
 
