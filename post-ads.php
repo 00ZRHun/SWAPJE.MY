@@ -12,6 +12,67 @@
 		// insert data into ads
 		if(isset($_POST['submit']))
 		{
+			// $folderPath = "upload/";
+			$targetDir = "img/adsImages/";
+			$imagesArr = array();
+
+			$images = array_filter($_POST['image']);
+
+			for($i=0; $i<count($images); $i++){
+				// if($image[$i] !== null){
+				if(is_null($images[$i])){
+					echo "NOT null";
+				}else {
+					echo "null";
+				}
+				// if(!is_null($image[$i])){
+					echo $images[$i] . "<br>";
+					$image_parts = explode(";base64,", $images[$i]);
+				// if($image_parts !== ""){
+			
+					$image_type_aux = explode("image/", $image_parts[0]);
+					$image_type = $image_type_aux[1];
+				
+					$image_base64 = base64_decode($image_parts[1]);
+					$fileName = uniqid() . '.png';
+				
+					$imagesArr[] = $fileName;
+
+					$file = $targetDir . $fileName;
+					file_put_contents($file, $image_base64);
+				// }
+			}
+			// 
+			// 
+			// 
+			// File upload configuration
+			// $targetDir = "uploads/";
+			$allowTypes = array('jpg','png','jpeg','gif');
+			
+			// $images = array();
+			$images_arr = array();
+			foreach($_FILES['images']['name'] as $key=>$val){
+				$image_name = $_FILES['images']['name'][$key];
+				$tmp_name   = $_FILES['images']['tmp_name'][$key];
+				$size       = $_FILES['images']['size'][$key];
+				$type       = $_FILES['images']['type'][$key];
+				$error      = $_FILES['images']['error'][$key];
+			
+				// File upload path
+				$fileName = basename($_FILES['images']['name'][$key]);
+				$targetFilePath = $targetDir . $fileName;
+				
+				// Check whether file type is valid
+				$fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+				if(in_array($fileType, $allowTypes)){    
+					// Store images on the server
+					if(move_uploaded_file($_FILES['images']['tmp_name'][$key],$targetFilePath)){
+						$imagesArr[] = $fileName;
+						$images_arr[] = $targetFilePath;
+					}
+				}
+			}
+
 			$userId=$_POST['userId'];
 			$title=$_POST['title'];
 			$category=$_POST['category'];
@@ -19,19 +80,23 @@
 			$payPalBusinessAccount=$_POST['payPalBusinessAccount'];
 			$contactNo=$_POST['contactNo'];
 			$description=$_POST['description'];
-			$vimage1=$_FILES["img1"]["name"];
-			$vimage2=$_FILES["img2"]["name"];
-			$vimage3=$_FILES["img3"]["name"];
-			$vimage4=$_FILES["img4"]["name"];
-			$vimage5=$_FILES["img5"]["name"];
-			move_uploaded_file($_FILES["img1"]["tmp_name"],"img/adsImages/".$_FILES["img1"]["name"]);
-			move_uploaded_file($_FILES["img2"]["tmp_name"],"img/adsImages/".$_FILES["img2"]["name"]);
-			move_uploaded_file($_FILES["img3"]["tmp_name"],"img/adsImages/".$_FILES["img3"]["name"]);
-			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/adsImages/".$_FILES["img4"]["name"]);
-			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/adsImages/".$_FILES["img5"]["name"]);
 
-			$sql="INSERT INTO ads(userId,title,category,companyName,payPalBusinessAccount,contactNo,description,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5)
-			 VALUES(:userId,:title,:category,:companyName,:payPalBusinessAccount,:contactNo,:description,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5)";
+			$images=implode(", ", $imagesArr);
+			/* $myJSON=json_encode($images_arr);
+			echo $myJSON; */
+			// $images=var_dump($images_arr);
+			// $images=$_POST['images'];
+
+			/* $vimage1=$_FILES["img1"]["name"];
+			move_uploaded_file($_FILES["img1"]["tmp_name"],"img/adsImages/".$_FILES["img1"]["name"]); */
+
+
+			/* $sql="INSERT INTO ads(userId,title,category,companyName,payPalBusinessAccount,contactNo,description,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5)
+			 VALUES(:userId,:title,:category,:companyName,:payPalBusinessAccount,:contactNo,:description,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5)"; */
+			$sql="INSERT INTO ads(userId,title,category,companyName,payPalBusinessAccount,contactNo,description,images)
+			 VALUES(:userId,:title,:category,:companyName,:payPalBusinessAccount,:contactNo,:description,:images)";
+			/* $sql="INSERT INTO ads(userId,title,category,companyName,payPalBusinessAccount,contactNo,description)
+			 VALUES(:userId,:title,:category,:companyName,:payPalBusinessAccount,:contactNo,:description)"; */
 			$query = $dbh->prepare($sql);
 			$query->bindParam(':userId',$userId,PDO::PARAM_STR);
 			$query->bindParam(':title',$title,PDO::PARAM_STR);
@@ -40,21 +105,21 @@
 			$query->bindParam(':payPalBusinessAccount',$payPalBusinessAccount,PDO::PARAM_STR);
 			$query->bindParam(':contactNo',$contactNo,PDO::PARAM_STR);
 			$query->bindParam(':description',$description,PDO::PARAM_STR);
-			$query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
-			$query->bindParam(':vimage2',$vimage2,PDO::PARAM_STR);
-			$query->bindParam(':vimage3',$vimage3,PDO::PARAM_STR);
-			$query->bindParam(':vimage4',$vimage4,PDO::PARAM_STR);
-			$query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR);
+			$query->bindParam(':images',$images,PDO::PARAM_STR);
+
+			// $query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
+			
+				
 			
 			$query->execute();
 			$lastInsertId = $dbh->lastInsertId();
 			if($lastInsertId)
 			{
-				$msg="Ads posted successfully";
+				$msg="Ads posted successfully" . $images_arr . $images;
 			}
 			else 
 			{
-				$error="Something went wrong. Please try again" . $userId . $sql;
+				$error="Something went wrong. Please try again" . $userId . $sql . "</br>" . $images_arr . $images;
 			}
 
 		}
@@ -161,7 +226,16 @@
 							<div class="page-title text-center">
 								<h2 class="">Post Ads</h2>
 							</div>
-							
+<h1>
+<?php if(!empty($images_arr)){ 
+print_r($images_arr);
+echo "yes";
+}					?>	
+<?= $images_arr ?>	
+<?= "asdcv" ?>	
+<?= $images ?>	
+<?= "abc" ?>	
+</h1>
 							<!-- form 1( basic info ) -->
 							<div class="row">
 								<div class="col-md-12">
@@ -173,7 +247,8 @@
 												if($error){
 													?>
 													<div class="errorWrap">
-														<strong>ERROR</strong>:<?php echo htmlentities($error); ?>
+<!-- BUG -->
+														<!-- <strong>ERROR</strong>:<?php echo htmlentities($error); ?> -->
 													</div>
 													<?php 
 												} 
@@ -189,6 +264,7 @@
 											<div class="panel-body">
 												<!-- form start -->
 												<form method="post" class="form-horizontal" enctype="multipart/form-data">
+												<!-- <form method="post" id="uploadForm"         enctype="multipart/form-data" action="upload.php"> -->
 													<!-- row 1 -->
 													<div class="form-group">
 														<label class="col-sm-2 control-label">Title<span style="color:red">*</span></label>
@@ -255,36 +331,28 @@
 														<i class="fa fa-camera" aria-hidden="true" style="font-size:42px"></i>
 													</a>
 
+													<div class="form-group">
+														<!--galleryPic-->
+														<label>Choose Images</label>
+														<input type="file" name="images[]" id="images" accept="image/*" multiple >
+														<!-- <input type="submit" name="submit" value="UPLOAD"/> -->
+
+														<!--/galleryPic-->
+													</div>
+
 													<!-- row 2( upload image ) -->
 													<div class="form-group">
 														<div class="col-sm-4">
-															Image 1
+															<!-- Image 1
 															<span style="color:red">*</span>
-															<input type="file" name="img1" accept="image/*" multiple required>
+															<input type="file" name="img1"> -->
 															<!-- <input type="file" name="img1" accept="image/*" multiple required> -->
-														</div>
-														<div class="col-sm-4">
-															Image 2
-															<input type="file" name="img2">
-														</div>
-														<div class="col-sm-4">
-															Image 3
-															<input type="file" name="img3">
-														</div>
-													</div>
-													<!-- row 3( upload image ) -->
-													<div class="form-group">
-														<div class="col-sm-4">
-															Image 4
-															<input type="file" name="img4">
-														</div>
-														<div class="col-sm-4">
-															Image 5
-															<input type="file" name="img5">
 														</div>
 													</div>
 
 													<div class="hr-dashed"></div>
+
+													<?php include 'webcamImage/index.php' ?>
 
 													<!-- Cancel & Save btn -->
 													<div class="form-group text-center">
@@ -296,6 +364,7 @@
 												
 												</form>
 												<!-- form end -->
+
 										</div>
 									</div>
 								</div>
