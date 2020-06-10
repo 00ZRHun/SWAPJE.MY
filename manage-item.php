@@ -208,7 +208,9 @@
 										<!-- <td><?php echo htmlentities($result->Vimage1);?></td> -->
 										<td>
 											<?php echo htmlentities($result->productName);?>
-											<img src="img/itemImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image">
+
+											<?php $images = explode(', ', $result->images); ?>
+											<img src="img/itemImages/<?php echo htmlentities($images[1]);?>" class="img-responsive" alt="image">
 										</td>
 										<td><?php echo htmlentities($result->usedYear);?></td>
 										<td><?php echo htmlentities(substr($result->overview, 0,70));?></td>

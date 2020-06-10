@@ -12,6 +12,68 @@
 		// insert data into items
 		if(isset($_POST['submit']))
 		{
+			// $folderPath = "upload/";
+			// $targetDir = "img/itemImages/";
+			$targetDir = "img/itemImages/";
+			$imagesArr = array();
+
+			$images = array_filter($_POST['image']);
+
+			for($i=0; $i<count($images); $i++){
+				// if($image[$i] !== null){
+				if(is_null($images[$i])){
+					echo "NOT null";
+				}else {
+					echo "null";
+				}
+				// if(!is_null($image[$i])){
+					echo $images[$i] . "<br>";
+					$image_parts = explode(";base64,", $images[$i]);
+				// if($image_parts !== ""){
+			
+					$image_type_aux = explode("image/", $image_parts[0]);
+					$image_type = $image_type_aux[1];
+				
+					$image_base64 = base64_decode($image_parts[1]);
+					$fileName = uniqid() . '.png';
+				
+					$imagesArr[] = $fileName;
+
+					$file = $targetDir . $fileName;
+					file_put_contents($file, $image_base64);
+				// }
+			}
+			// 
+			// 
+			// 
+			// File upload configuration
+			// $targetDir = "uploads/";
+			$allowTypes = array('jpg','png','jpeg','gif');
+			
+			// $images = array();
+			$images_arr = array();
+			foreach($_FILES['images']['name'] as $key=>$val){
+				$image_name = $_FILES['images']['name'][$key];
+				$tmp_name   = $_FILES['images']['tmp_name'][$key];
+				$size       = $_FILES['images']['size'][$key];
+				$type       = $_FILES['images']['type'][$key];
+				$error      = $_FILES['images']['error'][$key];
+			
+				// File upload path
+				$fileName = basename($_FILES['images']['name'][$key]);
+				$targetFilePath = $targetDir . $fileName;
+				
+				// Check whether file type is valid
+				$fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+				if(in_array($fileType, $allowTypes)){    
+					// Store images on the server
+					if(move_uploaded_file($_FILES['images']['tmp_name'][$key],$targetFilePath)){
+						$imagesArr[] = $fileName;
+						$images_arr[] = $targetFilePath;
+					}
+				}
+			}
+			
 			$userId=$_POST['userId'];
 			$productName=$_POST['productName'];
 			$usedYear=$_POST['usedYear'];
@@ -21,24 +83,17 @@
 			$value=$_POST['value'];
 			$payPalBusinessAccount=$_POST['payPalBusinessAccount'];
 			$contactNo=$_POST['contactNo'];
-			$vimage1=$_FILES["img1"]["name"];
-			$vimage2=$_FILES["img2"]["name"];
-			$vimage3=$_FILES["img3"]["name"];
-			$vimage4=$_FILES["img4"]["name"];
-			$vimage5=$_FILES["img5"]["name"];
 			$itemCondition=$_POST['itemCondition'];
 			$category=$_POST['category'];
 			$sell=$_POST['sell'];
 			$rent=$_POST['rent'];
 			$swap=$_POST['swap'];
-			move_uploaded_file($_FILES["img1"]["tmp_name"],"img/itemImages/".$_FILES["img1"]["name"]);
-			move_uploaded_file($_FILES["img2"]["tmp_name"],"img/itemImages/".$_FILES["img2"]["name"]);
-			move_uploaded_file($_FILES["img3"]["tmp_name"],"img/itemImages/".$_FILES["img3"]["name"]);
-			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/itemImages/".$_FILES["img4"]["name"]);
-			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/itemImages/".$_FILES["img5"]["name"]);
+			
+			$images=implode(", ", $imagesArr);
 
-			$sql="INSERT INTO items(user_id, productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,itemCondition,category,sell,rent,swap)
-			 VALUES(:userId,:productName,:usedYear,:overview,:totalPrice,:pricePerDay,:value,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:itemCondition,:category,:sell,:rent,:swap)";
+
+			$sql="INSERT INTO items(user_id, productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,images,itemCondition,category,sell,rent,swap)
+			 VALUES(:userId,:productName,:usedYear,:overview,:totalPrice,:pricePerDay,:value,:payPalBusinessAccount,:contactNo,:images,:itemCondition,:category,:sell,:rent,:swap)";
 			$query = $dbh->prepare($sql);
 			$query->bindParam(':userId',$userId,PDO::PARAM_STR);
 			$query->bindParam(':productName',$productName,PDO::PARAM_STR);
@@ -49,11 +104,9 @@
 			$query->bindParam(':value',$value,PDO::PARAM_STR);
 			$query->bindParam(':payPalBusinessAccount',$payPalBusinessAccount,PDO::PARAM_STR);
 			$query->bindParam(':contactNo',$contactNo,PDO::PARAM_STR);
-			$query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
-			$query->bindParam(':vimage2',$vimage2,PDO::PARAM_STR);
-			$query->bindParam(':vimage3',$vimage3,PDO::PARAM_STR);
-			$query->bindParam(':vimage4',$vimage4,PDO::PARAM_STR);
-			$query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR);
+
+			$query->bindParam(':images',$images,PDO::PARAM_STR);
+
 			$query->bindParam(':itemCondition',$itemCondition,PDO::PARAM_STR);
 			$query->bindParam(':category',$category,PDO::PARAM_STR);
 			$query->bindParam(':sell',$sell,PDO::PARAM_STR);
@@ -64,11 +117,11 @@
 			$lastInsertId = $dbh->lastInsertId();
 			if($lastInsertId)
 			{
-				$msg="Item posted successfully";
+				$msg="Item posted successfully" . $images;
 			}
 			else 
 			{
-				$error="Something went wrong. Please try again" . $userId . $sql;
+				$error="Something went wrong. Please try again" . $userId . $images;
 			}
 
 		}
@@ -298,7 +351,7 @@
 														</div>
 													</div>
 													<!-- row 2( upload image ) -->
-													<div class="form-group">
+													<!-- <div class="form-group">
 														<div class="col-sm-4">
 															Image 1
 															<span style="color:red">*</span>
@@ -312,18 +365,23 @@
 															Image 3
 															<input type="file" name="img3">
 														</div>
-													</div>
-													<!-- row 3( upload image ) -->
+													</div> -->
+
 													<div class="form-group">
 														<div class="col-sm-4">
-															Image 4
-															<input type="file" name="img4">
-														</div>
-														<div class="col-sm-4">
-															Image 5
-															<input type="file" name="img5">
+															<!--galleryPic-->
+															<label>Choose Images</label>
+															<input type="file" name="images[]" id="images" accept="image/*" multiple >
+															<!-- <input type="submit" name="submit" value="UPLOAD"/> -->
+
+															<!--/galleryPic-->
 														</div>
 													</div>
+
+													<a href="webcamImage">
+														<i class="fa fa-camera" aria-hidden="true" style="font-size:42px"></i>
+													</a>
+													<?php include 'webcamImage/index.php' ?>
 
 													<div class="hr-dashed"></div>
 
