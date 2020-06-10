@@ -117,7 +117,6 @@
 			$query->bindParam(':images',$images,PDO::PARAM_STR);
 			$query->bindParam(':id',$id,PDO::PARAM_STR);
 			$query->execute();
-			
 			$count = $query->execute();
 			if($count !== 0){
 				$msg = "Ads Updated Successfully". $images. $abc;
@@ -385,8 +384,6 @@
 
 															<!--/galleryPic-->
 														</div>
-
-
 
 														<!-- row 2( upload image ) -->
 														<div class="gallery">
