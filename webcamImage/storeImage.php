@@ -13,9 +13,10 @@ $images = $_POST['image'];
 
 $i = 0;
 echo $images[$i]; */
-echo '<br><pre>';
+
+/* echo '<br><pre>';
 print_r($images);
-echo '<pre>';
+echo '<pre>'; */
 
 for($i=0; $i<count($images); $i++){
     // if($image[$i] !== null){
@@ -41,9 +42,9 @@ for($i=0; $i<count($images); $i++){
 }
 
 // print_r($fileName);
-echo '<br>image_parts = ' . $image_parts;
+/* echo '<br>image_parts = ' . $image_parts;
 echo '<br>image_type_aux = ' . $image_type_aux;
 echo '<br>image_type = ' . $image_type;
 // echo $image_base64;
 echo "<br>fileName = " . $fileName;
-echo "<br>file = " . $file;
+echo "<br>file = " . $file; */

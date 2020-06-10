@@ -190,7 +190,10 @@
 										<td>
 											<?php echo htmlentities($result->title);?>
 <!-- ??? -->
-											<img src="img/adsImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image">
+											<!-- <img src="img/adsImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image"> -->
+											<?php $images = explode(', ', $result->images); ?>
+											<img src="img/adsImages/<?php echo htmlentities($images[1]);?>" class="img-responsive" alt="image">
+											<!-- <img src="uploads/<?php echo htmlentities($images[1]);?>" class="img-responsive" alt="image"> -->
 										</td>
 										<td><?php echo htmlentities($result->category);?></td>
 										<td><?php echo htmlentities($result->description);?></td>

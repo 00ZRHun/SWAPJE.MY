@@ -8,10 +8,84 @@
 		header('location:index.php');
 	}
 	else
-	{ 
+	{
 		// insert data into ads
 		if(isset($_POST['submit']))
 		{
+			// $folderPath = "upload/";
+			$targetDir = "img/adsImages/";
+			$imagesArr = array();
+
+			$images = array_filter($_POST['image']);
+
+			for($i=0; $i<count($images); $i++){
+				// if($image[$i] !== null){
+				if(is_null($images[$i])){
+					echo "NOT null";
+				}else {
+					echo "null";
+				}
+				// if(!is_null($image[$i])){
+					echo $images[$i] . "<br>";
+					$image_parts = explode(";base64,", $images[$i]);
+				// if($image_parts !== ""){
+			
+					$image_type_aux = explode("image/", $image_parts[0]);
+					$image_type = $image_type_aux[1];
+				
+					$image_base64 = base64_decode($image_parts[1]);
+					$fileName = uniqid() . '.png';
+				
+					$imagesArr[] = $fileName;
+
+					$file = $targetDir . $fileName;
+					file_put_contents($file, $image_base64);
+				// }
+			}
+			/* if(empty($_POST['images'])){
+				$abc = "abc";
+			} */
+			// if(isset($_FILES['images']) ){  
+				// File upload configuration
+				// $targetDir = "uploads/";
+				$allowTypes = array('jpg','png','jpeg','gif');
+				
+				// $images = array();
+				$images_arr = array();
+				foreach($_FILES['images']['name'] as $key=>$val){
+					$image_name = $_FILES['images']['name'][$key];
+					$tmp_name   = $_FILES['images']['tmp_name'][$key];
+					$size       = $_FILES['images']['size'][$key];
+					$type       = $_FILES['images']['type'][$key];
+					$error      = $_FILES['images']['error'][$key];
+					
+					// version 1
+					// File upload path
+					$fileName = basename($_FILES['images']['name'][$key]);
+					$targetFilePath = $targetDir . $fileName;
+					
+					// Check whether file type is valid
+					$fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+					if(in_array($fileType, $allowTypes)){    
+						// Store images on the server
+						if(move_uploaded_file($_FILES['images']['tmp_name'][$key],$targetFilePath)){
+							$imagesArr[] = $fileName;
+							$images_arr[] = $targetFilePath;
+						}
+					}
+				}
+
+				$images=implode(", ", $imagesArr);
+
+				if($images == ""){
+					$images = $_POST['tempImages'];
+				}
+			/* }else {
+				echo "HERE";
+				// $images = $tempImages;
+				$images = $_POST['tempImages'];
+			} */
+
 			// $userId=$_POST['userId'];
 			$title=$_POST['title'];
 			$category=$_POST['category'];
@@ -20,36 +94,7 @@
 			$contactNo=$_POST['contactNo'];
 			$description=$_POST['description'];
 			$id=$_GET['id'];
-			$vimage1=$_FILES["img1"]["name"];
-			$vimage2=$_FILES["img2"]["name"];
-			$vimage3=$_FILES["img3"]["name"];
-			$vimage4=$_FILES["img4"]["name"];
-			$vimage5=$_FILES["img5"]["name"];
-			move_uploaded_file($_FILES["img1"]["tmp_name"],"img/adsImages/".$_FILES["img1"]["name"]);
-			move_uploaded_file($_FILES["img2"]["tmp_name"],"img/adsImages/".$_FILES["img2"]["name"]);
-			move_uploaded_file($_FILES["img3"]["tmp_name"],"img/adsImages/".$_FILES["img3"]["name"]);
-			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/adsImages/".$_FILES["img4"]["name"]);
-			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/adsImages/".$_FILES["img5"]["name"]);
-			/* move_uploaded_file($_FILES["img1"]["tmp_name"],"img/adsImages/".$_FILES["img1"]["name"]);
-			$vimage1=$_FILES
-			["img1"]["name"]; */
-			/* move_uploaded_file($_FILES["image"]["tmp_name"],"uploads/" . $_FILES["image"]["name"]);			
-    		$location1=$_FILES["image"]["name"]; */
 
-			/* $sql="INSERT INTO ads(userId,title,category,companyName,payPalBusinessAccount,contactNo,description,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5)
-			 VALUES(:userId,:title,:category,:companyName,:payPalBusinessAccount,:contactNo,:description,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5)"; */
-			/*  $sql =
-              "update tblusers
-              set FullName=:name,ContactNo=:mobileno,dob=:dob,Address=:adress,City=:city,Country=:country
-              where EmailId=:email"; */
-			/* $sql =
-			"update ads
-			 set
-			 title=:title
-			 where id=:id"; */
-		/* $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "UPDATE tbl_image SET image_location ='$location1' WHERE tbl_image_id = '$get_id' "; */
-			
 			$sql =
 			"update ads
 			 set
@@ -59,11 +104,7 @@
 			 payPalBusinessAccount=:payPalBusinessAccount,
 			 contactNo=:contactNo,
 			 description=:description,
-			 Vimage1=:vimage1,
-			 Vimage2=:vimage2,
-			 Vimage3=:vimage3,
-			 Vimage4=:vimage4,
-			 Vimage5=:vimage5
+			 images=:images
 			 where id=:id";
 			$query = $dbh->prepare($sql);
 			// $query->bindParam(':userId',$userId,PDO::PARAM_STR);
@@ -73,19 +114,13 @@
 			$query->bindParam(':payPalBusinessAccount',$payPalBusinessAccount,PDO::PARAM_STR);
 			$query->bindParam(':contactNo',$contactNo,PDO::PARAM_STR);
 			$query->bindParam(':description',$description,PDO::PARAM_STR);
-			$query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
-			$query->bindParam(':vimage2',$vimage2,PDO::PARAM_STR);
-			$query->bindParam(':vimage3',$vimage3,PDO::PARAM_STR);
-			$query->bindParam(':vimage4',$vimage4,PDO::PARAM_STR);
-			$query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR);
+			$query->bindParam(':images',$images,PDO::PARAM_STR);
 			$query->bindParam(':id',$id,PDO::PARAM_STR);
 			$query->execute();
 			
-			// $msg="Profile Updated Successfully".$sql.$name.$mobileno.$dob;
 			$count = $query->execute();
 			if($count !== 0){
-// $msg = "Ads Updated Successfully".$sql.$title.$id.$category;
-				$msg = "Ads Updated Successfully";
+				$msg = "Ads Updated Successfully". $images. $abc;
 			}
 			else{
 				$error="Something went wrong. Please try again";
@@ -172,7 +207,20 @@
 			-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 			box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 		}
-	</style>
+
+        ul, ol, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .container{padding: 20px;}
+        .upload-div{margin-bottom: 25px;}
+        .gallery{width:100%; float:left; margin-top:30px;}
+        .gallery ul{margin:0; padding:0; list-style-type:none;}
+        .gallery ul li{padding:7px; border:2px solid #ccc; float:left; margin:10px 7px; background:none; width:auto; height:auto;}
+        .gallery img{width:250px;}
+    </style>
 </head>
 
 <body>
@@ -203,13 +251,6 @@
 
 											<!-- notification( htmlentities ) -->
 											<?php 
-												if($error){
-													?>
-													<div class="errorWrap">
-														<strong>ERROR</strong>:<?php echo htmlentities($error); ?>
-													</div>
-													<?php 
-												} 
 												if($msg){
 													?>
 													<div class="succWrap">
@@ -217,6 +258,16 @@
 													</div>
 													<?php
 												}	
+												else if($error){
+													?>
+													<div class="errorWrap">
+														<strong>ERROR</strong>:<?php echo htmlentities($error); ?>
+													</div>
+													<?php 
+												} 
+												else{
+													
+												}
 											?>
 
 <div class="panel-body">
@@ -318,9 +369,54 @@
 																<h4><b>Upload Images</b></h4>
 															</div>
 														</div>
-														<!-- row 2( upload image ) -->
+
+														<a href="webcamImage">
+															<i class="fa fa-camera" aria-hidden="true" style="font-size:42px"></i>
+														</a>
 														<div class="form-group">
-															<div class="col-sm-4">
+															<?php include 'webcamImage/index.php' ?>
+														</div>
+
+														<div class="form-group">
+															<!--galleryPic-->
+															<label>Choose Images from Gallery</label>
+															<input type="file" name="images[]" id="images" accept="image/*" multiple >
+															<!-- <input type="submit" name="submit" value="UPLOAD"/> -->
+
+															<!--/galleryPic-->
+														</div>
+
+
+
+														<!-- row 2( upload image ) -->
+														<div class="gallery">
+															<!-- gallery view of uploaded images --> 
+															<div class="gallery" id="imagesPreview">
+																<?php
+																$tempImages = $result->images;
+																$images = explode(', ', $tempImages);
+																?>
+																	<input type="text" name="tempImages" id="tempImages" class="form-control" value="<?= $tempImages ?>">
+																<?php
+																if(!empty($images)){ 
+																		/* echo $images_arr;
+																		var_dump($images_arr); */
+																?>
+																	<ul>
+																		<?php foreach($images as $image_src){ ?>
+																			<li>
+																				<img src="img/adsImages/<?php echo $image_src; ?>" alt="<?= $image_src ?>">
+																			</li>
+																		<?php } ?>
+																	</ul>
+																<?php 
+																}
+																?>
+															</div>
+														</div>
+
+														<div class="form-group">
+															<!-- <div class="col-sm-4">
 																Image 1
 																<span style="color:red">*</span>
 																<input type="file" name="img1">
@@ -332,18 +428,18 @@
 															<div class="col-sm-4">
 																Image 3
 																<input type="file" name="img3">
-															</div>
+															</div> -->
 														</div>
 														<!-- row 3( upload image ) -->
 														<div class="form-group">
-															<div class="col-sm-4">
+															<!-- <div class="col-sm-4">
 																Image 4
 																<input type="file" name="img4">
 															</div>
 															<div class="col-sm-4">
 																Image 5
 																<input type="file" name="img5">
-															</div>
+															</div> -->
 														</div>
 
 														<div class="hr-dashed"></div>
