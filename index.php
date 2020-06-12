@@ -105,7 +105,11 @@ error_reporting(0);
 
             <div class="card" onclick="window.location.href = 'item-details.php?vhid=<?php echo htmlentities($result->id); ?>'">
               <div class="card-image-padding">
-                <img src="img/itemImages/<?php echo htmlentities($result->Vimage1); ?>" class="img-responsive" alt="image">
+                <!-- <img src="img/itemImages/<?php echo htmlentities($result->Vimage1); ?>" class="img-responsive" alt="image"> -->
+                <?php $images = explode(', ', $result->images); ?>
+								<!-- <img src="img/adsImages/<?php echo htmlentities($images[1]);?>" class="img-responsive" alt="image"> -->
+
+                <img src="img/itemImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image">
               </div>              
               <div class="card-body">
                 <h5 class="card-title"><?php echo htmlentities($result->productName); ?></h5>
