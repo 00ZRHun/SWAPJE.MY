@@ -88,9 +88,7 @@ if (isset($_POST['signup'])) {
                 </div>
 
                 <div class="form-group text-center" id="whiteBtn">
-                  <a href="#loginform" data-toggle="modal" data-dismiss="modal">
-                    <a class="need-an-acc">Already have an account?</a>
-                  </a>
+                  <a href="#loginform" class="need-an-acc" data-toggle="modal" data-dismiss="modal">Already have an account?</a>
                 </div>
               </form>
             </div>
