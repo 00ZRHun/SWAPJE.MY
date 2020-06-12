@@ -40,7 +40,7 @@ if (isset($_POST['login'])) {
       <div class="modal-body">
         <div class="row">
           <div class="login_wrap">
-            <div class="col-md-12 col-sm-6">
+            <div class="col-md-12 col-sm-12">
               <form method="post">
                 <div class="form-group">
                   <input type="email" class="form-control" name="email" placeholder="Email">
@@ -51,25 +51,17 @@ if (isset($_POST['login'])) {
 <!-- ???? -->
                 <div class="form-group checkbox">
                   <input type="checkbox" id="remember">
-                </div>
-                <div class="form-group">
-                  <input type="submit" name="login" value="Sign In" class="btn btn-block">
-                </div>
-                <br><br>
-                <div class="form-group text-center" id="whiteBtn" style="color: black; background-color: white;">
-                  <a href="#signupform" data-toggle="modal" data-dismiss="modal">
-                    <input value="Need an account?" class="btn btn-block">
-                  </a>
-                </div>
+                </div>                
+                
+                <button type="submit" name="login" class="btn btn-block">Sign In</button>
 
-                <div class="form-group text-center" id="whiteBtn" style="color: black; background-color: white;">                                                                      
-                  <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div>
-                </div>
-                <div class="form-group text-center" id="whiteBtn" style="color: black; background-color: white;">
-                  <a href="#" data-toggle="modal" data-dismiss="modal">
-                  <input value="T     Continue with Twitter" class="btn btn-block">
-                  </a>
-                </div>
+                <div class="modal-button-group">                                    
+                  <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width="100%"></div>
+                  <a class="btn btn-block" href="#" data-toggle="modal" data-dismiss="modal">Continue with Twitter</a>
+                </div>                
+                
+                <a class="need-an-acc" href="#signupform" data-toggle="modal" data-dismiss="modal">Need an account?</a>                  
+                
               </form>
             </div>
 

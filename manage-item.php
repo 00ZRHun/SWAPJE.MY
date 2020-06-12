@@ -33,7 +33,12 @@
 	
 	<title>SWAP.ME</title>
 
-	<!--  -->
+	
+	<!-- SWAPJE CSS + Google Icons-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="css/swapje/index.css">
+	<link rel="stylesheet" href="css/nav/nav.css">
+	
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<!-- Sandstone Bootstrap CSS -->
@@ -287,9 +292,7 @@
 	<!--/Forgot-password-Form --> 
 
 	<!-- Scripts --> 
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="js/bootstrap-select.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script> 
+	<script src="assets/js/jquery.min.js"></script>	
 	<script src="js/jquery.dataTables.min.js"></script>
 	<script src="js/dataTables.bootstrap.min.js"></script>
 	<script src="js/Chart.min.js"></script>

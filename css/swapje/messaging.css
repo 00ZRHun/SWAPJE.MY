@@ -116,6 +116,10 @@
     padding: 2em;
 }
 
+.message-content-container .message-div {
+    width: 75% !important;
+}    
+
 .self-message-div {
     margin-left: auto;     
 }
@@ -153,6 +157,8 @@
     padding: 0;
     padding-top: 1em;
     padding-bottom: 6em !important;
+    /* max-height: 100vh; */
+    /* overflow-y: scroll; */
 }
 
 .message-div-content p{
@@ -194,10 +200,10 @@
         bottom: .75em;
     }
 
-    
     .message-content-container .message-div {
-        width: 45%;
+        width: 45% !important;
     }    
+        
 }
 
 @media screen and (min-width:1024px) {
