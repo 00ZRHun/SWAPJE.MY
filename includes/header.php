@@ -93,6 +93,7 @@
                       <li><a href="profile.php">Profile Settings</a></li>
                       <li><a href="update-password.php">Update Password</a></li>                                            
                       <li><a href="manage-item.php">Manage Items</a></li>
+                      <li><a href="post-ads.php">Post Ads</a></li>
                       <li><a href="manage-ads.php">Manage Ads</a></li>
                       <li><a href="logout.php">Sign Out</a></li>
                     </ul>
