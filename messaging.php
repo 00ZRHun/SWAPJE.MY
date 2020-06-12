@@ -175,6 +175,7 @@ if (isset($_SESSION['login'])) {
 </div>
 
 <script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function(){
 

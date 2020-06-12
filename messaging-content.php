@@ -61,7 +61,7 @@ if (isset($_SESSION['login'])) {
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
   <!-- JQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
@@ -80,6 +80,15 @@ if (isset($_SESSION['login'])) {
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
 
+        let scrollToBottom = () => {
+            setTimeout(function() {
+                window.scrollTo(0, document.querySelector("#messages-container").scrollHeight)
+            }, 3000);
+        }
+
+        // First load, scroll to bottom
+        scrollToBottom();
+
         function sendMessage(e) {
             e.preventDefault();
 
@@ -94,14 +103,12 @@ if (isset($_SESSION['login'])) {
                 "from_user_name": "<?php echo htmlentities($from_user_name) ?>",
                 "user_id": <?php echo htmlentities($user_id); ?>,
                 "created": firebase.database.ServerValue.TIMESTAMP
-            });
-
+            });     
+            
             $('#message-input').val("");
-            document.documentElement.scrollTo({
-                left: 0,
-                top: document.documentElement.scrollHeight,
-                behavior: 'smooth'
-            });
+            setTimeout(function() {
+                window.scrollTo(0, document.querySelector("#messages-container").scrollHeight)
+            }, 1000);
             
         };
                 
@@ -208,5 +215,6 @@ if (isset($_SESSION['login'])) {
 }
 ?>
 
+<script src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>

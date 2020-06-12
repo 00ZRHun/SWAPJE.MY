@@ -40,7 +40,7 @@
           <i class="material-icons">chat_bubble_outline</i>
           <span>Messages</span>
         </div>
-        <div class="nav__main-content-item">
+        <div class="nav__main-content-item"onclick="window.location.href = 'notifications.php'">
           <i class="material-icons">notifications_none</i>
           <span>Notifications</span>
         </div>
@@ -91,12 +91,9 @@
                     <!-- dropdown menu( login/- ) -->
                     <ul class="dropdown-menu">
                       <li><a href="profile.php">Profile Settings</a></li>
-                      <li><a href="update-password.php">Update Password</a></li>
-                      <!-- <li><a href="my-booking.php">My Booking</a></li>
-                  <li><a href="post-testimonial.php">Post a Testimonial</a></li>
-                  <li><a href="my-testimonials.php">My Testimonial</a></li> -->
-                      <li><a href="swap_request.php">Requests</a></li>
-                      <li><a href="swap_records-listing.php">Records</a></li>
+                      <li><a href="update-password.php">Update Password</a></li>                                            
+                      <li><a href="manage-item.php">Manage Items</a></li>
+                      <li><a href="manage-ads.php">Manage Ads</a></li>
                       <li><a href="logout.php">Sign Out</a></li>
                     </ul>
                   <?php } ?>
