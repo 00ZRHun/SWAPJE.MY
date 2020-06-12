@@ -60,7 +60,7 @@ if (isset($_POST['signup'])) {
       <div class="modal-body">
         <div class="row">
           <div class="signup_wrap">
-            <div class="col-md-12 col-sm-6">
+            <div class="col-md-12 col-sm-12">
               <form  method="post" name="signup">
                 <div class="form-group">
                   <input type="text" class="form-control" name="firstName" placeholder="First Name" required="required">
@@ -89,7 +89,7 @@ if (isset($_POST['signup'])) {
 
                 <div class="form-group text-center" id="whiteBtn">
                   <a href="#loginform" data-toggle="modal" data-dismiss="modal">
-                    <input value="Already have an account?" class="btn btn-block">
+                    <a class="need-an-acc">Already have an account?</a>
                   </a>
                 </div>
               </form>
