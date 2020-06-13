@@ -204,9 +204,11 @@ if (strlen($_SESSION['login']) == 0) {
 														<td><?php echo htmlentities($result->payPalBusinessAccount); ?></td>
 														<td><?php echo htmlentities($result->contactNo); ?></td>
 														<td>
-															<a href="edit-ads.php?id=<?php echo $result->id; ?>">
+															<!-- <a href="edit-ads.php?id=<?php echo $result->id; ?>">
 																<i class="fa fa-edit"></i>
-															</a>&nbsp;&nbsp;
+															</a> -->
+															<?php include 'componentFunction/boost.php'; ?>
+															&nbsp;&nbsp;
 															<a href="manage-ads.php?del=<?php echo $result->id; ?>" onclick="return confirm('Do you want to delete');">
 																<i class="fa fa-close"></i>
 															</a>
