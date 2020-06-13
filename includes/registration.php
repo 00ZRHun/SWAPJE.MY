@@ -1,12 +1,14 @@
 <?php
 //error_reporting(0);
 if (isset($_POST['signup'])) {
+    $profile = (rand(1,10) . ".png");
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $email = $_POST['email'];
     $password = md5($_POST['password']);
-    $sql = "INSERT INTO users(firstName,lastName,email,password) VALUES(:firstName,:lastName,:email,:password)";
+    $sql = "INSERT INTO users(profile,firstName,lastName,email,password) VALUES(:profile,:firstName,:lastName,:email,:password)";
     $query = $dbh->prepare($sql);
+    $query->bindParam(':profile', $profile, PDO::PARAM_STR);
     $query->bindParam(':firstName', $firstName, PDO::PARAM_STR);
     $query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
     $query->bindParam(':email', $email, PDO::PARAM_STR);
@@ -16,7 +18,7 @@ if (isset($_POST['signup'])) {
     if ($lastInsertId) {
         echo "<script>alert('Registration successfull. Now you can login');</script>" . $sql . $firstName . $lastName . $email;
     } else {
-        echo "<script>alert('Something went wrong. Please try again');</script>";
+        echo "<script>alert('Something went wrong. Please try again');</script>" . $profile;
     }
 }
 ?>

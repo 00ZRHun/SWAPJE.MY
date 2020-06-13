@@ -1,83 +1,94 @@
 <!--Rent-->
 <div role="tabpanel" class="tab-pane" id="rent">
-    <!-- payment( PayPal ) -->
-    <div id="payment-box" class="payment-box">
-        <h5 class="txt-price" style="margin: 0">
-            Price Per Day :
-            RM<?php
-                $pricePerDay = $result->pricePerDay;
-                echo htmlentities($pricePerDay);
-                ?>
-        </h5>
-        <div>
+    <p>
+        <!-- payment( PayPal ) -->
+        <div id="payment-box" class="payment-box">  
+            <h5 class="txt-price" style="margin: 0">
+                Price per Day :
+                RM<?= $pricePerDay=$result->pricePerDay ?>
+            </h5>        
+
+            <form style="margin-left: auto" action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+                method="post" target="_top">
+                <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount); ?>'>
+                <input type='hidden' name='item_name' value='<?php echo htmlentities($name); ?>'>
+                <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#1'); ?>'>
+
+                <table>
+                    <tr>
+                        <td>Day(s) of rent</td>
+                        <td><input type='number' class='price' value='1' /></td>
+                    </tr>
+                    <tr>
+                        <td>Total price</td>
+                        <!-- <td><input type='text' id='totalPrice' name='amount' value="40" disabled /></td> -->
+                        <td><input type='text' name='amount' id='totalPrice' value='<?=$pricePerDay?>' readonly/></td>
+                    </tr>
+                </table>
+                
+                <input type='hidden' name='no_shipping' value='1'>
+                <input type='hidden' name='currency_code' value='MYR'>
+                <input type='hidden' name='notify_url'
+                    value='http://localhost:8888/SWAPJE.MY/paypal-payment-gateway-integration-in-php/notify.php'>
+                <input type='hidden' name='cancel_return'
+                    value='http://localhost:8888/SWAPJE.MY/paypal-payment-gateway-integration-in-php/cancel.php'>
+                <input type='hidden' name='return'
+                    value='http://localhost:8888/SWAPJE.MY/return.php'>
+                <input type="hidden" name="cmd" value="_xclick">
+
+                <button
+                    type="submit" name="pay_now" id="pay_now" class="primary-btn" disabled
+                >
+                Pay Now
+                </button>
+            </form>
         </div>
-        <br>
-        <form name="form" action="" method="get">
-            <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'>            
-        </form>
 
-        <?php
-        $pricePerDay = $result->pricePerDay;
-        ?>
-
-        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>
         <script>
-            var decision = 0;
-            $(document).ready(function() {
-                $('select.status').on('change', function() {
-                    decision = $(this).val();
-                    var totalPrice = decision * <?= $pricePerDay ?>;
-                    alert("RM" + totalPrice);
-                });
+            $(document).ready(function(){
+                // we used jQuery 'keyup' to trigger the computation as the user type
+                $('.price').keyup(function () {
+                
+                    // initialize the sum (total price) to zero
+                    var sum = 0;
+                    
+                    // we use jQuery each() to loop through all the textbox with 'price' class
+                    // and compute the sum for each loop
+                    $('.price').each(function() {
+                        total = Number($(this).val()) * <?=$pricePerDay?>;
+                        // total = Number($(this).val()) * 100;
+                    });
+                    
+                    // set the computed value to 'totalPrice' textbox
+                    $('#totalPrice').val(total);
 
+                    /* var button = document.getElementById("pay_now");
+                    //  document.getElementById("pay_now").disabled = false;
+                    button.disabled = false; */
+                    /* if ($.trim($(this).text()) === '') {
+                        $('#pay_now').prop('disabled', true);
+                    } else {
+                        $('#pay_now').prop('disabled', false);
+                    } */
+
+                    /* if ($.trim($(this).text()) === '') {
+                        $('button#pay_now').prop('disabled', true);
+                    } else {
+                        $('button#pay_now').prop('disabled', false);
+                    } */
+                    if( $("#totalPrice").val() == 0) {
+                        alert('a');
+                        // $("#pay_now").prop("disabled", true);
+                    }else {
+                        alert('b');
+                        // $("#pay_now").prop("disabled", false);
+                        // $("#pay_now").removeAttribute('disabled');
+                        document.getElementById("pay_now").removeAttribute('disabled');
+                    }
+                });
             });
         </script>
-
-        <select class="status">
-            <option value="">Select...</option>
-            <option value="1">1 day</option>
-            <option value="2">2 days</option>
-            <option value="3">3 days</option>
-            <option value="4">4 days</option>
-            <option value="5">5 days</option>
-            <option value="6">6 days</option>
-            <option value="7">1 week</option>
-        </select>
-
-        <?php $totalPrice = 100 ?>
-        <button onclick="myfunction()">test</button>
-
-        <script>
-            <?php $totalPrice = "<script>document.writeln(decision);</script>"; ?>
-
-            function myfunction() {
-                alert(<?= $totalPrice ?>)
-            }
-        </script>
-
-        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount); ?>'>
-            <input type='hidden' name='item_name' value='<?php echo htmlentities($name); ?>'>
-            <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#N1'); ?>'>
-            <!-- <input type='hidden' name='amount' value='<?php echo htmlentities((float) ($_GET['totalPrice'])); ?>'> -->
-            <!-- <input type='hidden' name='amount' value='<?php echo htmlentities((float) ($result->pricePerDay) * (float) ($_GET['rentDay'])); ?>'> -->
-            <?php $totalPrice = "<script>document.writeln(decision);</script>"; ?>
-            <input type='hidden' name='amount' value='<?php echo htmlentities((float) $totalPrice) ?>'>
-            <input type='hidden' name='no_shipping' value='1'>
-            <input type='hidden' name='currency_code' value='MYR'>
-            <input type='hidden' name='notify_url' value='http://localhost:8888/paypal-payment-gateway-integration-in-php/notify.php'>
-            <input type='hidden' name='cancel_return' value='http://localhost:8888/paypal-payment-gateway-integration-in-php/cancel.php'>
-            <input type='hidden' name='return' value='http://localhost:8888/Renting%20System/SellRentSwap_System/return.php'>
-            <input type="hidden" name="cmd" value="_xclick">
-
-            <button type="submit" name="pay_now" id="pay_now">Rent</button>
-        </form>
-
-        <script>
-            function submitForm() {
-                document.getElementById("form_id").submit();
-            }
-        </script>
-    </div>
+    </p>
 </div>
 <!--/Rent-->

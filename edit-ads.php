@@ -115,7 +115,7 @@
 			$query->bindParam(':contactNo',$contactNo,PDO::PARAM_STR);
 			$query->bindParam(':description',$description,PDO::PARAM_STR);
 			$query->bindParam(':images',$images,PDO::PARAM_STR);
-			$query->bindParam(':id',$id,PDO::PARAM_STR);
+			$query->bindParam(':id',$id,PDO::PAERAM_STR);
 			$query->execute();
 			$count = $query->execute();
 			if($count !== 0){
@@ -394,21 +394,21 @@
 																$images = explode(', ', $tempImages);
 																?>
 																	<input type="text" name="tempImages" id="tempImages" class="form-control" value="<?= $tempImages ?>">
-																<?php
-																if(!empty($images)){ 
-																		/* echo $images_arr;
-																		var_dump($images_arr); */
-																?>
-																	<ul>
-																		<?php foreach($images as $image_src){ ?>
-																			<li>
-																				<img src="img/adsImages/<?php echo $image_src; ?>" alt="<?= $image_src ?>">
-																			</li>
-																		<?php } ?>
-																	</ul>
-																<?php 
-																}
-																?>
+																	<?php
+																	if(!empty($images)){ 
+																			/* echo $images_arr;
+																			var_dump($images_arr); */
+																	?>
+																		<ul>
+																			<?php foreach($images as $image_src){ ?>
+																				<li>
+																					<img src="img/adsImages/<?php echo $image_src; ?>" alt="<?= $image_src ?>">
+																				</li>
+																			<?php } ?>
+																		</ul>
+																	<?php 
+																	}
+																	?>
 															</div>
 														</div>
 

@@ -2,6 +2,7 @@
 <div role="tabpanel" class="tab-pane" id="swap">
     <p>
         <?php
+            // to get user ID
             $user_sql = "SELECT id FROM users WHERE email=:email";
             $user_query = $dbh->prepare($user_sql);
             $user_query->bindParam(':email', $email, PDO::PARAM_STR);
@@ -11,7 +12,8 @@
             $user_id = $user_results["id"];
             $item_status = 0;
 
-            $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, user.id
+            // 
+            $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, item.images, user.id
             FROM items as item
             JOIN users as user
             ON item.user_id = user.id
@@ -31,18 +33,29 @@
         <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id); ?>">
         <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID); ?>">
 
-        <div class="swap-item-list">
-            <?php
-                foreach ($results as $result) {
-            ?>
-            <div class="swap-item">
-                <input type="checkbox" name="receiver_item_id" id="<?php echo htmlentities($result->productName) ?>" value="<?php echo htmlentities($result->itemID) ?>" id="" />
-                <label for="<?php echo htmlentities($result->productName) ?>"><?php echo htmlentities($result->productName) ?></label><br />
+        <div class="gallery">
+            <!-- gallery view of uploaded images --> 
+            <div class="gallery" id="imagesPreview">
+                <div class="swap-item-list">
+                    <?php
+                        foreach ($results as $result) {
+                    ?>
+                    <div class="swap-item">
+                        <input style="position: absolute;" type="checkbox" name="receiver_item_id" id="<?php echo htmlentities($result->productName) ?>" value="<?php echo htmlentities($result->itemID) ?>" id="" />
+                        <?php $images = explode(', ', $result->images); ?>
+                        <!-- <img src="img/itemImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="<?php echo htmlentities($images[1]);?>"> -->
+                        <img src="img/itemImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="images">
+                        <br/><br/>
+                        <label for="<?php echo htmlentities($result->productName) ?>"><?php echo htmlentities($result->productName) ?></label>
+                    </div>
+                    <?php
+                        }
+                    ?>
+                </div>
             </div>
-            <?php
-                }
-            ?>
         </div>
+
+
 
     <button id="swap-with-owner-btn" style="margin-top: 1em" class="primary-btn">Swap with owner</button>
     </p>
