@@ -163,23 +163,41 @@ if (isset($_SESSION['login'])) {
         if(check_result === false)
             return;           
             
-        let sentBySelf = checkStatus(snapshot.val().user_id);                  
+        let sentBySelf = checkStatus(snapshot.val().user_id);                          
 
-        let html = "";
+        async function getAvatar(avatarUserId) {
+                return $.ajax({
+                method: "POST",
+                url: "functions/User/get_user_profile.php",
+                dataType: "json",
+                data: {
+                    avatarUserId
+                }                    
+                })
+                .then(response => {
 
-        // <img src="..." class="avatar" alt="avatar">
-        html = `
-        <div class="${sentBySelf ? "message-div self-message-div" : "message-div"}">            
-            <div class="message-div-content">
-                <h5 class="message-div-content__username">
-                ${sentBySelf ? "You" : "<?php echo htmlentities($to_user_name) ?>"} 
-                </h5>
-                <p>${snapshot.val().chat_message}</p>
-            </div>
-        </div>
-        `;
+                    let html = "";
+                    let avatarImage = "";
+
+                    html = `
+                    <div class="${sentBySelf ? "message-div self-message-div" : "message-div"}">     
+                        <img src="img/profile/${response.avatarImage}" class="avatar" alt="Avatar">       
+                        <div class="message-div-content">
+                            <h5 class="message-div-content__username">
+                            ${sentBySelf ? "You" : "<?php echo htmlentities($to_user_name) ?>"} 
+                            </h5>
+                            <p>${snapshot.val().chat_message}</p>
+                        </div>
+                    </div>`;
+
+                    document.getElementById("messages-container").innerHTML += html;
+                })                                
+        };    
         
-        document.getElementById("messages-container").innerHTML += html;
+        let currentChatUserId = sentBySelf ? <?php echo htmlentities($user_id) ?> : to_user_id
+        console.log(currentChatUserId)       
+        getAvatar(currentChatUserId);                                      
+                
     });    
 }); 
         

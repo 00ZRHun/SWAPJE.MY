@@ -87,6 +87,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <title>SWAP.MY</title>
+
+  <!-- SWAPJE CSS + Google Icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="css/swapje/index.css">
+  <link rel="stylesheet" href="css/nav/nav.css">
+  <link rel="stylesheet" href="css/swapje/home.css">
+  <link rel="stylesheet" href="css/swapje/profile.css">
+  
   <!--Bootstrap -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
   <!--Custome Style -->
@@ -164,7 +172,7 @@
 ?>
 
   <!--Profile-setting-->
-  <form  method="post" enctype="multipart/form-data">
+  <form  method="post" class="profile-form" enctype="multipart/form-data">
   <section class="user_profile inner_pages">
     <div class="container">
       <div class="user_profile_info gray-bg padding_4x4_40">
@@ -187,13 +195,13 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-3 col-sm-3">
+      <div class="profile-column">
+        
           <!--sidebar-->
-          <?php include 'includes/sidebar.php';?>
+          <?php # include 'includes/sidebar.php';?>
           <!--/sidebar-->
 
-          <div class="col-md-6 col-sm-8">
+          <div class="col-md-12 col-sm-12">
             <div class="profile_wrap">
               <h5 class="uppercase underline">General Settings</h5>
               <?php if ($msg) { ?>
@@ -249,7 +257,7 @@
                 <?php }}?>
 
                 <div class="form-group">
-                  <button type="submit" name="updateprofile" class="btn">
+                  <button type="submit" name="updateprofile" class="primary-btn">
                     Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
                   </button>
                 </div>
