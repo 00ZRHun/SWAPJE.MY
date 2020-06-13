@@ -1,65 +1,58 @@
 <?php
-//start session
-session_start();
+	//start session
+	session_start();
 
-include_once("config.php");
-include_once("inc/twitteroauth.php");
+	include_once("config.php");
+	include_once("inc/twitteroauth.php");
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Twitter OAuth Login Using PHP | W3tweaks</title>
     <style type="text/css">
-	.wrapper{width:600px; margin-left:auto;margin-right:auto;}
-	.welcome_txt{
-		margin: 20px;
-		background-color: #EBEBEB;
-		padding: 10px;
-		border: #D6D6D6 solid 1px;
-		-moz-border-radius:5px;
-		-webkit-border-radius:5px;
-		border-radius:5px;
-	}
-	.tweet_box{
-		margin: 20px;
-		background-color: #FFF0DD;
-		padding: 10px;
-		border: #F7CFCF solid 1px;
-		-moz-border-radius:5px;
-		-webkit-border-radius:5px;
-		border-radius:5px;
-	}
-	.tweet_box textarea{
-		width: 500px;
-		border: #F7CFCF solid 1px;
-		-moz-border-radius:5px;
-		-webkit-border-radius:5px;
-		border-radius:5px;
-	}
-	.tweet_list{
-		margin: 20px;
-		padding:20px;
-		background-color: #E2FFF9;
-		border: #CBECCE solid 1px;
-		-moz-border-radius:5px;
-		-webkit-border-radius:5px;
-		border-radius:5px;
-	}
-	.tweet_list ul{
-		padding: 0px;
-		font-family: verdana;
-		font-size: 12px;
-		color: #5C5C5C;
-	}
-	.tweet_list li{
-		border-bottom: silver dashed 1px;
-		list-style: none;
-		padding: 5px;
-	}
+		.wrapper{width:600px; margin-left:auto;margin-right:auto;}
+		.welcome_txt{
+			margin: 20px;
+			background-color: #EBEBEB;
+			padding: 10px;
+			border: #D6D6D6 solid 1px;
+			-moz-border-radius:5px;
+			-webkit-border-radius:5px;
+			border-radius:5px;
+		}
+		.tweet_box{
+			margin: 20px;
+			background-color: #FFF0DD;
+			padding: 10px;
+			border: #F7CFCF solid 1px;
+			-moz-border-radius:5px;
+			-webkit-border-radius:5px;
+			border-radius:5px;
+		}
+		.tweet_box textarea{
+			width: 500px;
+			border: #F7CFCF solid 1px;
+			-moz-border-radius:5px;
+			-webkit-border-radius:5px;
+			border-radius:5px;
+		}
+		.tweet_list{
+			margin: 20px;
+			padding:20px;
+			background-color: #E2FFF9;
+			border: #CBECCE solid 1px;
+			-moz-border-radius:5px;
+			-webkit-border-radius:5px;
+			border-radius:5px;
+		}
+		.tweet_list ul{
+			padding: 0px;
+			font-family: verdana;
+			font-size: 12px;
+			color: #5C5C5C;
+		}
+		.tweet_list li{
+			border-bottom: silver dashed 1px;
+			list-style: none;
+			padding: 5px;
+		}
 	</style>
-</head>
-<body>
 <?php
 	if(isset($_SESSION['status']) && $_SESSION['status'] == 'verified') 
 	{
@@ -104,8 +97,12 @@ include_once("inc/twitteroauth.php");
 			
 	}else{
 		//Display login button
-		echo '<a href="process.php"><img src="images/twitter.png"/></a>';
+		// echo '<a href="process.php"><img src="images/twitter.png"/></a>';
+		// echo '<a href="componentFunction/twitterlogin/process.php"><img src="componentFunction/twitterlogin/images/twitter.png"/></a>';
+		
+		// echo '<a class="btn btn-block" href="process.php" data-toggle="modal" data-dismiss="modal">Continue with Twitter</a>';
+		// echo '<a class="btn btn-block" href="componentFunction/twitterlogin/process.php" data-toggle="modal" data-dismiss="modal">Continue with Twitter</a>';
+		echo '<a class="btn btn-block" href="componentFunction/twitterlogin/process.php">Continue with Twitter</a>';
+
 	}
 ?>  
-</body>
-</html>

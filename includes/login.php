@@ -57,7 +57,8 @@ if (isset($_POST['login'])) {
 
                 <div class="modal-button-group">                                    
                   <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width="100%"></div>
-                  <a class="btn btn-block" href="#" data-toggle="modal" data-dismiss="modal">Continue with Twitter</a>
+                  <!-- <a class="btn btn-block" href="#" data-toggle="modal" data-dismiss="modal">Continue with Twitter</a> -->
+                  <?php include 'componentFunction/twitterlogin/index.php' ?>
                 </div>                
                 
                 <a class="need-an-acc" href="#signupform" data-toggle="modal" data-dismiss="modal">Need an account?</a>                  
