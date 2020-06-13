@@ -76,7 +76,8 @@
                           // echo htmlentities($result->firstName . $result->lasstName);
                           $firstName = $result->firstName;
                           $lastName = $result->lastName;
-                          echo htmlentities($lastName . $firstName);
+                          // echo htmlentities($firstName . ' ' . $lastName);
+                          echo htmlentities($firstName . $lastName);
 
                           // GLOBAL VARIABLE( id )
                           $id = $result->id;

@@ -162,6 +162,21 @@ if (isset($_POST['submit'])) {
       }
     }
   </script>
+  <style>
+    ul, ol, li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+    .container{padding: 20px;}
+    .upload-div{margin-bottom: 25px;}
+    .gallery{width:100%; float:left; margin-top:30px;}
+    .gallery ul{margin:0; padding:0; list-style-type:none;}
+    .gallery ul li{padding:7px; border:2px solid #ccc; float:left; margin:10px 7px; background:none; width:auto; height:auto;}
+    .gallery img{width:250px;}
+  </style>
+  </style>
 </head>
 
 <body>

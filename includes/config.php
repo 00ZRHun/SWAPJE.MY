@@ -2,13 +2,14 @@
 // DB credentials.
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_PASS', 'root');
 // define('DB_PASS', '');
 define('DB_NAME', 'swapje');
 // Establish database connection.
 try
 {
     $dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER, DB_PASS,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+    // $dbh = new PDO("mysql:host=".'localhost'.";dbname=".'testing','root', 'root',array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
 }
 catch (PDOException $e)
 {
