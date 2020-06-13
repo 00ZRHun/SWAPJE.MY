@@ -255,20 +255,22 @@ if (strlen($_SESSION['login']) == 0) {
 
 										<div class="panel-body">
 
+											<strong class="text-danger">Select at least 1 category: sell, rent or swap below to enable filling</strong>
+
 											<!-- form start -->
-											<form method="post" class="form-horizontal" enctype="multipart/form-data">
+											<form method="post" class="form-horizontal" style="margin-top: 2em" enctype="multipart/form-data">
 												<!-- Post A Vehicle -->
-												<!-- row 1 -->
+												<!-- row 1 -->												
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
 													<div class="col-sm-4">
 														<input type="hidden" name="userId" id="userId" class="form-control" required value="<?= $id ?>">
-														<input type="text" name="productName" id="productName" class="form-control" required>
+														<input type="text" name="productName" id="productName" disabled class="form-control-default form-control" required>
 													</div>
 
 													<label class="col-sm-2 control-label">Used Year<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<input type="number" name="usedYear" id="usedYear" class="form-control" required>
+														<input type="number" name="usedYear" disabled id="usedYear" class="form-control form-control-default" required>
 													</div>
 
 													<!-- <label class="col-sm-2 control-label">Select Brand<span style="color:red">*</span></label>
@@ -296,24 +298,24 @@ if (strlen($_SESSION['login']) == 0) {
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Overview<span style="color:red">*</span></label>
 													<div class="col-sm-10">
-														<textarea class="form-control" name="overview" id="overview" rows="3" required></textarea>
+														<textarea disabled class="form-control form-control-default" name="overview" id="overview" rows="3" required></textarea>
 													</div>
 												</div>
 												<!-- row 3 -->
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Total Price( RM )<span style="color:red">*</span></label>
 													<div class="col-sm-2">
-														<input type="number" name="totalPrice" id="totalPrice" class="form-control" required>
+														<input type="number" name="totalPrice" id="totalPrice" disabled class="form-control-default form-control" required>
 													</div>
 
 													<label class="col-sm-2 control-label">Price Per Day( RM )<span style="color:red">*</span></label>
 													<div class="col-sm-2">
-														<input type="number" name="pricePerDay" id="pricePerDay" class="form-control" required>
+														<input disabled type="number" name="pricePerDay" id="pricePerDay" class="form-control-default form-control" required>
 													</div>
 
 													<label class="col-sm-2 control-label">Value( RM )<span style="color:red">*</span></label>
 													<div class="col-sm-2">
-														<input type="number" name="value" id="value" class="form-control" required>
+														<input disabled type="number" name="value" id="value" class="form-control form-control-default" required>
 													</div>
 
 													<!-- <label class="col-sm-2 control-label">pricePerDay<span style="color:red">*</span></label>
@@ -330,12 +332,12 @@ if (strlen($_SESSION['login']) == 0) {
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Pay Pal Business Account<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<input type="email" name="payPalBusinessAccount" id="payPalBusinessAccount" class="form-control" required>
+														<input type="email" name="payPalBusinessAccount" id="payPalBusinessAccount" disabled class="form-control-default form-control" required>
 													</div>
 
 													<label class="col-sm-2 control-label">Contact Nombor<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<input type="number" name="contactNo" id="contactNo" class="form-control" required>
+														<input type="number" name="contactNo" id="contactNo" disabled class="form-control-default form-control" required>
 													</div>
 												</div>
 
@@ -385,7 +387,7 @@ if (strlen($_SESSION['login']) == 0) {
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Item condition 1-10<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<select name="itemCondition" id="itemCondition" class="form-control" required>
+														<select disabled name="itemCondition" id="itemCondition" class="form-control form-control-default" required>
 															<option value="10">10</option>
 															<option value="9">9</option>
 															<option value="8">8</option>
@@ -403,7 +405,7 @@ if (strlen($_SESSION['login']) == 0) {
 													<!--  -->
 													<label class="col-sm-2 control-label">Category<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<select name="category" id="category" class="form-control" required>
+														<select disabled  name="category" id="category" class="form-control-default form-control" required>
 															<?php
 															$sql = "SELECT * FROM category WHERE delmode=0 ORDER BY name ASC";
 
@@ -467,8 +469,8 @@ if (strlen($_SESSION['login']) == 0) {
 												<!-- Cancel & Save btn -->
 												<div class="form-group text-center">
 													<div class="col-sm-8 col-sm-offset-2">
-														<button class="btn btn-default" type="reset">Cancel</button>
-														<button class="btn btn-primary" name="submit" type="submit">Save changes</button>
+													<button class="primary-btn" name="submit" type="submit">Save changes</button>
+														<button class="grey-btn" style="margin: 5px 0" type="reset">Cancel</button>														
 													</div>
 												</div>
 
@@ -539,6 +541,33 @@ if (strlen($_SESSION['login']) == 0) {
 
 			uploadImageClicker.addEventListener('click', () => uploadImageContent.classList.toggle("show"));
 			uploadSnapshotClicker.addEventListener('click', () => uploadSnapshotContent.classList.toggle("show"));
+
+			// Handle checkbox and input field
+			const sellCheckbox = document.getElementById('sell'),
+				  rentCheckbox = document.getElementById('rent'),
+				  swapCheckbox = document.getElementById('swap');
+
+			const formControls = document.querySelectorAll(".form-control-default");
+
+			// Handlers
+			function checkboxOnChecked(e) {
+				if(sellCheckbox.checked || rentCheckbox.checked || swapCheckbox.checked) {
+					formControls.forEach((control) => {
+						control.disabled = false;
+					})
+				}			
+
+				else {
+					formControls.forEach((control) => {
+						control.disabled = true;
+					})
+				}
+						
+			}
+
+			sellCheckbox.addEventListener('change', checkboxOnChecked);
+			rentCheckbox.addEventListener('change', checkboxOnChecked);
+			swapCheckbox.addEventListener('change', checkboxOnChecked);
 			
 		</script>
 

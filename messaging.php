@@ -129,26 +129,45 @@ if (isset($_SESSION['login'])) {
 
             // Store a record of current receiver and sender to to_user_namelist array.
             to_user_namelist.push(chatRecord);
-        }                    
-
-        let html = "";
+        }                            
 
         if(check === true) {                                                        
             $(`*[data-to_user_id="${snapshot.val().user_id == <?php echo htmlentities($user_id)?> ? snapshot.val().to_user_id : snapshot.val().user_id }"]`).html(snapshot.val().chat_message) 
         } else {
-            html = `
-            <div class="message-div message-preview" onclick="redirectPage(${snapshot.val().user_id == <?php echo htmlentities($user_id)?> ? snapshot.val().to_user_id : snapshot.val().user_id })">
-                <img src="..." class="avatar" alt="Avatar">
-                <div class="message-div-content">                
-                    <h5 class="message-div-content__username">
-                    ${snapshot.val().to_user_id == "<?php echo htmlentities($user_id) ?>" ? snapshot.val().from_user_name : snapshot.val().to_user_name}
-                    </h5>
-                    <p data-to_user_id=${snapshot.val().user_id == <?php echo htmlentities($user_id)?> ? snapshot.val().to_user_id : snapshot.val().user_id }>${snapshot.val().chat_message}</p>
-                </div>
-            </div>
-            `;
+                        
+            let currentChatUserId = snapshot.val().user_id == "<?php echo htmlentities($user_id)?>" ? snapshot.val().to_user_id : snapshot.val().user_id;            
 
-            document.getElementById("messages-container").innerHTML += html;
+            async function getAvatar(avatarUserId) {
+                return $.ajax({
+                method: "POST",
+                url: "functions/User/get_user_profile.php",
+                dataType: "json",
+                data: {
+                    avatarUserId
+                }                    
+                })
+                .then(response => {
+
+                    let html = "";
+                    let avatarImage;
+
+                    html = `
+                    <div class="message-div message-preview" onclick="redirectPage(${snapshot.val().user_id == <?php echo htmlentities($user_id)?> ? snapshot.val().to_user_id : snapshot.val().user_id })">
+                        <img src="img/profile/${response.avatarImage}" class="avatar" alt="Avatar">
+                        <div class="message-div-content">                
+                            <h5 class="message-div-content__username">
+                            ${snapshot.val().to_user_id == "<?php echo htmlentities($user_id) ?>" ? snapshot.val().from_user_name : snapshot.val().to_user_name}
+                            </h5>
+                            <p data-to_user_id=${snapshot.val().user_id == <?php echo htmlentities($user_id)?> ? snapshot.val().to_user_id : snapshot.val().user_id }>${snapshot.val().chat_message}</p>
+                        </div>
+                    </div>
+                    `;
+
+                    document.getElementById("messages-container").innerHTML += html;
+                })                                
+            };
+
+            getAvatar(currentChatUserId);            
         }                  
     });
 });

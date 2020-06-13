@@ -1,0 +1,17 @@
+
+.profile-form {
+    margin-top: 6em;
+}
+
+.profile-column {
+    display: flex;
+    flex-flow: column;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.profile-form button .angle_arrow{    
+    height: unset !important;    
+    vertical-align: unset !important;    
+}
+

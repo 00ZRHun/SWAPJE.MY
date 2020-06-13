@@ -351,9 +351,9 @@ if (strlen($_SESSION['login']) == 0) {
 
 												<!-- Cancel & Save btn -->
 												<div class="form-group text-center">
-													<div class="col-sm-8 col-sm-offset-2">
-														<button class="btn btn-default" type="reset">Cancel</button>
-														<button class="btn btn-primary" name="submit" type="submit">Save changes</button>
+													<div class="col-sm-8 col-sm-offset-2">														
+														<button class="primary-btn" name="submit" type="submit">Save changes</button>
+														<button class="grey-btn" type="reset">Cancel</button>
 													</div>
 												</div>
 

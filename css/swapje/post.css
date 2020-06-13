@@ -1,6 +1,10 @@
-
 .upload-image-container {
     margin-top: 4em;
+}
+
+input:disabled,
+textarea:disabled {
+    opacity: .5 !important;
 }
 
 .show {
