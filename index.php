@@ -78,7 +78,14 @@ error_reporting(0);
           $query->bindParam(':search', $search, PDO::PARAM_STR);
         } else {
           // $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
-          $sql = "SELECT * from items WHERE delmode=0 ORDER BY updationDate DESC";
+          // $sql = "SELECT * from items WHERE delmode=0 ORDER BY updationDate DESC";
+          $sql = "SELECT items.*, SUM(rating.star) as starRating
+            from items 
+            LEFT JOIN rating
+            ON items.id = rating.itemId
+            WHERE delmode=0
+            GROUP BY items.id
+            ORDER BY starRating DESC";
           $query = $dbh->prepare($sql);
         }
 

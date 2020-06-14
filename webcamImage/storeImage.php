@@ -34,7 +34,7 @@ for($i=0; $i<count($images); $i++){
         $image_type = $image_type_aux[1];
     
         $image_base64 = base64_decode($image_parts[1]);
-        $fileName = uniqid() . '.png';
+        $fileName = uniqid(rand(0,100), true) . '.png';
     
         $file = $folderPath . $fileName;
         file_put_contents($file, $image_base64);

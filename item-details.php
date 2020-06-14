@@ -195,9 +195,9 @@ if (isset($_POST['submit'])) {
       <div class="item-detail__header">
         <h6>Product Detail</h6>
 
-        <!--Star Rating-->
+        <!--Star-Rating-->
         <?php include 'componentFunction/starRating.php'; ?>
-        <!--/Star Rating-->
+        <!--/Star-Rating-->
       </div>
       <!-- get data from items -->
       <?php
@@ -296,9 +296,9 @@ if (isset($_POST['submit'])) {
   <?php include 'includes/footer.php'; ?>
   <!--/Footer-->
 
-  <!--Back to top-->
+  <!--Back-to-top-->
   <?php include 'componentFunction/backToTop.php'; ?>
-  <!--/Back to top-->
+  <!--/Back-to-top-->
 
   <!--Login-Form-->
   <?php include 'includes/login.php'; ?>
