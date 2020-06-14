@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jun 10, 2020 at 12:01 PM
+-- Generation Time: Jun 14, 2020 at 11:54 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.4.2
 
@@ -159,7 +159,8 @@ INSERT INTO `favorite` (`id`, `userId`, `itemId`, `date_created`) VALUES
 (243, 1, 20, '2020-06-08 13:40:24'),
 (244, 1, 20, '2020-06-08 13:40:28'),
 (245, 1, 20, '2020-06-08 13:40:32'),
-(252, 1, 6, '2020-06-09 07:14:21');
+(252, 1, 6, '2020-06-09 07:14:21'),
+(253, 1, 25, '2020-06-14 09:36:53');
 
 -- --------------------------------------------------------
 
@@ -203,7 +204,7 @@ CREATE TABLE `items` (
   `swap` int(11) DEFAULT '0',
   `totalPrice` int(12) DEFAULT NULL,
   `pricePerDay` int(12) DEFAULT NULL,
-  `value` int(12) NOT NULL,
+  `value` int(12) DEFAULT NULL,
   `payPalBusinessAccount` varchar(100) DEFAULT NULL,
   `contactNo` varchar(15) DEFAULT NULL,
   `images` varchar(225) DEFAULT NULL,
@@ -242,8 +243,13 @@ INSERT INTO `items` (`id`, `user_id`, `productName`, `itemCondition`, `usedYear`
 (23, 1, 'ipo', 10, 123, 4, 'ipo', 1, 1, 1, 123, 123, 123, 'iop@iop.iop', '123123123213', 'Screenshot 2020-06-01 at 5.09.21 PM.png', '2020-06-10 10:51:51', 0, '0'),
 (24, 1, 'ipo', 10, 123, 4, 'ipo', 1, 1, 1, 123, 123, 123, 'iop@iop.iop', '123123123213', 'Screenshot 2020-06-01 at 5.09.21 PM.png', '2020-06-10 10:53:43', 0, '0'),
 (25, 1, 'a', 10, 1, 4, 'a', 1, 1, 1, 1, 1, 1, 'a@a.a', '123123123123', '5ee0bf6142fee.png, 5ee0bf61439dc.png, Screenshot 2020-05-28 at 7.20.53 PM.png, Screenshot 2020-06-01 at 5.09.21 PM.png, Screenshot 2020-06-01 at 10.54.16 PM.png', '2020-06-10 11:09:21', 0, '0'),
-(26, 1, 'a', 10, 1, 4, 'a', 1, 1, 1, 1, 1, 1, 'a@a.a', '123123123123', '5ee0c0bbc57a2.png, 5ee0c0bbc5c41.png, Screenshot 2020-05-28 at 7.20.53 PM.png, Screenshot 2020-06-01 at 5.09.21 PM.png, Screenshot 2020-06-01 at 10.54.16 PM.png', '2020-06-10 11:15:07', 0, '0'),
-(27, 1, 'z123', 10, 2123, 4, 'z123', 1, 1, 1, 2123, 11123, 111123, 'z@z.z123', '123123123123123', '5ee0ca49e98ed.png, 5ee0ca49ea1c9.png, Screenshot 2020-05-28 at 7.20.53 PM.png, Screenshot 2020-06-01 at 10.54.16 PM.png', '2020-06-10 11:39:13', 0, '0');
+(26, 1, 'a', 10, 1, 4, 'a', 1, 1, 1, 1, 1, 1, 'jobbusiness@gmail.com', '123123123123', '5ee0c0bbc57a2.png, 5ee0c0bbc5c41.png, Screenshot 2020-05-28 at 7.20.53 PM.png, Screenshot 2020-06-01 at 5.09.21 PM.png, Screenshot 2020-06-01 at 10.54.16 PM.png', '2020-06-10 11:15:07', 0, '0'),
+(27, 1, 'z123', 10, 2123, 4, 'z123', 1, 1, 1, 2123, 11123, 111123, 'jobbusiness@gmail.com', '123123123123123', '5ee0ca49e98ed.png, 5ee0ca49ea1c9.png, Screenshot 2020-05-28 at 7.20.53 PM.png, Screenshot 2020-06-01 at 10.54.16 PM.png', '2020-06-10 11:39:13', 0, '0'),
+(28, 1, 'qwe', 10, 123, 4, 'qwe', 1, 0, 0, 123, 123, 123, '00zrhun@gmail.com', '601110604061', '5ee60217a2957.png, 5ee60217a2957.png, Screenshot 2020-06-01 at 10.54.42 PM.png', '2020-06-14 11:01:32', 0, '0'),
+(29, 1, 'qwe', 10, 123, 4, 'qwe', 1, NULL, NULL, 123, NULL, NULL, '00zrhun@gmail.com', '601110604061', '5ee6039566034.png, Screenshot 2020-06-01 at 10.54.42 PM.png', '2020-06-14 11:01:41', 0, '0'),
+(30, 1, 'qwe', 10, 123, 4, 'qwe', 1, NULL, NULL, 123, NULL, NULL, '00zrhun@gmail.com', '601110604061', '5ee604a3f09fd.png, Screenshot 2020-06-01 at 10.54.42 PM.png', '2020-06-14 11:06:11', 0, '0'),
+(31, 1, 'qwe', 10, 123, 4, 'qwe', 1, NULL, NULL, 123, NULL, NULL, '00zrhun@gmail.com', '601110604061', '5ee6055a08630.png, Screenshot 2020-06-01 at 10.54.42 PM.png', '2020-06-14 11:09:14', 0, '0'),
+(32, 1, 'zxc', 1, 456, 4, 'zxc', 1, 1, 1, 123, 567, 890, 'jobbusinessun@gmail.com', '601110604061', '5ee6066e11e23.png, 5ee6066e12251.png, Screenshot 2020-06-01 at 5.09.21 PM.png, Screenshot 2020-06-01 at 10.54.16 PM.png', '2020-06-14 11:13:50', 0, '0');
 
 -- --------------------------------------------------------
 
@@ -267,7 +273,8 @@ INSERT INTO `rating` (`id`, `userId`, `itemId`, `star`, `timestamp`) VALUES
 (1, 1, 20, 5, '2020-06-08 13:40:30'),
 (23, 30, 17, 5, '2020-06-08 03:05:21'),
 (24, 1, 12, 1, '2020-06-08 06:37:42'),
-(25, 1, 6, 4, '2020-06-09 07:13:01');
+(25, 1, 6, 4, '2020-06-09 07:13:01'),
+(26, 1, 25, 5, '2020-06-14 09:36:50');
 
 -- --------------------------------------------------------
 
@@ -277,26 +284,29 @@ INSERT INTO `rating` (`id`, `userId`, `itemId`, `star`, `timestamp`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
+  `profile` varchar(120) DEFAULT NULL,
   `firstName` varchar(120) DEFAULT NULL,
   `lastName` varchar(120) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
-  `ContactNo` char(13) DEFAULT NULL,
+  `contactNo` char(13) DEFAULT NULL,
   `dob` varchar(100) DEFAULT NULL,
-  `Address` varchar(255) DEFAULT NULL,
-  `City` varchar(100) DEFAULT NULL,
-  `Country` varchar(100) DEFAULT NULL,
-  `RegDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `regDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updationDate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `password`, `ContactNo`, `dob`, `Address`, `City`, `Country`, `RegDate`, `UpdationDate`) VALUES
-(1, 'a', 'a', '00ZRHun@gmail.com', 'e99a18c428cb38d5f260853678922e03', NULL, NULL, NULL, NULL, NULL, '2020-06-01 15:39:33', '2020-06-02 12:54:03'),
-(2, 'bc', 'a', 'abc@gmail.com', 'e99a18c428cb38d5f260853678922e03', NULL, NULL, NULL, NULL, NULL, '2020-06-02 00:41:59', '2020-06-02 12:54:06');
+INSERT INTO `users` (`id`, `profile`, `firstName`, `lastName`, `email`, `password`, `contactNo`, `dob`, `address`, `city`, `country`, `regDate`, `updationDate`) VALUES
+(1, 'Screenshot 2020-06-01 at 10.54.16 PM.png', 'Zu Rong', 'Hun', '00zrhun@gmail.com', 'e99a18c428cb38d5f260853678922e03', '601110604061', '11/22/16667', 'S-23B, Bukit Batu, 81020 Kulai, Johor.', 'Kulai', 'Malaysia', '2020-06-01 15:39:33', '2020-06-12 13:25:41'),
+(2, NULL, 'bc', 'a', 'abc@gmail.com', 'e99a18c428cb38d5f260853678922e03', NULL, NULL, NULL, NULL, NULL, '2020-06-02 00:41:59', '2020-06-02 12:54:06'),
+(3, '1.png', ':firstName', ':lastName', 'email@gmail.com', ':password', NULL, NULL, NULL, NULL, NULL, '2020-06-13 14:09:00', NULL),
+(4, '7.png', 'trytry', 'try553', 'trytrytry553@gmail.com', 'f1c3744bf6e5c0f5e9985efddbe158f9', NULL, NULL, NULL, NULL, NULL, '2020-06-13 14:09:45', '2020-06-13 14:11:59');
 
 --
 -- Indexes for dumped tables
@@ -339,6 +349,12 @@ ALTER TABLE `rating`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -352,7 +368,7 @@ ALTER TABLE `ads`
 -- AUTO_INCREMENT for table `favorite`
 --
 ALTER TABLE `favorite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
 
 --
 -- AUTO_INCREMENT for table `images`
@@ -364,10 +380,16 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;

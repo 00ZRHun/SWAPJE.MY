@@ -31,7 +31,7 @@ if (strlen($_SESSION['login']) == 0) {
 			$image_type = $image_type_aux[1];
 
 			$image_base64 = base64_decode($image_parts[1]);
-			$fileName = uniqid(rand(0,100), true) . '.png';
+			$fileName = uniqid() . '.png';
 
 			$imagesArr[] = $fileName;
 
@@ -112,26 +112,9 @@ if (strlen($_SESSION['login']) == 0) {
 		$query->execute();
 		$lastInsertId = $dbh->lastInsertId();
 		if ($lastInsertId) {
-			$msg = "Item posted successfully";
-			//  . $images;
+			$msg = "Item posted successfully" . $images;
 		} else {
-			$error = "Something went wrong. Please try again";
-			/*  . $sql . `<br>` .
-			':userId : ' . $userId . `<br>` . 
-			':productName : ' . $productName . `<br>` . 
-			':usedYear : ' . $usedYear . `<br>` . 
-			':overview : ' . $overview . `<br>` . 
-			':totalPrice : ' . $totalPrice . `<br>` . 
-			':pricePerDay : ' . $pricePerDay . `<br>` . 
-			':value : ' . $value . `<br>` . 
-			':payPalBusinessAccount : ' . $payPalBusinessAccount . `<br>` . 
-			':contactNo : ' . $contactNo . `<br>` . 
-			':images : ' . $images . `<br>` . 
-			':itemCondition : ' . $itemCondition . `<br>` . 
-			':category : ' . $category . `<br>` . 
-			':sell : ' . $sell . `<br>` . 
-			':rent : ' . $rent . `<br>` . 
-			':swap : ' . $swap . `<br>`; */
+			$error = "Something went wrong. Please try again" . $userId . $images;
 		}
 	}
 ?>
@@ -205,8 +188,27 @@ if (strlen($_SESSION['login']) == 0) {
 		<link rel="apple-touch-icon-precomposed" href="assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
 		<link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
 		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-		
+		<style>
+			.errorWrap {
+				padding: 10px;
+				margin: 0 0 20px 0;
+				background: #fff;
+				border-left: 4px solid #dd3d36;
+				-webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+				box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+			}
+
+			.succWrap {
+				padding: 10px;
+				margin: 0 0 20px 0;
+				background: #fff;
+				border-left: 4px solid #5cb85c;
+				-webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+				box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+			}
+		</style>
 	</head>
+
 	<body>
 		<!-- <h1><?= $id ?></h1> -->
 		<!-- Start Switcher -->
@@ -230,15 +232,31 @@ if (strlen($_SESSION['login']) == 0) {
 							<!-- form 1( basic info ) -->
 							<div class="row">
 								<div class="col-md-12">
-								<!-- notification( htmlentities ) -->
-									<!--status-->
-									<?php include 'componentFunction/status.php'; ?>
-									<!--/status-->
-
 									<div class="panel panel-default">
 										<div class="panel-heading">Basic Info</div>
 
+										<!-- notification( htmlentities ) -->
+										<?php
+										if ($error) {
+										?>
+											<div class="errorWrap">
+												<strong>ERROR</strong>:<?php echo htmlentities($error); ?>
+											</div>
+										<?php
+										}
+										if ($msg) {
+										?>
+											<div class="succWrap">
+												<strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?>
+											</div>
+										<?php
+										}
+										?>
+
 										<div class="panel-body">
+
+											<strong class="text-danger">Select at least 1 category: sell, rent or swap below to enable filling</strong>
+
 											<!-- form start -->
 											<form method="post" class="form-horizontal" style="margin-top: 2em" enctype="multipart/form-data">
 												<!-- Post A Vehicle -->
@@ -247,112 +265,57 @@ if (strlen($_SESSION['login']) == 0) {
 													<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
 													<div class="col-sm-4">
 														<input type="hidden" name="userId" id="userId" class="form-control" required value="<?= $id ?>">
-														<input type="text" name="productName" id="productName" class="form-control-default form-control" required>
+														<input type="text" name="productName" id="productName" disabled class="form-control-default form-control" required>
 													</div>
 
 													<label class="col-sm-2 control-label">Used Year<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<input type="number" name="usedYear" id="usedYear" class="form-control form-control-default" required>
+														<input type="number" name="usedYear" disabled id="usedYear" class="form-control form-control-default" required>
 													</div>
-												</div>
 
-												<!-- <div class="hr-dashed"></div> -->
-												
+													<!-- <label class="col-sm-2 control-label">Select Brand<span style="color:red">*</span></label>
+														<div class="col-sm-4">
+															<select name="brandname" required>
+																<option value=""> Select </option>
+																<?php
+																$ret = "select id,BrandName from tblbrands";
+																$query = $dbh->prepare($ret);
+																//$query->bindParam(':id',$id, PDO::PARAM_STR);
+																$query->execute();
+																$results = $query->fetchAll(PDO::FETCH_OBJ);
+																if ($query->rowCount() > 0) {
+																	foreach ($results as $result) {
+																?>
+																	<option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->BrandName); ?></option>
+																<?php
+																	}
+																}
+																?>
+															</select>
+														</div> -->
+												</div>
 												<!-- row 2 -->
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Overview<span style="color:red">*</span></label>
 													<div class="col-sm-10">
-														<textarea class="form-control form-control-default" name="overview" id="overview" rows="3" required></textarea>
+														<textarea disabled class="form-control form-control-default" name="overview" id="overview" rows="3" required></textarea>
 													</div>
 												</div>
-
-												<!-- <div class="hr-dashed"></div> -->
-
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Item condition 1-10<span style="color:red">*</span></label>
-													<div class="col-sm-4">
-														<select name="itemCondition" id="itemCondition" class="form-control form-control-default" required>
-															<option value="10">10</option>
-															<option value="9">9</option>
-															<option value="8">8</option>
-															<option value="7">7</option>
-															<option value="6">6</option>
-															<option value="5">5</option>
-															<option value="4">4</option>
-															<option value="3">3</option>
-															<option value="2">2</option>
-															<option value="1">1</option>
-														</select>
-													</div>
-
-													<label class="col-sm-2 control-label">Category<span style="color:red">*</span></label>
-													<div class="col-sm-4">
-														<select  name="category" id="category" class="form-control-default form-control" required>
-															<?php
-															$sql = "SELECT * FROM category WHERE delmode=0 ORDER BY name ASC";
-
-															// echo $id;
-
-															$query = $dbh->prepare($sql);
-															$query->execute();
-															$results = $query->fetchAll(PDO::FETCH_OBJ);
-															if ($query->rowCount() > 0) {
-																foreach ($results as $result) {
-															?>
-																	<option value="<?= $result->id; ?>"><?= $result->name; ?></option>
-															<?php }
-															} ?>
-														</select>
-													</div>
-												</div>
-
-												<div class="hr-dashed"></div>
-												
-												<!-- <strong class="text-danger">Select at least 1 category: sell, rent or swap below to enable filling</strong> -->
-												<strong class="text-danger text-center">
-													&nbsp&nbsp&nbsp&nbsp&nbsp
-													Please kindly tick the following checkbox to enable filling
-												</strong>
-
-												<div class="form-group">
-													<!-- <div class="col-sm-3"></div> -->
-													<div class="col-sm-4 text-center" style="float: left">
-														<div class="checkbox checkbox-inline">
-															<input type="checkbox" id="sell" name="sell" value="1">
-															<label for="sell">sell</label>
-														</div>
-													</div>
-													<div class="col-sm-4 text-center" style="float: left">
-														<div class="checkbox checkbox-inline">
-															<input type="checkbox" id="rent" name="rent" value="1">
-															<label for="rent">rent</label>
-														</div>
-													</div>
-													<div class="col-sm-4 text-center" style="float: left">
-														<div class="checkbox checkbox-inline">
-															<input type="checkbox" id="swap" name="swap" value="1">
-															<label for="swap">swap</label>
-														</div>
-													</div>
-												</div>
-
-												<!-- <div class="hr-dashed"></div> -->
-
 												<!-- row 3 -->
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Total Price( RM )<span style="color:red">*</span></label>
 													<div class="col-sm-2">
-														<input type="number" name="totalPrice" id="totalPrice" class="form-control form-control-default" disabled required>
+														<input type="number" name="totalPrice" id="totalPrice" disabled class="form-control-default form-control" required>
 													</div>
 
 													<label class="col-sm-2 control-label">Price Per Day( RM )<span style="color:red">*</span></label>
 													<div class="col-sm-2">
-														<input type="number" name="pricePerDay" id="pricePerDay" class="form-control form-control-default" disabled required>
+														<input disabled type="number" name="pricePerDay" id="pricePerDay" class="form-control-default form-control" required>
 													</div>
 
 													<label class="col-sm-2 control-label">Value( RM )<span style="color:red">*</span></label>
 													<div class="col-sm-2">
-														<input type="number" name="value" id="value" class="form-control form-control-default" disabled required>
+														<input disabled type="number" name="value" id="value" class="form-control form-control-default" required>
 													</div>
 
 													<!-- <label class="col-sm-2 control-label">pricePerDay<span style="color:red">*</span></label>
@@ -365,8 +328,20 @@ if (strlen($_SESSION['login']) == 0) {
 															</select>
 														</div> -->
 												</div>
+												<!-- row 4 -->
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Pay Pal Business Account<span style="color:red">*</span></label>
+													<div class="col-sm-4">
+														<input type="email" name="payPalBusinessAccount" id="payPalBusinessAccount" disabled class="form-control-default form-control" required>
+													</div>
 
-												<!-- <div class="hr-dashed"></div> -->
+													<label class="col-sm-2 control-label">Contact Nombor<span style="color:red">*</span></label>
+													<div class="col-sm-4">
+														<input type="number" name="contactNo" id="contactNo" disabled class="form-control-default form-control" required>
+													</div>
+												</div>
+
+												<div class="hr-dashed"></div>
 
 												<!-- image -->
 													<!-- gallery -->
@@ -407,7 +382,52 @@ if (strlen($_SESSION['login']) == 0) {
 												</div>
 												<?php include 'webcamImage/index.php' ?>
 
-												<!-- <div class="hr-dashed"></div> -->
+												<div class="hr-dashed"></div>
+
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Item condition 1-10<span style="color:red">*</span></label>
+													<div class="col-sm-4">
+														<select disabled name="itemCondition" id="itemCondition" class="form-control form-control-default" required>
+															<option value="10">10</option>
+															<option value="9">9</option>
+															<option value="8">8</option>
+															<option value="7">7</option>
+															<option value="6">6</option>
+															<option value="5">5</option>
+															<option value="4">4</option>
+															<option value="3">3</option>
+															<option value="2">2</option>
+															<option value="1">1</option>
+														</select>
+													</div>
+													<!--  -->
+													<!--  -->
+													<!--  -->
+													<label class="col-sm-2 control-label">Category<span style="color:red">*</span></label>
+													<div class="col-sm-4">
+														<select disabled  name="category" id="category" class="form-control-default form-control" required>
+															<?php
+															$sql = "SELECT * FROM category WHERE delmode=0 ORDER BY name ASC";
+
+															// echo $id;
+
+															$query = $dbh->prepare($sql);
+															$query->execute();
+															$results = $query->fetchAll(PDO::FETCH_OBJ);
+															if ($query->rowCount() > 0) {
+																foreach ($results as $result) {
+															?>
+																	<option value="<?= $result->id; ?>"><?= $result->name; ?></option>
+															<?php }
+															} ?>
+														</select>
+													</div>
+													<!--  -->
+													<!--  -->
+													<!--  -->
+
+												</div>
+
 										</div>
 									</div>
 								</div>
@@ -417,39 +437,36 @@ if (strlen($_SESSION['login']) == 0) {
 							<div class="row">
 								<div class="col-md-12">
 									<div class="panel panel-default">
-										<div class="panel-heading">User Info</div>
+										<div class="panel-heading">Category</div>
 										<div class="panel-body">
 
 											<!-- Accessories -->
 											<!-- row 1 -->
 											<div class="form-group">
+												<div class="col-sm-4">
+													<div class="checkbox checkbox-inline">
+														<input type="checkbox" id="sell" name="sell" value="1">
+														<label for="sell">sell</label>
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="checkbox checkbox-inline">
+														<input type="checkbox" id="rent" name="rent" value="1">
+														<label for="rent">rent</label>
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="checkbox checkbox-inline">
+														<input type="checkbox" id="swap" name="swap" value="1">
+														<label for="swap">swap</label>
+													</div>
+												</div>
 
 												<!-- <div class="hr-dashed"></div> -->
-												<!-- <br><br><br> -->
+												<br><br><br>
 
 												<!-- Cancel & Save btn -->
 												<div class="form-group text-center">
-												
-												<?php
-													$user_sql = "SELECT * FROM users WHERE id=:id";        
-													$user_query = $dbh->prepare($user_sql);
-													$user_query->bindParam(':id', $id, PDO::PARAM_STR);
-													$user_query->execute();
-													$user_results = $user_query->fetch();
-												?>
-													<label class="col-sm-2 control-label">Pay Pal Business Account<span style="color:red">*</span></label>
-													<div class="col-sm-4">
-														<input type="email" name="payPalBusinessAccount" id="payPalBusinessAccount" class="form-control-default form-control" value="<?= $user_results['email'] ?>" required>
-													</div>
-
-													<label class="col-sm-2 control-label">Contact Nombor<span style="color:red">*</span></label>
-													<div class="col-sm-4">
-														<input type="number" name="contactNo" id="contactNo" class="form-control-default form-control" value="<?= $user_results['contactNo'] ?>" required>
-													</div>
-
-													<div class="hr-dashed"></div>
-													<br><br><br>
-
 													<div class="col-sm-8 col-sm-offset-2">
 													<button class="primary-btn" name="submit" type="submit">Save changes</button>
 														<button class="grey-btn" style="margin: 5px 0" type="reset">Cancel</button>														
@@ -469,8 +486,17 @@ if (strlen($_SESSION['login']) == 0) {
 			</div>
 		</div>
 		<!-- /Body -->
-		
+
+		<!-- Cancel & Save btn -->
+		<!-- <div class="form-group">
+		<div class="col-sm-8 col-sm-offset-2">
+			<button class="btn btn-default" type="reset">Cancel</button>
+			<button class="btn btn-primary" name="submit" type="submit">Save changes</button>
+		</div>
+	</div> -->
+
 		<!-- Loading Scripts -->
+		
 		<script src="js/main.js"></script>
 		<script>
 			function previewImages() {
@@ -519,56 +545,28 @@ if (strlen($_SESSION['login']) == 0) {
 				  rentCheckbox = document.getElementById('rent'),
 				  swapCheckbox = document.getElementById('swap');
 
-			// const formControls = document.querySelectorAll(".form-control-default");
-			const totalPriceTextBox = document.getElementById('totalPrice'),
-				  pricePerDayTextBox = document.getElementById('pricePerDay'),
-				  valueTextBox = document.getElementById('value');
+			const formControls = document.querySelectorAll(".form-control-default");
 
 			// Handlers
 			function checkboxOnChecked(e) {
-				/* if(sellCheckbox.checked || rentCheckbox.checked || swapCheckbox.checked) {
+				if(sellCheckbox.checked || rentCheckbox.checked || swapCheckbox.checked) {
 					formControls.forEach((control) => {
 						control.disabled = false;
 					})
-				} */	
-				
-				// chckbox checked
-				if(sellCheckbox.checked) {
-					totalPriceTextBox.disabled = false;
 				}			
-				if(rentCheckbox.checked) {
-					pricePerDayTextBox.disabled = false;
-				}			
-				if(swapCheckbox.checked) {
-					valueTextBox.disabled = false;
-				}		
 
-				// chckbox unchecked
-				if(!sellCheckbox.checked) {
-					totalPriceTextBox.disabled = true;
-					// totalPriceTextBox.reset();
-					totalPriceTextBox.value = '';
-				}			
-				if(!rentCheckbox.checked) {
-					pricePerDayTextBox.disabled = true;
-					pricePerDayTextBox.value = '';
-				}			
-				if(!swapCheckbox.checked) {
-					valueTextBox.disabled = true;
-					valueTextBox.value = '';
-				}
-
-				/* else {
+				else {
 					formControls.forEach((control) => {
 						control.disabled = true;
 					})
-				} */
+				}
 						
 			}
 
 			sellCheckbox.addEventListener('change', checkboxOnChecked);
 			rentCheckbox.addEventListener('change', checkboxOnChecked);
 			swapCheckbox.addEventListener('change', checkboxOnChecked);
+			
 		</script>
 
 
@@ -576,9 +574,9 @@ if (strlen($_SESSION['login']) == 0) {
 		<?php include('includes/footer.php'); ?>
 		<!-- /Footer-->
 
-		<!--Back-to-top-->
-		<?php include 'componentFunction/backToTop.php'; ?>
-  		<!--/Back-to-top-->
+		<!--Back to top-->
+		<div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
+		<!--/Back to top-->
 
 		<!--Login-Form -->
 		<?php include('includes/login.php'); ?>

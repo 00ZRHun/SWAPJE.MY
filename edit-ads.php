@@ -190,23 +190,6 @@
 	<link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 	<style>
-		.errorWrap {
-			padding: 10px;
-			margin: 0 0 20px 0;
-			background: #fff;
-			border-left: 4px solid #dd3d36;
-			-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-			box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-		}
-		.succWrap{
-			padding: 10px;
-			margin: 0 0 20px 0;
-			background: #fff;
-			border-left: 4px solid #5cb85c;
-			-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-			box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-		}
-
         ul, ol, li {
             margin: 0;
             padding: 0;
@@ -247,27 +230,10 @@
 								<div class="col-md-12">
 									<div class="panel panel-default">
 										<div class="panel-heading">Basic Info</div>
-
 											<!-- notification( htmlentities ) -->
-											<?php 
-												if($msg){
-													?>
-													<div class="succWrap">
-														<strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?>
-													</div>
-													<?php
-												}	
-												else if($error){
-													?>
-													<div class="errorWrap">
-														<strong>ERROR</strong>:<?php echo htmlentities($error); ?>
-													</div>
-													<?php 
-												} 
-												else{
-													
-												}
-											?>
+											<!--status-->
+											<?php include 'componentFunction/status.php'; ?>
+											<!--/status-->
 
 <div class="panel-body">
 												<?php

@@ -86,24 +86,6 @@
 	<link rel="apple-touch-icon-precomposed" href="assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
 	<link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-	<style>
-		.errorWrap {
-			padding: 10px;
-			margin: 0 0 20px 0;
-			background: #fff;
-			border-left: 4px solid #dd3d36;
-			-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-			box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-		}
-		.succWrap{
-			padding: 10px;
-			margin: 0 0 20px 0;
-			background: #fff;
-			border-left: 4px solid #5cb85c;
-			-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-			box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-		}
-	</style>
 </head>
 
 <body>
@@ -131,18 +113,10 @@
 							<div class="panel-heading">Item Details</div>
 							
 							<div class="panel-body">
-								<!-- notify( success/fail ) -->
-								<?php 
-										if($error){
-									?>
-										<div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?></div>
-									<?php 
-										} else if($msg){
-									?>
-										<div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?></div>
-									<?php 
-										}
-								?>
+								<!-- notification( htmlentities )/notify( success/fail ) -->
+									<!--status-->
+									<?php include 'componentFunction/status.php'; ?>
+									<!--/status-->
 
 								<!-- table -->
 								<table id="zctb" class="text-center display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
