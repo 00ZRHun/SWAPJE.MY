@@ -4,6 +4,13 @@
    <div class="item-grid">
      <?php
       $sql = "SELECT * from items WHERE delmode=0 AND category=:category AND NOT user_id=:userId";
+      $sql = "SELECT items.*, SUM(rating.star) as starRating
+              from items 
+              LEFT JOIN rating
+              ON items.id = rating.itemId
+              WHERE delmode=0 AND category=:category AND NOT user_id=:userId
+              GROUP BY items.id
+              ORDER BY starRating DESC";
       $query = $dbh->prepare($sql);
       $query->bindParam(':category', $category, PDO::PARAM_STR);
       $query->bindParam(':userId', $userId, PDO::PARAM_STR);
