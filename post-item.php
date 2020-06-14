@@ -366,9 +366,38 @@ if (strlen($_SESSION['login']) == 0) {
 														</div> -->
 												</div>
 
-												<!-- <div class="hr-dashed"></div> -->
+												<div class="hr-dashed"></div>
+												
+												<!-- <strong class="text-danger">Select at least 1 category: sell, rent or swap below to enable filling</strong> -->
+												<!-- <h3 class="text-left" style="font-weight: 800;"> -->
+												<h6 class="text-left">
+													<!-- <strong class="text-center"> -->
+														<!-- &nbsp&nbsp&nbsp -->
+														Add your items
+													<!-- </strong> -->
+												</h6>
+
+												<!-- <div class="col-sm-12">
+													<label class="control-label">Add your items<span style="color:red">*</span></label>
+												</div> -->
 
 												<!-- image -->
+													<!-- webcam -->
+												<div class="form-group snapshot">
+													<div class="col-sm-12">
+														<h5>
+															<b>
+																<a href="webcamImage">
+																	<i class="fa fa-camera webcam-icon" aria-hidden="true"></i>
+																</a>
+																<!-- Upload Snapshot -->
+																Take a picture
+															</b>
+														</h5>
+													</div>
+												</div>
+												<?php include 'webcamImage/index.php' ?>
+
 													<!-- gallery -->
 												<div class="form-group image">
 													<div class="col-sm-12">
@@ -376,7 +405,9 @@ if (strlen($_SESSION['login']) == 0) {
 															<b>
 																<a href="#">
 																	<i class="fa fa-image webcam-icon" aria-hidden="true"></i>
-																</a>Upload Images
+																</a>
+																<!-- Upload Images -->
+																Browser gallery
 															</b>
 														</h5>
 													</div>
@@ -388,26 +419,28 @@ if (strlen($_SESSION['login']) == 0) {
 														<input type="file" name="images[]" id="images" accept="image/*" multiple>
 														<!-- <input type="submit" name="submit" value="UPLOAD"/> -->
 
-														<div class="snapshot-grid" id="preview-images"></div>
 														<!--/galleryPic-->
 													</div>
 												</div>
+												
+												<div class="hr-dashed"></div>
+												
+												<h6 class="text-left">
+													Uploaded items
+												</h6>
+												<!-- <div class="snapshot-grid" id="preview-images"></div> -->
+												<p>webcam image(s) :</p><br>
 
-													<!-- webcam -->
-												<div class="form-group snapshot">
-													<div class="col-sm-12">
-														<h5>
-															<b>
-																<a href="webcamImage">
-																	<i class="fa fa-camera webcam-icon" aria-hidden="true"></i>
-																</a>Upload Snapshot
-															</b>
-														</h5>
-													</div>
+												<div class="snapshot-grid" id="preview-images">
+													<?php for($i=0; $i<60; $i++){ ?>
+														<div>
+															<div id="results[<?=$i;?>]"></div>
+														</div>
+													<?php } ?>
+
+													<p class="col-md-12">gallery image(s) :</p><br>
+													<p></p>
 												</div>
-												<?php include 'webcamImage/index.php' ?>
-
-												<!-- <div class="hr-dashed"></div> -->
 										</div>
 									</div>
 								</div>
@@ -451,8 +484,23 @@ if (strlen($_SESSION['login']) == 0) {
 													<br><br><br>
 
 													<div class="col-sm-8 col-sm-offset-2">
-													<button class="primary-btn" name="submit" type="submit">Save changes</button>
-														<button class="grey-btn" style="margin: 5px 0" type="reset">Cancel</button>														
+														 <!-- <button class="grey-btn" style="margin: 5px 0" type="reset">Cancel</button>														
+														<button class="danger-btn" style="margin: 5px 0" type="reset">Cancel</button> -->	
+														<!-- <button class="grey-btn" type="reset" style="width: 100px; height: 40px;">
+														Reset
+														</button> -->
+														<button class="danger-btn" type="reset" style="width: 100px;height: 40px;">
+															<!-- Cancel -->
+															Reset
+														</button>														
+														<button class="primary-btn" name="submit" type="submit" style="width: 100px; height: 40px;">
+														 	<!-- background-color: light-green" -->
+															<!-- Save changes -->
+															Publish
+														</button>
+														<!-- <button class="grey-btn" name="reset" type="reset">
+															Reset
+														</button> -->
 													</div>
 												</div>
 

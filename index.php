@@ -61,40 +61,37 @@ error_reporting(0);
       <h5>Items Browser</h5>      
 
       <!-- Body -->
-
       <div id="latestItem" class="item-grid">
-
         <?php
-        if (isset($_REQUEST['category'])) {
-          $sql = "SELECT * from items WHERE delmode=0 AND category=:category ORDER BY updationDate DESC";
-          $category = $_POST['category'];
-          $query = $dbh->prepare($sql);
-          $query->bindParam(':category', $category, PDO::PARAM_STR);
-        } else if (isset($_REQUEST['search'])) {
-          // $sql = "SELECT * from items WHERE delmode=0 AND productName LIKE '%:search%' ORDER BY updationDate DESC";
-          $sql = "SELECT * from items WHERE delmode=0 AND productName LIKE :search ORDER BY updationDate DESC";
-          $search = '%' . $_POST['search'] . '%';
-          $query = $dbh->prepare($sql);
-          $query->bindParam(':search', $search, PDO::PARAM_STR);
-        } else {
-          // $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
-          // $sql = "SELECT * from items WHERE delmode=0 ORDER BY updationDate DESC";
-          $sql = "SELECT items.*, SUM(rating.star) as starRating
-            from items 
-            LEFT JOIN rating
-            ON items.id = rating.itemId
-            WHERE delmode=0
-            GROUP BY items.id
-            ORDER BY starRating DESC";
-          $query = $dbh->prepare($sql);
-        }
+          if (isset($_REQUEST['category'])) {
+            $sql = "SELECT * from items WHERE delmode=0 AND category=:category ORDER BY updationDate DESC";
+            $category = $_POST['category'];
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':category', $category, PDO::PARAM_STR);
+          } else if (isset($_REQUEST['search'])) {
+            // $sql = "SELECT * from items WHERE delmode=0 AND productName LIKE '%:search%' ORDER BY updationDate DESC";
+            $sql = "SELECT * from items WHERE delmode=0 AND productName LIKE :search ORDER BY updationDate DESC";
+            $search = '%' . $_POST['search'] . '%';
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':search', $search, PDO::PARAM_STR);
+          } else {
+            // $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
+            // $sql = "SELECT * from items WHERE delmode=0 ORDER BY updationDate DESC";
+            $sql = "SELECT items.*, SUM(rating.star) as starRating
+              from items 
+              LEFT JOIN rating
+              ON items.id = rating.itemId
+              WHERE delmode=0
+              GROUP BY items.id
+              ORDER BY starRating DESC";
+            $query = $dbh->prepare($sql);
+          }
 
+          $query->execute();
+          $results = $query->fetchAll(PDO::FETCH_OBJ);
+          $cnt = 1;
 
-        $query->execute();
-        $results = $query->fetchAll(PDO::FETCH_OBJ);
-        $cnt = 1;
-
-        if ($query->rowCount() == 0) {
+          if ($query->rowCount() == 0) {
         ?>
 
           <section class="about_us section-padding">
@@ -187,6 +184,42 @@ error_reporting(0);
         }
         ?>
       </div>
+
+      <!--  -->
+      <!--  -->
+      <!--  -->
+      
+      <br><br><br>
+      <h1 class="text-center">random ADS</h1>
+      <div id="latestItem">
+        <?php
+            $sql = "SELECT * from ads
+              WHERE delmode=0 
+              ORDER BY RAND()
+              LIMIT 1";
+            $query = $dbh->prepare($sql);
+            $query->execute();
+
+            $results = $query->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query->rowCount() > 0) {
+              foreach ($results as $result) {
+        ?>
+            <a href="abc.com">
+              <!-- <div class="card" onclick="window.location.href = 'abc.com'"> -->
+              <!-- <div class="card" onclick="window.location.href = 'item-details.php?vhid=<?php echo htmlentities($result->id); ?>'"> -->
+              <!-- <div class="card"> -->
+                <div class="text-center" style="width: 100%">
+                  <?php $images = explode(', ', $result->images); ?>
+
+                  <img src="img/adsImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
+                </div>                                         
+              <!-- </div> -->
+            </a>
+        <?php }} ?>
+      </div>
+
+
     </div>
     <!-- /Recent Cat -->
     <!-- /Body -->

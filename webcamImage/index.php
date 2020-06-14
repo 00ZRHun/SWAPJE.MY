@@ -21,15 +21,21 @@
                 <?php } ?>
             </div>
             
-            <div style="padding: 1em 0;">Your captured image will appear here...</div>
-
-            <div class="snapshot-grid">
-            <?php for($i=0; $i<60; $i++){ ?>
-                <div>
-                    <div id="results[<?=$i;?>]"></div>
-                </div>
-            <?php } ?>
+            <!-- <div style="padding: 1em 0;">Your captured image will appear here...</div> -->
+            <div style="padding: 1em 1em;">
+                <h6>Uploaded items</h6>
             </div>
+            <!-- <h6 class="text-left" style="padding: 1em 0;float: left;">
+                Uploaded items
+            </h6> -->
+
+            <!-- <div class="snapshot-grid">
+                <?php for($i=0; $i<60; $i++){ ?>
+                    <div>
+                        <div id="results[<?=$i;?>]"></div>
+                    </div>
+                <?php } ?>
+            </div> -->
 
             <div class="col-md-12 text-center">
                 <br/>
