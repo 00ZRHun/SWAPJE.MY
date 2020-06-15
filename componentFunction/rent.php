@@ -17,7 +17,7 @@
                 <table>
                     <tr>
                         <td>Day(s) of rent</td>
-                        <td><input type='number' class='price' value='1' /></td>
+                        <td><input type='number' id="day" class='price' /></td>
                     </tr>
                     <tr>
                         <td>Total price</td>
@@ -37,7 +37,7 @@
                 <input type="hidden" name="cmd" value="_xclick">
 
                 <button
-                    type="submit" name="pay_now" id="pay_now" class="primary-btn" disabled
+                    type="submit" name="pay_now" id="pay_now" class="pay_rent_btn" class="primary-btn"
                 >
                 Pay Now
                 </button>
@@ -47,8 +47,17 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>
         <script>
             $(document).ready(function(){
+
+                if(!$("#day").val()) {
+                    $(".pay_rent_btn").hide();
+                }                    
+
+
                 // we used jQuery 'keyup' to trigger the computation as the user type
                 $('.price').keyup(function () {
+
+                    if(!$("#day").val())
+                        return $(".pay_rent_btn").hide();
                 
                     // initialize the sum (total price) to zero
                     var sum = 0;
@@ -77,14 +86,12 @@
                     } else {
                         $('button#pay_now').prop('disabled', false);
                     } */
-                    if( $("#totalPrice").val() == 0) {
-                        alert('a');
+                    if( $("#totalPrice").val() == 0) {                        
                         // $("#pay_now").prop("disabled", true);
-                    }else {
-                        alert('b');
+                    }else {                        
                         // $("#pay_now").prop("disabled", false);
                         // $("#pay_now").removeAttribute('disabled');
-                        document.getElementById("pay_now").removeAttribute('disabled');
+                        $(".pay_rent_btn").show()
                     }
                 });
             });

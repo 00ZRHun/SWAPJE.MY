@@ -69,11 +69,20 @@ if (isset($_POST['submit'])) {
   <meta name="description" content="">
   <title>SWAP.MY</title>
 
+  <!-- JQuery -->
+  
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+  <!-- Add the slick-theme.css if you want default styling -->
+  <link rel="stylesheet" type="text/css" href="assets/css/slick.css"/>  
+  <link rel="stylesheet" type="text/css" href="assets/css/slick-theme.css"/>  
+
   <!-- SWAPJE CSS + Google Icons-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="css/swapje/index.css">
   <link rel="stylesheet" href="css/swapje/item-detail.css">
   <link rel="stylesheet" href="css/nav/nav.css">
+    
 
   <!--Bootstrap -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
@@ -104,10 +113,8 @@ if (isset($_POST['submit'])) {
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/favicon-icon/apple-touch-icon-72-precomposed.png">
   <link rel="apple-touch-icon-precomposed" href="assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-
-  <!-- JQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">  
+  
 
   <script>
     function highlightStar(obj, id) {
@@ -320,6 +327,9 @@ if (isset($_POST['submit'])) {
   <!--Logics-->
   <script src="js/swap/swap.js"></script>
   <!--/Logics-->
+  
+  <script type="text/javascript" src="assets/js/slick.min.js"></script>
+  <script src="js/multislider.js"></script>  
 
   <!--script-->
   <script src="assets/js/jquery.min.js"></script>
