@@ -88,6 +88,7 @@ button {
     padding: .8em 0 !important;
     display: flex;
     flex-flow: column;
+    justify-content: flex-start;
 }
 
 .item-grid .card:hover {
@@ -154,6 +155,7 @@ button {
 @media screen and (min-width: 1200px) {
     .item-grid {
         grid-template-areas: 'item item item';
+        grid-template-columns: repeat(3, 1fr);
     }
     
 }

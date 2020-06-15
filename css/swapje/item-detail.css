@@ -159,23 +159,39 @@
 
 .swap-item-list,
 .swap-item {
-    display: flex;    
-    align-items: center;
+    /* display: flex;     */
+    /* align-items: center; */
 }
 
-.swap-item-list {    
-    flex-flow: wrap;
-}
 
 .swap-item {
+    display: flex;
+    flex-flow: column;
+    max-width: 200px !important;  
+    
     margin-right: 1em;
     margin-bottom: 1em;
 }
 
 .swap-item label {
+    margin-top: 1em;
     margin-bottom: 0;
     margin-left: 5px;
 }
+
+.slick-next:before {
+    background-color: #000;
+    color: #fff !important;
+    padding: .5em;
+    
+}
+
+.swap-item img {
+    height: 200px;
+    object-fit: contain;
+    background: #f1f1f1;
+}
+   
 
 @media screen and (min-width: 768px) {
     .item-detail__header h6 {

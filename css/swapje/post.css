@@ -41,7 +41,7 @@ textarea:disabled {
 }
 
 .post-item .form-group .control-label {
-    margin-top: 2em !important;    
+    margin-top: 2em !important;   
 }
 
 .post-item .form-group {
@@ -89,6 +89,29 @@ textarea:disabled {
     margin-bottom: 1em;
 }
 
+.checkbox-group {
+    padding: 0 1em !important;   
+    display: flex; 
+    flex-flow: column;
+}
+
+.checkbox-column {
+    padding: 1em 0 !important;
+    display:flex; 
+    flex-flow:column; 
+    align-items: flex-start;
+
+    margin-right: 2em;
+}
+
+.post-item .form-group .checkbox-column .control-label {
+    margin-top: .5em !important;    
+}
+
+.checkbox label {
+    padding-left: .5em !important;    
+}
+
 .checkbox label::before {
     color: black !important;
 }
@@ -109,7 +132,13 @@ textarea:disabled {
 
     .snapshot-grid {
         grid-template-areas: 's s';
-    }    
+    }   
+    
+    .checkbox-group {
+        flex-flow: row;    
+        align-items: center;
+        justify-content: flex-start;
+    }
 }
 
 @media screen and (min-width: 1280px) {

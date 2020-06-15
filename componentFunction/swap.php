@@ -9,7 +9,7 @@
             $user_query->execute();
             $user_results = $user_query->fetch();
 
-            $user_id = $user_results["id"];
+            $user_id = $user_results["id"];            
             $item_status = 0;
 
             // 
@@ -25,35 +25,34 @@
 
             $query->execute();
             $results = $query->fetchAll(PDO::FETCH_OBJ);
-        ?>
+            
+        ?>        
 
         <!-- <h2>Item you have:<?=$user_results["id"];?></h2> -->
         <h2>Item you have: </h2>
         <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
         <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id); ?>">
         <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID); ?>">
-
-        <div class="gallery">
+        
             <!-- gallery view of uploaded images --> 
-            <div class="gallery" id="imagesPreview">
+            <div class="" id="imagesPreview">
                 <div class="swap-item-list">
                     <?php
-                        foreach ($results as $result) {
+                        foreach ($results as $result) {                              
                     ?>
                     <div class="swap-item">
-                        <input style="position: absolute;" type="checkbox" name="receiver_item_id" id="<?php echo htmlentities($result->productName) ?>" value="<?php echo htmlentities($result->itemID) ?>" id="" />
+                        <input style="position: relative;" type="checkbox" name="receiver_item_id" id="<?php echo htmlentities($result->productName) ?>" value="<?php echo htmlentities($result->itemID) ?>" id="" />
                         <?php $images = explode(', ', $result->images); ?>
                         <!-- <img src="img/itemImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="<?php echo htmlentities($images[1]);?>"> -->
-                        <img src="img/itemImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="images">
-                        <br/><br/>
+                        <img src="img/itemImages/<?php echo htmlentities($images[0]); ?>" class="img-responsive" alt="images">                        
                         <label for="<?php echo htmlentities($result->productName) ?>"><?php echo htmlentities($result->productName) ?></label>
-                    </div>
+                    </div>                         
+                    <div></div>                                                    
                     <?php
                         }
                     ?>
-                </div>
-            </div>
-        </div>
+                </div>            
+         </div>
 
 
 
