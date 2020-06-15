@@ -4,7 +4,12 @@ include 'includes/config.php';
 error_reporting(0);
 
 if (strlen($_SESSION['login']) == 0) {
-  header('location:index.php');
+  /* echo '<script language="javascript">';
+  echo 'alert("Please login first!")';
+  echo '</script>'; */
+  /* header('location:index.php');
+  $error = "Please login first!"; */
+  
 } else {
   if (isset($_REQUEST['addfavorite'])) {
     $sql = "INSERT INTO favorite(userId,itemId) VALUE(:userId,:itemId)";

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jun 14, 2020 at 11:54 AM
+-- Generation Time: Jun 15, 2020 at 10:42 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.4.2
 
@@ -249,7 +249,9 @@ INSERT INTO `items` (`id`, `user_id`, `productName`, `itemCondition`, `usedYear`
 (29, 1, 'qwe', 10, 123, 4, 'qwe', 1, NULL, NULL, 123, NULL, NULL, '00zrhun@gmail.com', '601110604061', '5ee6039566034.png, Screenshot 2020-06-01 at 10.54.42 PM.png', '2020-06-14 11:01:41', 0, '0'),
 (30, 1, 'qwe', 10, 123, 4, 'qwe', 1, NULL, NULL, 123, NULL, NULL, '00zrhun@gmail.com', '601110604061', '5ee604a3f09fd.png, Screenshot 2020-06-01 at 10.54.42 PM.png', '2020-06-14 11:06:11', 0, '0'),
 (31, 1, 'qwe', 10, 123, 4, 'qwe', 1, NULL, NULL, 123, NULL, NULL, '00zrhun@gmail.com', '601110604061', '5ee6055a08630.png, Screenshot 2020-06-01 at 10.54.42 PM.png', '2020-06-14 11:09:14', 0, '0'),
-(32, 1, 'zxc', 1, 456, 4, 'zxc', 1, 1, 1, 123, 567, 890, 'jobbusinessun@gmail.com', '601110604061', '5ee6066e11e23.png, 5ee6066e12251.png, Screenshot 2020-06-01 at 5.09.21 PM.png, Screenshot 2020-06-01 at 10.54.16 PM.png', '2020-06-14 11:13:50', 0, '0');
+(32, 1, 'zxc', 1, 456, 4, 'zxc', 1, 1, 1, 123, 567, 890, 'jobbusinessun@gmail.com', '601110604061', '5ee6066e11e23.png, 5ee6066e12251.png, Screenshot 2020-06-01 at 5.09.21 PM.png, Screenshot 2020-06-01 at 10.54.16 PM.png', '2020-06-14 11:13:50', 0, '0'),
+(33, 4, 'v', 6, 6, 3, 'v6', NULL, 1, NULL, NULL, 456, NULL, 'trytrytry553@gmail.com', '601110604061', '465ee700a5a01895.37396781.png, 325ee700a5a07820.70221348.png', '2020-06-15 05:01:25', 0, '0'),
+(34, 1, 'a', 10, 1, 4, 'qw', 1, NULL, NULL, 123, NULL, NULL, '00zrhun@gmail.com', '601110604061', '625ee74fc5dd54b3.28628933.png, 185ee74fc5ddc404.02990837.png', '2020-06-15 10:39:01', 0, '0');
 
 -- --------------------------------------------------------
 
@@ -306,7 +308,7 @@ INSERT INTO `users` (`id`, `profile`, `firstName`, `lastName`, `email`, `passwor
 (1, 'Screenshot 2020-06-01 at 10.54.16 PM.png', 'Zu Rong', 'Hun', '00zrhun@gmail.com', 'e99a18c428cb38d5f260853678922e03', '601110604061', '11/22/16667', 'S-23B, Bukit Batu, 81020 Kulai, Johor.', 'Kulai', 'Malaysia', '2020-06-01 15:39:33', '2020-06-12 13:25:41'),
 (2, NULL, 'bc', 'a', 'abc@gmail.com', 'e99a18c428cb38d5f260853678922e03', NULL, NULL, NULL, NULL, NULL, '2020-06-02 00:41:59', '2020-06-02 12:54:06'),
 (3, '1.png', ':firstName', ':lastName', 'email@gmail.com', ':password', NULL, NULL, NULL, NULL, NULL, '2020-06-13 14:09:00', NULL),
-(4, '7.png', 'trytry', 'try553', 'trytrytry553@gmail.com', 'f1c3744bf6e5c0f5e9985efddbe158f9', NULL, NULL, NULL, NULL, NULL, '2020-06-13 14:09:45', '2020-06-13 14:11:59');
+(4, 'Screenshot 2020-06-01 at 5.09.21 PM.png', 'trytry1', 'try5531', 'trytrytry553@gmail.com', 'f1c3744bf6e5c0f5e9985efddbe158f9', '1231231231231', '0123-02-11', 'sdf', 'xcv', 'Malaysia', '2020-06-13 14:09:45', '2020-06-15 05:10:27');
 
 --
 -- Indexes for dumped tables
@@ -380,7 +382,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `rating`
