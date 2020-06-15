@@ -187,9 +187,16 @@
 										<!-- <td><?php echo htmlentities($result->Vimage1);?></td> -->
 										<td>
 											<?php echo htmlentities($result->productName);?>
-
-											<?php $images = explode(', ', $result->images); ?>
-											<img src="img/itemImages/<?php echo htmlentities($images[1]);?>" class="img-responsive" alt="image">
+											
+											<?php 
+												$imagesData = $result->images;
+												if(strpos($imagesData, ', ')) {
+												$images = explode(', ', $result->images);
+											?>
+												<img src="img/itemImages/<?php echo htmlentities($images[1]);?>" class="img-responsive" alt="image">
+											<?php } else { ?>
+												<img src="img/itemImages/<?php echo htmlentities($imagesData);?>" class="img-responsive" alt="image">
+											<?php } ?>
 										</td>
 										<td><?php echo htmlentities($result->usedYear);?></td>
 										<td><?php echo htmlentities(substr($result->overview, 0,70));?></td>
