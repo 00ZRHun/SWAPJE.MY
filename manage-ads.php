@@ -165,11 +165,22 @@ if (strlen($_SESSION['login']) == 0) {
 														<td><?php echo htmlentities($cnt); ?></td>
 														<td>
 															<?php echo htmlentities($result->title); ?>
+															
 															<!-- ??? -->
 															<!-- <img src="img/adsImages/<?php echo htmlentities($result->Vimage1); ?>" class="img-responsive" alt="image"> -->
-															<?php $images = explode(', ', $result->images); ?>
-															<img src="img/adsImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image">
+															<!-- <?php $images = explode(', ', $result->images); ?>
+															<img src="img/adsImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image"> -->
 															<!-- <img src="uploads/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image"> -->
+
+															<?php 
+																$imagesData = $result->images;
+																if(strpos($imagesData, ', ')) {
+																$images = explode(', ', $result->images);
+															?>
+																<img src="img/adsImages/<?php echo htmlentities($images[1]);?>" class="img-responsive" alt="image">
+															<?php } else { ?>
+																<img src="img/adsImages/<?php echo htmlentities($imagesData);?>" class="img-responsive" alt="image">
+															<?php } ?>
 														</td>
 														<td><?php echo htmlentities($result->category); ?></td>
 														<td><?php echo htmlentities($result->description); ?></td>

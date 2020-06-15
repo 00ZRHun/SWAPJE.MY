@@ -128,10 +128,11 @@ if (strlen($_SESSION['login']) == 0) {
 		$query->execute();
 		$lastInsertId = $dbh->lastInsertId();
 		if ($lastInsertId) {
-			$msg = "Item posted successfully" . '<br>' . 
+			$msg = "Item posted successfully";
+				/*  . '<br>' . 
 				 "targetFilePath = " . $targetFilePath . '<br>' . 
 				 "temp = " . $temp . '<br>' . 
-				 "newfilename = " . $newfilename . '<br>';
+				 "newfilename = " . $newfilename . '<br>'; */
 			//  . $images;
 		} else {
 			$error = "Something went wrong. Please try again";
