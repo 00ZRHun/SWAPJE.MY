@@ -49,20 +49,20 @@
         $newquery->execute();
 
         // Update item delmode
-        $receiver_item_ids = explode(", ", $row_result["receiver_item_id"]);
+        // $receiver_item_ids = explode(", ", $row_result["receiver_item_id"]);
 
-        foreach ($receiver_item_ids as $id) {
-            $update_item_sql = "UPDATE items SET delmode=:delmode WHERE id=:item_id OR id=:receiver_item_id";
-            $delmode = -1;
+        // foreach ($receiver_item_ids as $id) {
+        //     $update_item_sql = "UPDATE items SET delmode=:delmode WHERE id=:item_id OR id=:receiver_item_id";
+        //     $delmode = -1;
 
-            $item_id = $row_result["item_id"];
+        //     $item_id = $row_result["item_id"];
 
-            $update_query = $dbh->prepare($update_item_sql);
-            $update_query->bindParam(':delmode', $delmode);
-            $update_query->bindParam(':item_id', $item_id);
-            $update_query->bindParam(':receiver_item_id', $id);
-            $update_query->execute();
-        }                                                        
+        //     $update_query = $dbh->prepare($update_item_sql);
+        //     $update_query->bindParam(':delmode', $delmode);
+        //     $update_query->bindParam(':item_id', $item_id);
+        //     $update_query->bindParam(':receiver_item_id', $id);
+        //     $update_query->execute();
+        // }                                                        
 
         echo json_encode(['code' => 200, 'msg' => "Success"]);
     } catch(exception $e) {

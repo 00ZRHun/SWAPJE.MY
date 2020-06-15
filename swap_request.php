@@ -104,7 +104,7 @@ error_reporting(0);
                 $current_provider = get_user_detail($result->provider_id, $dbh);                
                 $current_provider_name = $current_provider["firstName"] . " " . $current_provider["lastName"];
                 
-                ?>
+                ?>                    
                     <div class="notification-list__item">
                         <p style="margin-bottom: 0; margin-top: 1em;">You want to swap 
                             <?php for ($i = 0; $i < count($receiver_item_ids); $i++) {
