@@ -27,8 +27,9 @@
       ?>
          <div class="card" onclick="window.location.href = 'item-details.php?vhid=<?php echo htmlentities($result->id); ?>'">
            <div class="card-image-padding">
-             <?php $images = explode(', ', $result->images); ?>
-             <img src="img/itemImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image">
+             <!-- <?php $images = explode(', ', $result->images); ?>
+             <img src="img/itemImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image"> -->
+             <?php include 'componentFunction/showOneItemImage.php'; ?>
            </div>
            <div class="card-body">
              <h5 class="card-title"><?php echo htmlentities($result->productName); ?></h5>

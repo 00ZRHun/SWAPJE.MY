@@ -18,10 +18,10 @@
     }
 </style>
 
-<?php if ($error) { ?>
+<?php if ($error && $error!==4) { ?>
     <div class="errorWrap">
         <strong>ERROR</strong>:<?php echo htmlentities($error); ?>
-    </div>
+    </div> 
 <?php } if ($msg) { ?>
     <div class="succWrap">
         <strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?>

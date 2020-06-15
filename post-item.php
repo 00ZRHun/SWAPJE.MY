@@ -327,21 +327,6 @@ if (strlen($_SESSION['login']) == 0) {
 													Please kindly tick the following checkbox to enable filling
 												</strong>
 
-												<div class="form-group">
-													<!-- <div class="col-sm-3"></div> -->
-													<div class="col-sm-4 text-center" style="float: left">
-														
-													</div>
-													<div class="col-sm-4 text-center" style="float: left">
-														
-													</div>
-													<div class="col-sm-4 text-center" style="float: left">
-														
-													</div>
-												</div>
-
-												<!-- <div class="hr-dashed"></div> -->
-
 												<!-- row 3 -->
 												<div class="form-group checkbox-group">
 													<div class="col-sm-4 checkbox-column">
@@ -349,8 +334,7 @@ if (strlen($_SESSION['login']) == 0) {
 															<input type="checkbox" id="sell" name="sell" value="1">
 															<label for="sell">sell</label>
 														</div>
-														<label class=" control-label">Total Price( RM )<span style="color:red">*</span></label>														
-														<input type="number" name="totalPrice" id="totalPrice" class="form-control form-control-default" disabled required>														
+														
 													</div>													
 													
 													<div class="col-sm-4 checkbox-column">
@@ -358,8 +342,8 @@ if (strlen($_SESSION['login']) == 0) {
 															<input type="checkbox" id="rent" name="rent" value="1">
 															<label for="rent">rent</label>
 														</div>
-														<label class="control-label">Price Per Day( RM )<span style="color:red">*</span></label>
-														<input type="number" name="pricePerDay" id="pricePerDay" class="form-control form-control-default" disabled required>
+														<!-- <label class="control-label">Price Per Day( RM )<span style="color:red">*</span></label>
+														<input type="number" name="pricePerDay" id="pricePerDay" class="form-control form-control-default" disabled required> -->
 													</div>
 													
 													<div class="col-sm-4 checkbox-column">
@@ -367,8 +351,8 @@ if (strlen($_SESSION['login']) == 0) {
 															<input type="checkbox" id="swap" name="swap" value="1">
 															<label for="swap">swap</label>
 														</div>
-														<label class="control-label">Value( RM )<span style="color:red">*</span></label>
-														<input type="number" name="value" id="value" class="form-control form-control-default" disabled required>
+														<!-- <label class="control-label">Value( RM )<span style="color:red">*</span></label>
+														<input type="number" name="value" id="value" class="form-control form-control-default" disabled required> -->
 													</div>
 
 													<!-- <label class="col-sm-2 control-label">pricePerDay<span style="color:red">*</span></label>
@@ -380,6 +364,26 @@ if (strlen($_SESSION['login']) == 0) {
 																<option value="CNG">CNG</option>
 															</select>
 														</div> -->
+												</div>
+
+												<!-- <div class="hr-dashed"></div> -->
+
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Total Price( RM )<span style="color:red">*</span></label>
+													<div class="col-sm-2">
+														<!-- <input type="number" name="totalPrice" id="totalPrice" class="form-control					   " disabled required> -->
+														<input type="number" name="totalPrice" id="totalPrice" class="form-control form-control-default" disabled required>														
+													</div>
+
+													<label class="col-sm-2 control-label">Price Per Day( RM )<span style="color:red">*</span></label>
+													<div class="col-sm-2">
+														<input type="number" name="pricePerDay" id="pricePerDay" class="form-control form-control-default" disabled required>
+													</div>
+
+													<label class="col-sm-2 control-label">Value( RM )<span style="color:red">*</span></label>
+													<div class="col-sm-2">
+														<input type="number" name="value" id="value" class="form-control form-control-default" disabled required>
+													</div>
 												</div>
 
 												<div class="hr-dashed"></div>
