@@ -10,12 +10,51 @@ if (strlen($_SESSION['login']) == 0) {
 } else {
 	// insert data into items
 	if (isset($_POST['submit'])) {
-		// webcam
-		// $folderPath = "upload/";
-		// $targetDir = "img/itemImages/";
 		$targetDir = "img/itemImages/";
 		$imagesArr = array();
 
+		// gallery
+		// File upload configuration
+		// $targetDir = "uploads/";
+		$allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+
+		// $images = array();
+		$images_arr = array();
+		foreach ($_FILES['images']['name'] as $key => $val) {
+			$image_name = $_FILES['images']['name'][$key];
+			$tmp_name   = $_FILES['images']['tmp_name'][$key];
+			$size       = $_FILES['images']['size'][$key];
+			$type       = $_FILES['images']['type'][$key];
+			$error      = $_FILES['images']['error'][$key];
+
+			
+
+			// File upload path
+			$fileName = basename($_FILES['images']['name'][$key]);
+
+			// $targetFilePath = $targetDir . $fileName;
+			$temp = explode(".", $_FILES["images"]["name"][$key]);
+			// $newfilename = round(microtime(true)) . '.' . end($temp);
+			$newfilename = uniqid(rand(0,100), true) . '.' . end($temp);
+			$targetFilePath = $targetDir . $newfilename;
+			/* $temp = explode(".", $_FILES["file"]["name"]);
+			$newfilename = round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["file"]["tmp_name"], "../img/imageDirectory/" . $newfilename . ".png"); */
+
+			// Check whether file type is valid
+			$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+			if (in_array($fileType, $allowTypes)) {
+				// Store images on the server
+				if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $targetFilePath)) {
+					$imagesArr[] = $newfilename;
+					$images_arr[] = $targetFilePath;
+				}
+			}
+		}
+
+		// webcam
+		// $folderPath = "upload/";
+		// $targetDir = "img/itemImages/";
 		$images = array_filter($_POST['image']);
 
 		for ($i = 0; $i < count($images); $i++) {
@@ -41,49 +80,6 @@ if (strlen($_SESSION['login']) == 0) {
 			$file = $targetDir . $fileName;
 			file_put_contents($file, $image_base64);
 			// }
-		}
-
-		// file upload
-		// File upload configuration
-		// $targetDir = "uploads/";
-		$allowTypes = array('jpg', 'png', 'jpeg', 'gif');
-
-		// $images = array();
-		$images_arr = array();
-		foreach ($_FILES['images']['name'] as $key => $val) {
-			$image_name = $_FILES['images']['name'][$key];
-			$tmp_name   = $_FILES['images']['tmp_name'][$key];
-			$size       = $_FILES['images']['size'][$key];
-			$type       = $_FILES['images']['type'][$key];
-			$error      = $_FILES['images']['error'][$key];
-
-			
-
-			// File upload path
-			$fileName = basename($_FILES['images']['name'][$key]);
-
-			// $targetFilePath = $targetDir . $fileName;
-			$temp = explode(".", $_FILES["images"]["name"][$key]);
-			// $newfilename = round(microtime(true)) . '.' . end($temp);
-			$newfilename = uniqid(rand(0,100), true) . '.' . end($temp);
-			$targetFilePath = $targetDir . $newfilename;
-
-			// 
-			// 
-			// 
-			/* $temp = explode(".", $_FILES["file"]["name"]);
-			$newfilename = round(microtime(true)) . '.' . end($temp);
-			move_uploaded_file($_FILES["file"]["tmp_name"], "../img/imageDirectory/" . $newfilename . ".png"); */
-
-			// Check whether file type is valid
-			$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-			if (in_array($fileType, $allowTypes)) {
-				// Store images on the server
-				if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $targetFilePath)) {
-					$imagesArr[] = $newfilename;
-					$images_arr[] = $targetFilePath;
-				}
-			}
 		}
 
 		$userId = $_POST['userId'];

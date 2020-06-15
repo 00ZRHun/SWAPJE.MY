@@ -317,8 +317,30 @@
 														<div class="col-sm-4">
 															<input type="number" name="usedYear" id="usedYear" class="form-control" value="<?= $usedYear ?>" required>
 														</div>
-													</div>
 
+														<!-- <label class="col-sm-2 control-label">Select Brand<span style="color:red">*</span></label>
+														<div class="col-sm-4">
+															<select name="brandname" required>
+																<option value=""> Select </option>
+																<?php 
+																	$ret="select id,BrandName from tblbrands";
+																	$query= $dbh -> prepare($ret);
+																	//$query->bindParam(':id',$id, PDO::PARAM_STR);
+																	$query-> execute();
+																	$results = $query -> fetchAll(PDO::FETCH_OBJ);
+																	if($query -> rowCount() > 0)
+																	{
+																		foreach($results as $result)
+																		{
+																	?>
+																	<option value="<?php echo htmlentities($result->id);?>"><?php echo htmlentities($result->BrandName);?></option>
+																<?php
+																		}
+																	} 
+																?>
+															</select>
+														</div> -->
+													</div>
 													<!-- row 2 -->
 													<div class="form-group">
 														<label class="col-sm-2 control-label">Overview<span style="color:red">*</span></label>
@@ -355,7 +377,17 @@
 														</div> -->
 													</div>
 													<!-- row 4 -->
-													
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Pay Pal Business Account<span style="color:red">*</span></label>
+														<div class="col-sm-4">
+															<input type="email" name="payPalBusinessAccount" id="payPalBusinessAccount" class="form-control" value="<?= $payPalBusinessAccount ?>" required>
+														</div>
+
+														<label class="col-sm-2 control-label">Contact Nombor<span style="color:red">*</span></label>
+														<div class="col-sm-4">
+															<input type="number" name="contactNo" id="contactNo" class="form-control" value="<?= $contactNo ?>" required>
+														</div>
+													</div>
 
 													<div class="hr-dashed"></div>
 
@@ -478,6 +510,7 @@
 														</div>
 													</div>
 
+
 												<!-- <div class="hr-dashed"></div> -->
 												<br><br><br>
 
@@ -504,105 +537,25 @@
 	</div>
 	<!-- /Body -->
 
+	<!-- Cancel & Save btn -->
+	<!-- <div class="form-group">
+		<div class="col-sm-8 col-sm-offset-2">
+			<button class="btn btn-default" type="reset">Cancel</button>
+			<button class="btn btn-primary" name="submit" type="submit">Save changes</button>
+		</div>
+	</div> -->
+
 	<!-- Loading Scripts -->
-	<script src="js/main.js"></script>
-	<script>
-		function previewImages() {
-
-			var preview = document.querySelector('#preview-images');
-
-			if (this.files) {
-				[].forEach.call(this.files, readAndPreview);
-			}
-
-			function readAndPreview(file) {
-
-				// Make sure `file.name` matches our extensions criteria
-				if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-					return alert(file.name + " is not an image");
-				} // else...
-
-				var reader = new FileReader();
-
-				reader.addEventListener("load", function() {
-					const imageElem = `
-						<img src=${this.result} alt=${file.name} />
-					`;
-					preview.innerHTML += imageElem;
-				});
-
-				reader.readAsDataURL(file);
-
-			}
-
-		}
-
-		document.querySelector('#images').addEventListener("change", previewImages);
-
-		const uploadImageContent = document.querySelector(".image-content");
-		const uploadSnapshotContent = document.querySelector(".upload-image-container");
-		
-		const uploadImageClicker = document.querySelector(".image");
-		const uploadSnapshotClicker = document.querySelector(".snapshot");
-
-		uploadImageClicker.addEventListener('click', () => uploadImageContent.classList.toggle("show"));
-		uploadSnapshotClicker.addEventListener('click', () => uploadSnapshotContent.classList.toggle("show"));
-
-		// Handle checkbox and input field
-		const sellCheckbox = document.getElementById('sell'),
-				rentCheckbox = document.getElementById('rent'),
-				swapCheckbox = document.getElementById('swap');
-
-		// const formControls = document.querySelectorAll(".form-control-default");
-		const totalPriceTextBox = document.getElementById('totalPrice'),
-				pricePerDayTextBox = document.getElementById('pricePerDay'),
-				valueTextBox = document.getElementById('value');
-
-		// Handlers
-		function checkboxOnChecked(e) {
-			/* if(sellCheckbox.checked || rentCheckbox.checked || swapCheckbox.checked) {
-				formControls.forEach((control) => {
-					control.disabled = false;
-				})
-			} */	
-			
-			// chckbox checked
-			if(sellCheckbox.checked) {
-				totalPriceTextBox.disabled = false;
-			}			
-			if(rentCheckbox.checked) {
-				pricePerDayTextBox.disabled = false;
-			}			
-			if(swapCheckbox.checked) {
-				valueTextBox.disabled = false;
-			}		
-
-			// chckbox unchecked
-			if(!sellCheckbox.checked) {
-				totalPriceTextBox.disabled = true;
-				// totalPriceTextBox.reset();
-				totalPriceTextBox.value = '';
-			}			
-			if(!rentCheckbox.checked) {
-				pricePerDayTextBox.disabled = true;
-				pricePerDayTextBox.value = '';
-			}			
-			if(!swapCheckbox.checked) {
-				valueTextBox.disabled = true;
-				valueTextBox.value = '';
-			}
-
-			/* else {
-				formControls.forEach((control) => {
-					control.disabled = true;
-				})
-			} */
-					
-		}
-
-		sellCheckbox.addEventListener('change', checkboxOnChecked);
-		rentCheckbox.addEventListener('change', checkboxOnChecked);
-		swapCheckbox.addEventListener('change', checkboxOnChecked);
+	<script src="js/jquery.min.js">
+		</script>
+		<script src="js/bootstrap-select.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery.dataTables.min.js"></script>
+		<script src="js/dataTables.bootstrap.min.js"></script>
+		<script src="js/Chart.min.js"></script>
+		<script src="js/fileinput.js"></script>
+		<script src="js/chartData.js"></script>
+		<script src="js/main.js">
 	</script>
 
 
