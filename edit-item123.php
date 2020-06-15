@@ -250,124 +250,86 @@
 	<!-- /Header --> 
 
 	<!-- Body -->
+	<br>
+	<!-- <div class="ts-main-content" style="margin-top:10"> -->
 	<div class="ts-main-content post-item" style="padding-top: 90px; padding-bottom: 90px">
 		<div class="container">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-						<div class="page-title text-center">
-							<h2 class="">Post Item</h2>
-						</div>
+							<div class="text-center">
+								<h2 class="">Edit Item</h2>
+							</div>
+							
+							<!-- form 1( basic info ) -->
+							<div class="row">
+								<div class="col-md-12">
+									<div class="panel panel-default">
+										<div class="panel-heading">Basic Info</div>
 
-						<!-- form 1( basic info ) -->
-						<div class="row">
-							<div class="col-md-12">
-							<!-- notification( htmlentities ) -->
-								<!--status-->
-								<?php include 'componentFunction/status.php'; ?>
-								<!--/status-->
+											<!-- notification( htmlentities ) -->
+												<!--status-->
+												<?php include 'componentFunction/status.php'; ?>
+												<!--/status-->
 
-								<div class="panel panel-default">
-									<div class="panel-heading">Basic Info</div>
-
-									<div class="panel-body">
-									<?php
-										$item_sql = "SELECT * FROM items WHERE id=:id";        
-										$item_query = $dbh->prepare($item_sql);
-										$item_query->bindParam(':id', $editId, PDO::PARAM_STR);
-										$item_query->execute();
-										$item_results = $item_query->fetch();
-
-										// security
-										// $id = $item_results["user_id"];
-										$productName = $item_results["productName"];
-										$usedYear = $item_results["usedYear"];
-										$overview = $item_results["overview"];
-										$sell = $item_results["sell"];
-										$rent = $item_results["rent"];
-										$swap = $item_results["swap"];
-										$totalPrice = $item_results["totalPrice"];
-										$pricePerDay = $item_results["pricePerDay"];
-										$value = $item_results["value"];
-										$payPalBusinessAccount = $item_results["payPalBusinessAccount"];
-										$contactNo = $item_results["contactNo"];
-										$images = $item_results["images"];
-									?>
-										<!-- form start -->
-										<form method="post" class="form-horizontal" style="margin-top: 2em" enctype="multipart/form-data">
-											<!-- row 1 -->												
-											<div class="form-group">
-												<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
-												<div class="col-sm-4">
-													<input type="hidden" name="userId" id="userId" class="form-control" required value="<?=$id?>">
-													<input type="text" name="productName" id="productName" class="form-control-default form-control" value="<?=$productName?>" required>
-												</div>
-
-												<label class="col-sm-2 control-label">Used Year<span style="color:red">*</span></label>
-												<div class="col-sm-4">
-													<input type="number" name="usedYear" id="usedYear" class="form-control form-control-default" value="<?=$usedYear?>" required>
-												</div>
-											</div>
-
-											<!-- <div class="hr-dashed"></div> -->
+											<div class="panel-body">
 											
-											<!-- row 2 -->
-											<div class="form-group">
-												<label class="col-sm-2 control-label">Overview<span style="color:red">*</span></label>
-												<div class="col-sm-10">
-													<textarea class="form-control form-control-default" name="overview" id="overview" rows="3" required><?=$overview?></textarea>
-												</div>
-											</div>
+											<?php
+												$item_sql = "SELECT * FROM items WHERE id=:id";        
+												$item_query = $dbh->prepare($item_sql);
+												$item_query->bindParam(':id', $editId, PDO::PARAM_STR);
+												$item_query->execute();
+												$item_results = $item_query->fetch();
 
-											<!-- <div class="hr-dashed"></div> -->
+												// security
+												// $id = $item_results["user_id"];
+												$productName = $item_results["productName"];
+												$usedYear = $item_results["usedYear"];
+												$overview = $item_results["overview"];
+												$sell = $item_results["sell"];
+												$rent = $item_results["rent"];
+												$swap = $item_results["swap"];
+												$totalPrice = $item_results["totalPrice"];
+												$pricePerDay = $item_results["pricePerDay"];
+												$value = $item_results["value"];
+												$payPalBusinessAccount = $item_results["payPalBusinessAccount"];
+												$contactNo = $item_results["contactNo"];
+												$images = $item_results["images"];
+											?>
 
-											<div class="form-group">
-												<label class="col-sm-2 control-label">Item condition 1-10<span style="color:red">*</span></label>
-												<div class="col-sm-4">
-													<select name="itemCondition" id="itemCondition" class="form-control form-control-default" required>
-														<option value="10">10</option>
-														<option value="9">9</option>
-														<option value="8">8</option>
-														<option value="7">7</option>
-														<option value="6">6</option>
-														<option value="5">5</option>
-														<option value="4">4</option>
-														<option value="3">3</option>
-														<option value="2">2</option>
-														<option value="1">1</option>
-													</select>
-												</div>
+											<!-- <?= $item_sql ?>
+											<?= $editId ?>
+											<?= $item_results["productName"]; ?>
+											<?= $productName ?> -->
 
-												<label class="col-sm-2 control-label">Category<span style="color:red">*</span></label>
-												<div class="col-sm-4">
-													<select  name="category" id="category" class="form-control-default form-control" required>
-														<?php
-														$sql = "SELECT * FROM category WHERE delmode=0 ORDER BY name ASC";
+												<!-- form start -->
+												<form method="post" class="form-horizontal" enctype="multipart/form-data">
+												<!-- Post A Vehicle -->
+													<!-- row 1 -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
+														<div class="col-sm-4">
+															<input type="hidden" name="userId" id="userId" class="form-control" value="<?= $id ?>" required>
+															<input type="text" name="productName" id="productName" class="form-control" value="<?= $productName ?>" required>
+														</div>
 
-														// echo $id;
+														<label class="col-sm-2 control-label">Used Year<span style="color:red">*</span></label>
+														<div class="col-sm-4">
+															<input type="number" name="usedYear" id="usedYear" class="form-control" value="<?= $usedYear ?>" required>
+														</div>
+													</div>
 
-														$query = $dbh->prepare($sql);
-														$query->execute();
-														$results = $query->fetchAll(PDO::FETCH_OBJ);
-														if ($query->rowCount() > 0) {
-															foreach ($results as $result) {
-														?>
-																<option value="<?= $result->id; ?>"><?= $result->name; ?></option>
-														<?php }
-														} ?>
-													</select>
-												</div>
-											</div>
-
-											<div class="hr-dashed"></div>
-											
-											<!-- <strong class="text-danger">Select at least 1 category: sell, rent or swap below to enable filling</strong> -->
-											<strong class="text-danger text-center">
-													Please kindly tick the following checkbox to enable filling
-												</strong>
-
-												<!-- row 3 -->
-												<div class="form-group checkbox-group">
+													<!-- row 2 -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Overview<span style="color:red">*</span></label>
+														<div class="col-sm-10">
+															<!-- <textarea class="form-control" name="overview" id="overview" rows="3" value="<?= $overview ?>" required></textarea> -->
+															<textarea class="form-control" name="overview" id="overview" rows="3" required><?= $overview ?></textarea>
+														</div>
+													</div>
+													
+													<!-- row 3 -->
+													<div class="form-group">
 														<div class="col-sm-4">
 															<div class="checkbox checkbox-inline">
 																<?php
@@ -413,8 +375,26 @@
 																<label for="swap">swap</label>
 															</div>
 														</div>
+													</div>
+													
+													<!-- row 4 -->
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Total Price( RM )<span style="color:red">*</span></label>
+														<div class="col-sm-2">
+															<input type="number" name="totalPrice" id="totalPrice" class="form-control" value="<?= $totalPrice ?>" required>
+														</div>
 
-													<!-- <label class="col-sm-2 control-label">pricePerDay<span style="color:red">*</span></label>
+														<label class="col-sm-2 control-label">Price Per Day( RM )<span style="color:red">*</span></label>
+														<div class="col-sm-2">
+															<input type="number" name="pricePerDay" id="pricePerDay" class="form-control" value="<?= $pricePerDay ?>" required>
+														</div>
+
+														<label class="col-sm-2 control-label">Value( RM )<span style="color:red">*</span></label>
+														<div class="col-sm-2">
+															<input type="number" name="value" id="value" class="form-control" value="<?= $value ?>" required>
+														</div>
+
+														<!-- <label class="col-sm-2 control-label">pricePerDay<span style="color:red">*</span></label>
 														<div class="col-sm-4">
 															<select name="fueltype" required>
 																<option value=""> Select </option>
@@ -423,172 +403,113 @@
 																<option value="CNG">CNG</option>
 															</select>
 														</div> -->
-												</div>
+													</div>
+													
 
-												<!-- <div class="hr-dashed"></div> -->
+													<div class="hr-dashed"></div>
 
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Total Price( RM )<span style="color:red">*</span></label>
-													<div class="col-sm-2">
-														<!-- <input type="number" name="totalPrice" id="totalPrice" class="form-control					   " disabled required> -->
-														<input type="number" name="totalPrice" id="totalPrice" class="form-control form-control-default" value="<?= $totalPrice ?>" required>														
+												<!-- image -->
+													<!-- row 1( subtitle ) -->
+
+													<div class="form-group">
+														<div class="col-sm-12">
+															<h4><b>Upload Images</b></h4>
+														</div>
+													</div>
+													<i class="fa fa-file" aria-hidden="true" style="font-size:42px"></i>
+													<div class="form-group">
+														<!--galleryPic-->
+														<label>Choose Images from Gallery</label>
+														<input type="file" name="images[]" id="images" accept="image/*" multiple >
+														<!-- <input type="submit" name="submit" value="UPLOAD"/> -->
+
+														<!--/galleryPic-->
 													</div>
 
-													<label class="col-sm-2 control-label">Price Per Day( RM )<span style="color:red">*</span></label>
-													<div class="col-sm-2">
-														<input type="number" name="pricePerDay" id="pricePerDay" class="form-control form-control-default" value="<?= $pricePerDay ?>" required>
+													<div class="hr-dashed"></div>
+
+													<a href="webcamImage">
+														<i class="fa fa-camera" aria-hidden="true" style="font-size:42px"></i>
+													</a>
+													<div class="form-group">
+														<?php include 'webcamImage/index.php' ?>
 													</div>
-='false'
-													<label class="col-sm-2 control-label">Value( RM )<span style="color:red">*</span></label>
-													<div class="col-sm-2">
-														<input type="number" name="value" id="value" class="form-control form-control-default" value="<?= $value ?>" required>
+
+
+													<!-- row 2( upload image ) -->
+													<div class="gallery">
+														<!-- gallery view of uploaded images --> 
+														<div class="gallery" id="imagesPreview">
+															<?php
+															$tempImages = $images;
+															$images = explode(', ', $tempImages);
+															?>
+																<!-- <input type="text" name="tempImages" id="tempImages" class="form-control" value="<?= $tempImages ?>"> -->
+															<?php
+															if(!empty($images)){ 
+																	/* echo $images_arr;
+																	var_dump($images_arr); */
+															?>
+																<ul>
+																	<?php foreach($images as $image_src){ ?>
+																		<li>
+																			<img src="img/itemImages/<?php echo $image_src; ?>" alt="<?= $image_src ?>">
+																		</li>
+																	<?php } ?>
+																</ul>
+															<?php 
+															}
+															?>
+														</div>
 													</div>
-												</div>
+													<!-- ( upload image ) -->
 
-												<div class="hr-dashed"></div>
-												
-												<!-- <strong class="text-danger">Select at least 1 category: sell, rent or swap below to enable filling</strong> -->
-												<!-- <h3 class="text-left" style="font-weight: 800;"> -->
-												<h6 class="text-left">
-													<!-- <strong class="text-center"> -->
-														<!-- &nbsp&nbsp&nbsp -->
-														Add your items
-													<!-- </strong> -->
-												</h6>
+													<div class="hr-dashed"></div>
 
-												<!-- <div class="col-sm-12">
-													<label class="control-label">Add your items<span style="color:red">*</span></label>
-												</div> -->
-
-											<!-- image -->
-												<!-- webcam -->
-											<div class="form-group snapshot">
-												<div class="col-sm-12">
-													<h5>
-														<b>
-															<a href="webcamImage">
-																<i class="fa fa-camera webcam-icon" aria-hidden="true"></i>
-															</a>
-															<!-- Upload Snapshot -->
-															Take a picture
-														</b>
-													</h5>
-												</div>
-											</div>
-											<?php include 'webcamImage/index.php' ?>
-
-												<!-- gallery -->
-											<div class="form-group image">
-												<div class="col-sm-12">
-													<h5>
-														<b>
-															<a href="#">
-																<i class="fa fa-image webcam-icon" aria-hidden="true"></i>
-															</a>
-															<!-- Upload Images -->
-															Browser gallery
-														</b>
-													</h5>
-												</div>
-											</div>
-											<div class="form-group image-content">
-												<div class="col-sm-12">
-													<!--galleryPic-->
-													<label>Choose Images</label>
-													<input type="file" name="images[]" id="images" accept="image/*" multiple>
-													<!-- <input type="submit" name="submit" value="UPLOAD"/> -->
-
-													<!--/galleryPic-->
-												</div>
-											</div>
-											
-											<div class="hr-dashed"></div>
-											
-											<h6 class="text-left">
-												Uploaded items
-											</h6>
-											<!-- <div class="snapshot-grid" id="preview-images"></div> -->
-											<p>webcam image(s) :</p><br>
-
-											<div class="snapshot-grid" id="preview-images">
-												<?php for($i=0; $i<60; $i++){ ?>
-													<div>
-														<div id="results[<?=$i;?>]"></div>
-													</div>
-												<?php } ?>
-
-												<p class="col-md-12">gallery image(s) :</p><br>
-												<p></p>
-											</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- form 2( accessories ) -->
-						<div class="row">
-							<div class="col-md-12">
-								<div class="panel panel-default">
-									<div class="panel-heading">User Info</div>
-									<div class="panel-body">
-
-										<!-- Accessories -->
-										<!-- row 1 -->
-										<div class="form-group">
-
-											<!-- <div class="hr-dashed"></div> -->
-											<!-- <br><br><br> -->
-
-											<!-- Cancel & Save btn -->
-											<div class="form-group text-center">
-											
-											<?php
-												$user_sql = "SELECT * FROM users WHERE id=:id";        
-												$user_query = $dbh->prepare($user_sql);
-												$user_query->bindParam(':id', $id, PDO::PARAM_STR);
-												$user_query->execute();
-												$user_results = $user_query->fetch();
-											?>
-												<label class="col-sm-2 control-label">Pay Pal Business Account<span style="color:red">*</span></label>
-												<div class="col-sm-4">
-													<input type="email" name="payPalBusinessAccount" id="payPalBusinessAccount" class="form-control-default form-control" value="<?= $user_results['email'] ?>" required>
-												</div>
-
-												<label class="col-sm-2 control-label">Contact Nombor<span style="color:red">*</span></label>
-												<div class="col-sm-4">
-													<input type="number" name="contactNo" id="contactNo" class="form-control-default form-control" value="<?= $user_results['contactNo'] ?>" required>
-												</div>
-
-												<div class="hr-dashed"></div>
-												<br><br><br>
-
-												<div class="col-sm-8 col-sm-offset-2">
-														<!-- <button class="grey-btn" style="margin: 5px 0" type="reset">Cancel</button>														
-													<button class="danger-btn" style="margin: 5px 0" type="reset">Cancel</button> -->	
-													<!-- <button class="grey-btn" type="reset" style="width: 100px; height: 40px;">
-													Reset
-													</button> -->
-													<button class="danger-btn" type="reset" style="width: 100px;height: 40px;">
-														<!-- Cancel -->
-														Reset
-													</button>														
-													<button class="primary-btn" name="submit" type="submit" style="width: 100px; height: 40px;">
-														<!-- background-color: light-green" -->
-														<!-- Save changes -->
-														Publish
-													</button>
-													<!-- <button class="grey-btn" name="reset" type="reset">
-														Reset
-													</button> -->
-												</div>
-											</div>
-
-											<!-- form end -->
-											</form>
 										</div>
 									</div>
 								</div>
 							</div>
+								
+							<!-- form 2( accessories ) -->
+							<div class="row">
+								<div class="col-md-12">
+									<div class="panel panel-default">
+										<div class="panel-heading">Category</div>
+											<div class="panel-body">
+
+												<!-- Accessories -->
+													<!-- row 1 -->
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Pay Pal Business Account<span style="color:red">*</span></label>
+													<div class="col-sm-4">
+														<input type="email" name="payPalBusinessAccount" id="payPalBusinessAccount" class="form-control" value="<?= $payPalBusinessAccount ?>" required>
+													</div>
+
+													<label class="col-sm-2 control-label">Contact Nombor<span style="color:red">*</span></label>
+													<div class="col-sm-4">
+														<input type="number" name="contactNo" id="contactNo" class="form-control" value="<?= $contactNo ?>" required>
+													</div>
+
+												<!-- <div class="hr-dashed"></div> -->
+													<br><br><br>
+
+													<!-- Cancel & Save btn -->
+													<div class="form-group text-center">
+														<div class="col-sm-8 col-sm-offset-2">
+															<button class="btn btn-default" type="reset">Cancel</button>
+															<button class="btn btn-primary" name="submit" type="submit">Save changes</button>
+														</div>
+													</div>
+											</div>
+												
+												
+												<!-- form end -->
+												</form>
+
+									</div>
+								</div>
+							</div>							
 						</div>
 					</div>
 				</div>

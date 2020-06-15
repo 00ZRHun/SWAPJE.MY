@@ -123,10 +123,6 @@ error_reporting(0);
         }
         ?>
       </div>
-
-      <!--  -->
-      <!--  -->
-      <!--  -->
       
       <br><br><br>
       <h1 class="text-center">random ADS</h1>
@@ -148,26 +144,19 @@ error_reporting(0);
               <!-- <div class="card" onclick="window.location.href = 'item-details.php?vhid=<?php echo htmlentities($result->id); ?>'"> -->
               <!-- <div class="card"> -->
                 <div id="ads" class="text-center abc" style="width: 100%">
-                  <button type="button" class="close" data-dismiss="abc" aria-label="Close" 
-                    onclick="
-                      document.getElementById('ads').outerHTML = '';
-                      // document.getElementById('ads').style.visibility='hidden';
-                      // document.getElementById('ads2').style.visibility='visible';
-                  ">
-                    <span aria-hidden="true">
-                      &times;
-                    </span>
-                  </button>
+                  
 
-                  <?php $images = explode(', ', $result->images); ?>
                   <a href="https://abc.com/">
-                    <img id="imgId" src="img/adsImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image" style="display: block; margin-left: auto; margin-right: auto; width: 50%; visibility: true;">
-                  </a>
                   <!-- <img id="imgId2" src="img/adsImages/abc.png" class="img-responsive" alt="ads closed" style="display: block; margin-left: auto; margin-right: auto; width: 50%; visibility: hidden;"> -->
+                    <!-- <?php $images = explode(', ', $result->images); ?>
+                    <img id="imgId" src="img/adsImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image" style="display: block; margin-left: auto; margin-right: auto; width: 50%; visibility: true;"> -->
+
+                    <?php include 'componentFunction/showOneAdsImage.php'; ?>
+                  </a>
                 </div>
-                <div class="ads2" style="visibility: hidden">
+                <!-- <div class="ads2" style="visibility: hidden">
                   <h3>Ads closed</h3>
-                </div>                                     
+                </div> -->                                     
               <!-- </div> -->
         <?php }} ?>
       </div>

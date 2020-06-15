@@ -233,7 +233,7 @@ if (isset($_POST['submit'])) {
       ?>
 
           <!--notification( htmlentities )-->
-          <?php include 'componentFunction/notification.php'; ?>
+          <?php include 'componentFunction/status.php'; ?>
           <!--/notification( htmlentities )-->
 
           <div class="carousel-wrapper">
