@@ -70,7 +70,7 @@ textarea:disabled {
 .snapshot-grid {
     display: grid;
     gap: 0 1em;
-    grid-template-areas: 's s';
+    grid-template-areas: 's';
 }
 
 #preview-images {
@@ -131,7 +131,7 @@ textarea:disabled {
     }
 
     .snapshot-grid {
-        grid-template-areas: 's s';
+        grid-template-areas: 's';
     }   
     
     .checkbox-group {
