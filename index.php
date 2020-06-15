@@ -58,6 +58,11 @@ error_reporting(0);
 
   <section class="home-section">
     <div class="container">
+
+     <!--Status-->
+     <?php include 'componentFunction/status.php'; ?>
+     <!--/Status-->
+
       <h5>Items Browser</h5>      
 
       <!-- Body -->
@@ -106,79 +111,13 @@ error_reporting(0);
         } else {
           foreach ($results as $result) {
           ?>
+              <!-- <a href="#loginform" data-toggle="modal" data-dismiss="modal" aria-haspopup="true" aria-expanded="false"> -->
 
-            <div class="card" onclick="window.location.href = 'item-details.php?vhid=<?php echo htmlentities($result->id); ?>'">
-              <div class="card-image-padding">
-                <!-- <img src="img/itemImages/<?php echo htmlentities($result->Vimage1); ?>" class="img-responsive" alt="image"> -->
-                <?php $images = explode(', ', $result->images); ?>
-								<!-- <img src="img/adsImages/<?php echo htmlentities($images[1]);?>" class="img-responsive" alt="image"> -->
+              <!--showAllItems-->
+              <?php include 'componentFunction/showAllItems.php'; ?>
+              <!--/showAllItems-->
 
-                <img src="img/itemImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image">
-              </div>              
-              <div class="card-body">
-                <h5 class="card-title"><?php echo htmlentities($result->productName); ?></h5>
-                <div class="card-item-description">
-                  <div style="display: flex; flex-flow: column">
-                    <h6 class="card-description-label">Used Year:</h6>
-                    <p class="card-description-text"><?php echo htmlentities($result->usedYear); ?> Year Used</p>
-                  </div>                  
-                  <div style="display: flex; flex-flow: column">
-                    <h6 class="card-description-label">Overview:</h6>
-                    <p class="card-description-text"><?php echo substr($result->overview, 0, 70); ?></p>
-                  </div>
-                </div>                                          
-                </div>
-                <div class="card-footer">
-                <div>
-                    <strong>Sell:</strong>
-                    <strong>
-                      <?php
-                      if ($result->sell == 1) {
-                      ?>
-                        RM
-                      <?php
-                        echo htmlentities($result->totalPrice);
-                      } else {
-                      ?>
-                        N/A
-                      <?php
-                      } ?>
-                    </strong>
-                  </div>
-                  <div>
-                    <strong>Rent:</strong>
-                    <strong>
-                      <?php
-                      if ($result->rent == 1) {
-                      ?>
-                        RM
-                      <?php
-                        echo htmlentities($result->pricePerDay);
-                      } else {
-                      ?>
-                        N/A
-                      <?php
-                      } ?>
-                    </strong>
-                  </div>
-                  <div>
-                    <strong>Swap:</strong>
-                    <strong>
-                      <?php
-                      if ($result->swap == 1) {
-                      ?>
-                        RM
-                      <?php
-                        echo htmlentities($result->value);
-                      } else {
-                      ?>
-                        N/A
-                      <?php
-                      } ?>
-                    </strong>
-                  </div>
-              </div>                            
-            </div>
+              <!-- </a> -->
         <?php
           }
         }
@@ -205,17 +144,31 @@ error_reporting(0);
             if ($query->rowCount() > 0) {
               foreach ($results as $result) {
         ?>
-            <a href="abc.com">
               <!-- <div class="card" onclick="window.location.href = 'abc.com'"> -->
               <!-- <div class="card" onclick="window.location.href = 'item-details.php?vhid=<?php echo htmlentities($result->id); ?>'"> -->
               <!-- <div class="card"> -->
-                <div class="text-center" style="width: 100%">
-                  <?php $images = explode(', ', $result->images); ?>
+                <div id="ads" class="text-center abc" style="width: 100%">
+                  <button type="button" class="close" data-dismiss="abc" aria-label="Close" 
+                    onclick="
+                      document.getElementById('ads').outerHTML = '';
+                      // document.getElementById('ads').style.visibility='hidden';
+                      // document.getElementById('ads2').style.visibility='visible';
+                  ">
+                    <span aria-hidden="true">
+                      &times;
+                    </span>
+                  </button>
 
-                  <img src="img/adsImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
-                </div>                                         
+                  <?php $images = explode(', ', $result->images); ?>
+                  <a href="https://abc.com/">
+                    <img id="imgId" src="img/adsImages/<?php echo htmlentities($images[1]); ?>" class="img-responsive" alt="image" style="display: block; margin-left: auto; margin-right: auto; width: 50%; visibility: true;">
+                  </a>
+                  <!-- <img id="imgId2" src="img/adsImages/abc.png" class="img-responsive" alt="ads closed" style="display: block; margin-left: auto; margin-right: auto; width: 50%; visibility: hidden;"> -->
+                </div>
+                <div class="ads2" style="visibility: hidden">
+                  <h3>Ads closed</h3>
+                </div>                                     
               <!-- </div> -->
-            </a>
         <?php }} ?>
       </div>
 

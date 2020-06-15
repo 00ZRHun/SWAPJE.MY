@@ -5,9 +5,12 @@ include('includes/config.php');
 
 if (strlen($_SESSION['login']) == 0) {
 	header('location:index.php');
+	// $error = "Please login first!";
+
 } else {
 	// insert data into items
 	if (isset($_POST['submit'])) {
+		// webcam
 		// $folderPath = "upload/";
 		// $targetDir = "img/itemImages/";
 		$targetDir = "img/itemImages/";
@@ -39,9 +42,8 @@ if (strlen($_SESSION['login']) == 0) {
 			file_put_contents($file, $image_base64);
 			// }
 		}
-		// 
-		// 
-		// 
+
+		// file upload
 		// File upload configuration
 		// $targetDir = "uploads/";
 		$allowTypes = array('jpg', 'png', 'jpeg', 'gif');
@@ -55,16 +57,30 @@ if (strlen($_SESSION['login']) == 0) {
 			$type       = $_FILES['images']['type'][$key];
 			$error      = $_FILES['images']['error'][$key];
 
+			
+
 			// File upload path
 			$fileName = basename($_FILES['images']['name'][$key]);
-			$targetFilePath = $targetDir . $fileName;
+
+			// $targetFilePath = $targetDir . $fileName;
+			$temp = explode(".", $_FILES["images"]["name"][$key]);
+			// $newfilename = round(microtime(true)) . '.' . end($temp);
+			$newfilename = uniqid(rand(0,100), true) . '.' . end($temp);
+			$targetFilePath = $targetDir . $newfilename;
+
+			// 
+			// 
+			// 
+			/* $temp = explode(".", $_FILES["file"]["name"]);
+			$newfilename = round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["file"]["tmp_name"], "../img/imageDirectory/" . $newfilename . ".png"); */
 
 			// Check whether file type is valid
 			$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 			if (in_array($fileType, $allowTypes)) {
 				// Store images on the server
 				if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $targetFilePath)) {
-					$imagesArr[] = $fileName;
+					$imagesArr[] = $newfilename;
 					$images_arr[] = $targetFilePath;
 				}
 			}
@@ -112,7 +128,10 @@ if (strlen($_SESSION['login']) == 0) {
 		$query->execute();
 		$lastInsertId = $dbh->lastInsertId();
 		if ($lastInsertId) {
-			$msg = "Item posted successfully";
+			$msg = "Item posted successfully" . '<br>' . 
+				 "targetFilePath = " . $targetFilePath . '<br>' . 
+				 "temp = " . $temp . '<br>' . 
+				 "newfilename = " . $newfilename . '<br>';
 			//  . $images;
 		} else {
 			$error = "Something went wrong. Please try again";
@@ -138,7 +157,6 @@ if (strlen($_SESSION['login']) == 0) {
 
 	<!doctype html>
 	<html lang="en" class="no-js">
-
 	<head>
 		<meta charset="UTF-8">
 		<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
@@ -205,7 +223,6 @@ if (strlen($_SESSION['login']) == 0) {
 		<link rel="apple-touch-icon-precomposed" href="assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
 		<link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
 		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-		
 	</head>
 	<body>
 		<!-- <h1><?= $id ?></h1> -->

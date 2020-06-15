@@ -141,6 +141,12 @@
 	
 	<title>SWAP.MY</title>
 
+	<!-- SWAPJE CSS + Google Icons-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="css/swapje/index.css">
+	<link rel="stylesheet" href="css/nav/nav.css">
+	<link rel="stylesheet" href="css/swapje/post.css">
+
 	<!--  -->
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="css/font-awesome.min.css">
@@ -216,7 +222,8 @@
 	<!-- /Header --> 
 
 	<!-- Body -->
-	<div class="ts-main-content" style="padding-top: 90px; padding-bottom: 90px"> 
+	<!-- <div class="ts-main-content" style="padding-top: 90px; padding-bottom: 90px">  -->
+	<div class="ts-main-content post-item" style="padding-top: 90px; padding-bottom: 90px">
 		<div class="container">
 			<div class="container-fluid">
 				<div class="row">

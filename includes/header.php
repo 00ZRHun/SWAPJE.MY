@@ -1,4 +1,11 @@
+
+
 <header>
+<!-- <?php if (!$_SESSION['login']) { ?>
+<a href="#loginform" data-toggle="modal" data-dismiss="modal" aria-haspopup="true" aria-expanded="false">
+                    abstract
+                    </a>
+<?php } ?> -->
 
   <!-- Navigation -->
   <nav id="navigation_bar" class="navbar navbar-default">
