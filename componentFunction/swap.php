@@ -10,7 +10,20 @@
             $user_results = $user_query->fetch();
 
             $user_id = $user_results["id"];            
+            $providerID;
             $item_status = 0;
+
+            $sql = "SELECT * from items where id=:vhid AND delmode=0";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':vhid', $vhid, PDO::PARAM_STR);
+            $query->execute();
+            $results = $query->fetchAll(PDO::FETCH_OBJ);
+            $cnt = 1;
+            if ($query->rowCount() > 0) {
+                foreach ($results as $result) {
+                    $providerID = $result->user_id;
+                }
+            }             
 
             // 
             $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, item.images, user.id
@@ -29,7 +42,7 @@
         ?>        
 
         <!-- <h2>Item you have:<?=$user_results["id"];?></h2> -->
-        <h2>Item you have: </h2>
+        <h2>Item you have: </h2>        
         <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
         <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id); ?>">
         <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID); ?>">

@@ -40,7 +40,11 @@ $(document).ready(function () {
 
 });
 
-$('#accept-request-btn').click(function () {
+$('#accept-request-btn').click(function (e) {
+
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
 
     // Swap Request ID
     const swap_request_id = $(this).attr("data-requestID");    
@@ -65,7 +69,11 @@ $('#accept-request-btn').click(function () {
     })
 });
 
-$('#reject-request-btn').click(function () {
+$('#reject-request-btn').click(function (e) {
+
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
 
     // Swap Request ID
     const swap_request_id = $(this).attr("data-requestID");
