@@ -109,7 +109,7 @@ if (strlen($_SESSION['login']) == 0) {
 							<div class="row">
 								<h2 class="panel-heading" style="font-size: large; font-weight: 1000;">Ads Details</h2>
 
-								<div class="panel-body">
+								<div class="panel-body"  style="overflow-x:auto;">
 									<!-- notification( htmlentities )/notify( success/fail ) -->
 										<!--status-->
 										<?php include 'componentFunction/status.php'; ?>

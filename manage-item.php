@@ -112,7 +112,7 @@
 						<div class="row">
 							<div class="panel-heading">Item Details</div>
 							
-							<div class="panel-body">
+							<div class="panel-body" style="overflow-x:auto;">
 								<!-- notification( htmlentities )/notify( success/fail ) -->
 									<!--status-->
 									<?php include 'componentFunction/status.php'; ?>
